@@ -1,0 +1,27 @@
+AddOptionMenu "OptionsMenuSimple"
+{
+	SubMenu "Isometric Mode Options", "IsoModOptions"
+}
+
+AddOptionMenu "OptionsMenu"
+{
+	SubMenu "Isometric Mode Options", "IsoModOptions"
+}
+
+OptionMenu "IsoModOptions"
+{
+    Title "Isometric Mode Options (Hardware Renderers only)"
+    Slider "Isometric Camera Pitch", IsometricPitch, 1, 89, 1
+    Slider "Deceleration Multiplier", DecelMult, 0.1, 1.0, 0.1
+    Slider "Aim Assist Max. Distance", IsoAimAssistMaxDist, 100, 5000, 100
+    Option "Isometric Fog of War", "r_radarclipper", "OnOff"
+    Option "Visibility Through Level Geometry", "r_dithertransparency", "OnOff"
+    StaticText ""
+    StaticText "Viewpoint Rotation Control"
+    Control "Rotate Left", "rotate_cam_left"
+    Control "Rotate Right", "rotate_cam_right"
+    Control "Zoom in", "iso_zoom_in"
+    Control "Zoom out", "iso_zoom_out"
+    Control "Toggle Aim Assist", "iso_aim_assist"
+    Slider "Rotation Speed", IsometricSpeed, 1, 10, 1
+}

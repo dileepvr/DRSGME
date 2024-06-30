@@ -1,0 +1,5 @@
+Gameinfo
+{
+        AddPlayerClasses = "DoomPlayer2"
+	AddEventHandlers = "MyStaticEventHandler", "MKeyEvents", "StartingInventoryHandler", "RenderCursorsOverlay", "IsoAimAssistHandler"
+}

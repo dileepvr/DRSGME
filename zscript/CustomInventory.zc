@@ -1,0 +1,291 @@
+class Z_NashMove : CustomInventory
+{
+//===========================================================================
+//
+// nashmove.pk3
+//
+// Less slippery player movement. Works for any player class.
+//
+// Originally written by Nash Muhandes.
+//
+//
+// Feel free to use this in your mods. You don't have to ask my permission!
+//
+//===========================================================================
+
+        int old_forwardmove, old_sidemove;
+	
+	Default
+	{
+		Inventory.MaxAmount 1;
+		+INVENTORY.UNDROPPABLE
+		+INVENTORY.UNTOSSABLE
+		+INVENTORY.AUTOACTIVATE
+	}
+
+	// How much to reduce the slippery movement.
+	// Lower number = less slippery.
+	cvar DECEL_MULT;
+
+	override void PostBeginPlay()
+	{
+	        old_forwardmove = 0;
+		old_sidemove = 0;
+	        if (Owner && Owner is "PlayerPawn") DECEL_MULT = CVar.GetCVar("DecelMult", Owner.player);
+	}
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	bool bIsOnFloor(void)
+	{
+		return (Owner.Pos.Z == Owner.FloorZ) || (Owner.bOnMObj);
+	}
+
+	bool bIsInPain(void)
+	{
+		State PainState = Owner.FindState('Pain');
+		if (PainState != NULL && Owner.InStateSequence(Owner.CurState, PainState))
+		{
+			return true;
+		}
+		return false;
+	}
+
+	double GetVelocity (void)
+	{
+		return Owner.Vel.Length();
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	override void Tick(void)
+	{
+	        bool stopped_or_changed_movement = !(Owner.player.cmd.forwardmove | Owner.player.cmd.sidemove);
+		stopped_or_changed_movement |= (Owner.player.cmd.forwardmove != old_forwardmove);
+		stopped_or_changed_movement |= (Owner.player.cmd.sidemove != old_sidemove);
+		old_forwardmove = Owner.player.cmd.forwardmove;
+		old_sidemove = Owner.player.cmd.sidemove;
+		if (Owner && Owner is "PlayerPawn")
+		{
+		  if (bIsOnFloor() && stopped_or_changed_movement)
+			{
+			        // Owner.A_SetSpeed((2.0 - DECEL_MULT.GetFloat()) * 2);
+				// decelerate the player, if not in pain
+				if (!bIsInPain())
+				{
+				        Owner.vel.x *= DECEL_MULT.GetFloat();
+					Owner.vel.y *= DECEL_MULT.GetFloat();
+				}
+			}
+		}
+		Super.Tick();
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+	States
+	{
+	Use:
+		TNT1 A 0;
+		Fail;
+	Pickup:
+		TNT1 A 0
+		{
+			return true;
+		}
+		Stop;
+	}
+}
+
+class IsometricMovement : CustomInventory
+{
+        int diffangle, face_cam_mult, oldcmdyaw, oldsidemove, oldforwardmove;
+	cvar isoyaw;
+	bool sidedownfacecam, fwddownfacecam;
+	
+	Default
+	{
+		Inventory.MaxAmount 1;
+		+INVENTORY.UNDROPPABLE
+		+INVENTORY.UNTOSSABLE
+		+INVENTORY.AUTOACTIVATE
+	}
+
+	bool bIsInPain(void)
+	{
+		State PainState = Owner.FindState('Pain');
+		if (PainState != NULL && Owner.InStateSequence(Owner.CurState, PainState))
+		{
+			return true;
+		}
+		return false;
+	}
+
+	override void PostBeginPlay()
+	{
+	        if (Owner && Owner is "PlayerPawn") isoyaw = CVar.GetCVar("IsometricYaw", Owner.player);
+	        Super.PostBeginPlay();
+		face_cam_mult = 1;
+		oldcmdyaw = 0;
+		oldsidemove = 0;
+		oldforwardmove = 0;
+		sidedownfacecam = false;
+		fwddownfacecam = false;
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	override void Tick(void)
+	{
+	        if (!automapactive && Owner && Owner is "PlayerPawn") // Remap controls for isometric mode
+		{
+		  let player = Owner.player;
+		  UserCmd cmd = player.cmd;
+		  diffangle = Owner.deltaangle(Owner.angle, isoyaw.GetFloat());
+		  if (abs(diffangle) > 90) face_cam_mult = -1; // Player is facing camera
+		  else face_cam_mult = 1; // Player is facing away from camera
+
+		  // Owner.A_SetPitch(0); // No pitch in isometric mode
+		  /* if (level.IsFreelookAllowed() && cmd.pitch && (cmd.pitch != -32768)) */
+		  /* { */
+		  /*   Owner.pitch = clamp(Owner.pitch + cmd.pitch * (360.0/65536.0), player.minpitch, player.maxpitch); */
+		  /* } */
+
+		  Owner.angle -= cmd.yaw * (360./65536.); // Cancel default mouse-turn first
+		  float newyaw;
+
+		  /* if(diffangle > 45 && diffangle < 135) newyaw += 3*cmd.pitch; */
+		  /* else if(diffangle > -135 && diffangle < -45) newyaw -= 3*cmd.pitch; */
+		  if(diffangle >= 0) newyaw += 3*cmd.pitch;
+		  else if(diffangle < 0) newyaw -= 3*cmd.pitch;
+
+		  if(abs(diffangle) < 80 || abs(diffangle) > 100)
+		  {
+		    if (oldcmdyaw == cmd.yaw)
+		      newyaw += cmd.yaw;
+		    else
+		      newyaw += face_cam_mult*cmd.yaw;
+		  }
+		  oldcmdyaw = cmd.yaw;
+
+		  Owner.angle += newyaw * (360./65536.);
+
+		  // Reverse side-movement (strafing) control mapping
+		  bool keychange = (oldsidemove != cmd.sidemove) || (oldforwardmove != cmd.forwardmove);
+		  if (keychange)
+		  {
+		    if ((abs(diffangle) > 112.5) && (oldsidemove == 0)) sidedownfacecam = true;
+		    else sidedownfacecam = false;
+		    if ((abs(diffangle) > 112.5) && (oldforwardmove == 0)) fwddownfacecam = true;
+		    else fwddownfacecam = false;
+		  }
+		  if ((sidedownfacecam || fwddownfacecam) && !bIsInPain())
+		  {
+		    double fm, sm;
+		    [fm, sm] = PlayerPawn(Owner).TweakSpeeds(cmd.forwardmove, cmd.sidemove);
+		    sm *= Owner.Speed / 256.;
+		    fm *= Owner.Speed / 256.;
+		    if (PlayerPawn(Owner).CanCrouch() && player.crouchfactor != 1)
+		    {
+		      sm *= player.crouchfactor;
+		      fm *= player.crouchfactor;
+		    }
+		    double friction, movefactor;
+		    [friction, movefactor] = PlayerPawn(Owner).GetFriction();
+		    if (!player.onground && !Owner.bNoGravity && !waterlevel) movefactor *= level.aircontrol;
+		    sm *= 2.0 * movefactor * (35 / TICRATE); // Factor of 2.0 to negate default MovePlayer()
+		    fm *= 2.0 * movefactor * (35 / TICRATE);
+		    if (sm && sidedownfacecam)
+		    {
+		      let a = Owner.angle + 90.0;
+		      Owner.Vel.X += sm * Cos(a);
+		      Owner.Vel.Y += sm * Sin(a);
+		    }
+		    /* if (fm && fwddownfacecam) */
+		    /* { */
+		    /*   let a = Owner.angle + 180.0; */
+		    /*   Owner.Vel.X += fm * Cos(a); */
+		    /*   Owner.Vel.Y += fm * Sin(a); */
+		    /* } */
+		  }
+		  oldsidemove = cmd.sidemove;
+		  oldforwardmove = cmd.forwardmove;
+		}
+
+		Super.Tick();
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+	States
+	{
+	Use:
+		TNT1 A 0;
+		Fail;
+	Pickup:
+		TNT1 A 0
+		{
+			return true;
+		}
+		Stop;
+	}
+}
+
+class MoveTorch : Inventory
+{
+  // MoveTorch given to me by Madame Rachelle
+        DynamicLight light;
+
+	default
+	{
+		Inventory.MaxAmount 1;
+		+INVENTORY.UNDROPPABLE
+		+INVENTORY.UNTOSSABLE
+		+INVENTORY.AUTOACTIVATE
+	}
+	override void DoEffect()
+	{
+		Super.DoEffect();
+		if (!light)
+			light = DynamicLight(Actor.Spawn("DynamicLight"));
+		if (light)
+		{
+			light.battenuate = true;
+			light.bnoshadowmap = true;
+			light.args[0] = 144;
+			light.args[1] = 144;
+			light.args[2] = 144;
+			light.args[3] = 10240;
+			light.args[4] = 10240;
+
+			vector3 offs = (0, 0, owner.height / 2);
+
+			light.SetOrigin(owner.pos + offs, true);
+			light.prev = owner.prev + offs;
+			light.vel = owner.vel;
+		}
+	}
+	override void OnDestroy()
+	{
+		if (light)
+			light.Destroy();
+		Super.OnDestroy();
+	}
+}

@@ -1,0 +1,43 @@
+** DRSGME
+
+And isometric camera mode with orthographic projection for the gzdoom engine.
+Made for the fork: https://github.com/dileepvr/gzdoom_isometric/tree/isocam_merge_test_Jun24
+Should work with just about any iwad.
+
+Consider playing with a sprites pack with all weapons and directions rendered for the player.
+
+Created by Dileep V. Reddy
+
+** Usage
+
+Just run =make= and a =pk3= wad file will be generated in dumped into the [[./build]] directory.
+Alternatively, you could zip the whole repository and rename the file extension to =pk3=.
+
+Then, after you've built =gzdoom= from the above fork, load the wad in
+at the end. Over the command line, command is:
+
+#+begin_src
+  > ./gzdoom -iwad <IWAD-FILE> -file <FULL-PATH-TO-DRSGME.pk3>
+#+end_src
+
+** Controls
+
+There are keys you can bind to rotate camera about the center, and
+zoom it in or out. The [[./keyconf.lmp]] file contains some suggested
+default binds. A key can be bound to toggle aim assist. Most other
+options (camera pitch, fog of war, dithered transparency) can be
+changed in the dedicated section in the options menu. Player
+strafe-movement controls get mapped based on direction the player
+faces relative to the camera.
+
+** Credits
+
+A lot of mods, forum posts, and wikis were consulted to prepare this. Special thanks to:
+- Rachel Alexanderson
+- Nash Muhandes
+- Ricardo Luís Vaz Silva
+
+All code and assets except the fonts are licensed under CC-0
+
+Remember: Book. Not Plan.
+ 

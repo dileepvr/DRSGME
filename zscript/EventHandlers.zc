@@ -1,0 +1,422 @@
+class CameraChangeHandler : CustomFloatCVar
+{
+  override double ModifyValue(Name CVarName, double val)
+  {
+    return clamp(val, 1.0, 89.0);
+  }
+}
+
+class MKeyEvents : EventHandler 
+{
+  cvar isodist, isopitch, isoyaw, isoaim;
+  override bool InputProcess (InputEvent e)
+  {
+    if (e.Type == InputEvent.Type_KeyDown)
+	SendNetworkEvent("MYKEYDOWN", e.KeyScan);
+
+    if (e.Type == InputEvent.Type_KeyUp)
+	SendNetworkEvent("MYKEYUP", e.KeyScan);
+    
+    return false;
+  }
+
+  override void NetworkProcess(ConsoleEvent e)
+  {			
+    if (e.Name == "MYKEYDOWN")
+      {
+	int key1, key2;
+	[key1, key2] = Bindings.GetKeysForCommand("rotate_cam_left");
+	if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
+	  CVar.GetCVar("RotatingLeft", players[e.Player]).SetBool(true);
+	else
+	  {
+	    [key1, key2] = Bindings.GetKeysForCommand("rotate_cam_right");
+	    if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
+	      CVar.GetCVar("RotatingRight", players[e.Player]).SetBool(true);
+	  }
+
+	[key1, key2] = Bindings.GetKeysForCommand("iso_zoom_in");
+	if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
+	  {
+	    isodist = CVar.GetCVar("IsometricDist", players[e.Player]);
+	    isodist.SetFloat(clamp(isodist.GetFloat()-10.0, 100.0, 500.0));
+	    isoyaw = CVar.GetCVar("IsometricYaw", players[e.Player]);
+	    isopitch = CVar.GetCVar("IsometricPitch", players[e.Player]);
+	    SpectatorCamera(players[e.Player].camera).Init(isodist.GetFloat(),
+							   isoyaw.GetFloat(), isopitch.GetFloat(), -1);
+	  }
+	else
+	  {
+	    [key1, key2] = Bindings.GetKeysForCommand("iso_zoom_out");
+	    if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
+	      {
+		isodist = CVar.GetCVar("IsometricDist", players[e.Player]);
+		isodist.SetFloat(clamp(isodist.GetFloat()+10.0, 100.0, 500.0));
+		isoyaw = CVar.GetCVar("IsometricYaw", players[e.Player]);
+		isopitch = CVar.GetCVar("IsometricPitch", players[e.Player]);
+		SpectatorCamera(players[e.Player].camera).Init(isodist.GetFloat(),
+							       isoyaw.GetFloat(), isopitch.GetFloat(), -1);
+	      }
+	  }
+	[key1, key2] = Bindings.GetKeysForCommand("iso_aim_assist");
+	if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
+	  {
+	    isoaim = CVar.GetCVar("IsoAimAssist", players[e.Player]);
+	    isoaim.SetBool(!isoaim.GetBool());
+	    if (isoaim.GetBool()) console.printf("Aim Assist Enabled");
+	    else console.printf("Aim Assist Disabled");
+	  }
+      }
+    else if (e.Name == "MYKEYUP")
+      {
+	int key1, key2;
+	[key1, key2] = Bindings.GetKeysForCommand("rotate_cam_left");
+	if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
+	  CVar.GetCVar("RotatingLeft", players[e.Player]).SetBool(false);
+	else
+	  {
+	    [key1, key2] = Bindings.GetKeysForCommand("rotate_cam_right");
+	    if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
+	      CVar.GetCVar("RotatingRight", players[e.Player]).SetBool(false);
+	  }
+      }
+  }
+}
+
+class StartingInventoryHandler : EventHandler
+{
+	override void PlayerEntered(PlayerEvent e)
+	{
+	        players[e.PlayerNumber].mo.A_GiveInventory("Z_NashMove", 1);
+		players[e.PlayerNumber].mo.A_GiveInventory("MoveTorch", 1);
+		players[e.PlayerNumber].mo.A_GiveInventory("IsometricMovement", 1);
+	}
+}
+
+class MyStaticEventHandler : StaticEventHandler
+{
+  override void PlayerSpawned(playerEvent e)
+  {
+    // When the player spawns, spawn an isometric spectator camera:
+    players[e.PlayerNumber].camera = SpectatorCamera(Actor.Spawn("SpectatorCamera", players[e.PlayerNumber].mo.pos));
+    players[e.PlayerNumber].camera.tracer = players[e.PlayerNumber].mo; // This makes camera follow the player
+    int camflags = VPSF_ABSOLUTEOFFSET | VPSF_ALLOWOUTOFBOUNDS | VPSF_ORTHOGRAPHIC;
+    CVar isodist = CVar.GetCVar("IsometricDist", players[e.PlayerNumber]);
+    CVar isoyaw = CVar.GetCVar("IsometricYaw", players[e.PlayerNumber]);
+    CVar isopitch = CVar.GetCVar("IsometricPitch", players[e.PlayerNumber]);
+    SpectatorCamera(players[e.PlayerNumber].camera).Init(isodist.GetFloat(), isoyaw.GetFloat(), isopitch.GetFloat(), camflags);
+    // The following has to come after Init
+    // SpectatorCamera(players[e.PlayerNumber].camera).lagdistance = 150.0; // Use for a lazy camera that only follows if you get away from center
+    // SpectatorCamera(players[e.PlayerNumber].camera).chasemode = 2; // 0: chase until tracer centered, 1: same but only when tracer is moving, 2: stop chase if tracer within lagdistance
+  }
+
+  override void PlayerDisconnected (PlayerEvent e)
+  {
+    // This is needed if a player disconnects from a multiplayer session
+    if(players[e.PlayerNumber].camera) players[e.PlayerNumber].camera.destroy();
+  }
+
+  override void WorldLoaded (WorldEvent e)
+  {
+    for (int i = 0; i < MAXPLAYERS; i++)
+      {
+	if (PlayerInGame[i] && players[i].mo)
+	  {
+	    players[i].camera = SpectatorCamera(Actor.Spawn("SpectatorCamera", players[i].mo.pos));
+	    players[i].camera.tracer = players[i].mo; // This makes camera follow the player
+	    int camflags = VPSF_ABSOLUTEOFFSET | VPSF_ALLOWOUTOFBOUNDS | VPSF_ORTHOGRAPHIC;
+	    CVar isodist = CVar.GetCVar("IsometricDist", players[i]);
+	    CVar isoyaw = CVar.GetCVar("IsometricYaw", players[i]);
+	    CVar isopitch = CVar.GetCVar("IsometricPitch", players[i]);
+	    SpectatorCamera(players[i].camera).Init(isodist.GetFloat(), isoyaw.GetFloat(), isopitch.GetFloat(), camflags);
+	    // The following has to come after Init
+	    // SpectatorCamera(players[i].camera).lagdistance = 150.0; // Use for a lazy camera that only follows if you get away from center
+	    // SpectatorCamera(players[i].camera).chasemode = 2; // 0: chase until tracer centered, 1: same but only when tracer is moving, 2: stop chase if tracer within lagdistance
+	  }
+      }
+  }
+
+  override void WorldTick()
+  {
+    for (int i = 0; i < MAXPLAYERS; i++)
+      {
+	if (PlayerInGame[i] && players[i].mo)
+	  {
+	    Bool rotateleft = CVar.GetCVar("RotatingLeft", players[i]).GetBool();
+	    Bool rotateright = CVar.GetCVar("RotatingRight", players[i]).GetBool();
+	    if (rotateleft || rotateright)
+	      {
+		CVar isodist = CVar.GetCVar("IsometricDist", players[i]);
+		CVar isoyaw = CVar.GetCVar("IsometricYaw", players[i]);
+		CVar isopitch = CVar.GetCVar("IsometricPitch", players[i]);
+		CVar isospeed = CVar.GetCVar("IsometricSpeed", players[i]);
+		isoyaw.SetFloat(isoyaw.GetFloat() + (rotateright ? 1 : -1) * isospeed.GetFloat());
+		int camflags = VPSF_ABSOLUTEOFFSET | VPSF_ALLOWOUTOFBOUNDS | VPSF_ORTHOGRAPHIC;
+		SpectatorCamera(players[i].camera).Init(isodist.GetFloat(), isoyaw.GetFloat(), isopitch.GetFloat(), camflags);
+	      }
+	  }
+      }
+  }
+}
+
+class RenderCursorsOverlay : EventHandler
+{
+        cvar isoyaw, isopitch, isoaimdist;
+	FLineTraceData t[MAXPLAYERS];
+	Vector3 hitloc;
+	bool actorhit[MAXPLAYERS];
+
+	override void OnRegister()
+	{
+	  isoyaw = CVar.GetCVar("IsometricYaw", players[consoleplayer]);
+	  isopitch = CVar.GetCVar("IsometricPitch", players[consoleplayer]);
+	  isoaimdist = CVar.GetCVar("IsoAimAssistMaxDist", players[consoleplayer]);
+	  hitloc = (0, 0, 0);
+	  for (int i = 0; i < MAXPLAYERS; i++)
+	  {
+	    actorhit[i] = false;
+	  }
+	}
+
+	override void WorldTick()
+	{
+	  for (int i = 0; i < MAXPLAYERS; i++)
+	  {
+	    if (PlayerInGame[i] && players[i].mo)
+	    {
+	      PlayerPawn pmo = players[i].mo;
+	      float max_dist = CVar.GetCVar("IsoAimAssistMaxDist", players[consoleplayer]).GetFloat();
+	      if (pmo.LineTrace(pmo.angle, max_dist, pmo.pitch, TRF_NOSKY, pmo.viewheight*pmo.player.crouchfactor, data:t[i]))
+	      {
+		if ((t[i].HitType == TRACE_HitActor) && t[i].hitActor.bISMONSTER && !t[i].hitActor.bFRIENDLY && !t[i].hitActor.bCORPSE)
+		  actorhit[i] = true;
+		else
+		  actorhit[i] = false;
+	      }
+	      else
+		actorhit[i] = false;
+	    }
+	  }
+	}
+	
+	override void RenderOverlay(RenderEvent e)
+	{
+	  if (!automapactive)
+	  {
+	    PlayerPawn pmo = players[consoleplayer].mo;
+	    float pang = pmo.angle;
+	    float cyaw = isoyaw.GetFloat();
+	    float cpit = isopitch.GetFloat();
+	    float max_dist = isoaimdist.GetFloat();
+	    
+	    StatusBar.BeginHUD();
+
+	    StatusBar.DrawInventoryIcon(players[consoleplayer].readyweapon, (0, -50),
+					StatusBar.DI_SCREEN_CENTER_BOTTOM | StatusBar.DI_ITEM_CENTER);
+
+	    int cursordist = 75;
+	    float diffangle = pmo.deltaangle(pang, cyaw);
+	    int cosine = (int)(-0.5*cursordist*Cos(diffangle));
+	    int sine = (int)(cursordist*Sin(diffangle));
+	    if(players[consoleplayer].camera != NULL && players[consoleplayer].camera.tracer != NULL)
+	    {
+	      if(players[consoleplayer].camera.ViewPos.Flags & VPSF_ORTHOGRAPHIC)
+	      { // If using orthographic projection
+		Vector3 playerdisp = players[consoleplayer].camera.tracer.pos - players[consoleplayer].camera.pos;
+		diffangle = pmo.deltaangle(playerdisp.Angle(), cyaw);
+		// Translate game/map (x, y, z) position into screen (x, y) location
+		double xproj = 320/players[consoleplayer].camera.ViewPos.offset.length();
+		double yproj = Sin(cpit)*xproj;
+		double zproj = Cos(cpit)*xproj;
+		cosine -= (int)(playerdisp.xy.length()*Cos(diffangle)*yproj);
+		cosine -= (int)(playerdisp.z*zproj);
+		// cosine -= (int)(players[consoleplayer].camera.tracer.height*0.5*zproj);
+		sine += (int)(playerdisp.xy.length()*Sin(diffangle)*xproj);
+	      } // else use libEye to locate camera.tracer's screen coordinates
+	    }
+
+	    if (CVar.GetCVar("IsoAimAssist", players[consoleplayer]).GetBool())
+	    {
+	      StatusBar.DrawImage("sprites/aim_hair.png", (sine, cosine),
+				  StatusBar.DI_SCREEN_CENTER | StatusBar.DI_ITEM_CENTER, scale: (1.2, 1.2));
+	    } else {
+	      StatusBar.DrawImage("sprites/dir_hair.png", (sine, cosine),
+				  StatusBar.DI_SCREEN_CENTER | StatusBar.DI_ITEM_CENTER, scale: (0.75, 0.75));
+	    }
+
+	    if (actorhit[consoleplayer])
+	    {
+	      int cosine2 = 0;
+	      int sine2 = 0;
+	      if(players[consoleplayer].camera.ViewPos.Flags & VPSF_ORTHOGRAPHIC)
+	      { // If using orthographic projection
+		Vector3 tardisp = t[consoleplayer].HitActor.pos - players[consoleplayer].camera.pos;
+		diffangle = pmo.deltaangle(tardisp.Angle(), cyaw);
+		// Translate game/map (x, y, z) position into screen (x, y) location
+		double xprj = 320/players[consoleplayer].camera.ViewPos.offset.length();
+		double yprj = Sin(cpit)*xprj;
+		double zprj = Cos(cpit)*xprj;
+		cosine2 -= (int)(tardisp.xy.length()*Cos(diffangle)*yprj);
+		cosine2 -= (int)(tardisp.z*zprj);
+		sine2 += (int)(tardisp.xy.length()*Sin(diffangle)*xprj);
+	      } // else use libEye to locate camera.tracer's screen coordinates
+	      cosine -= (int)(-0.25*cursordist*Cos(diffangle));
+	      sine -= (int)(0.5*cursordist*Sin(diffangle));	      
+	      int halfw = (int)(Screen.GetWidth()/2);
+	      int halfh = (int)(Screen.GetHeight()/2);
+	      Screen.DrawLine(2*sine+halfw, 2*cosine+halfh, 2*sine2+halfw, 2*cosine2+halfh, Color(0xFF, 0xFF, 0x00, 0xFF)); // Why 2?!
+	      StatusBar.DrawImage("sprites/tar_hair.png", (sine2, cosine2),
+				  StatusBar.DI_SCREEN_CENTER | StatusBar.DI_ITEM_CENTER, scale: (0.75, 0.75));
+	    }
+	  }
+	}
+}
+
+class IsoAimAssistHandler : StaticEventHandler
+{
+        // copying RicardoLuis0's Aim Assist Mod v0.8
+	// https://forum.zdoom.org/viewtopic.php?t=62895
+        FLineTraceData tarray[MAXPLAYERS];
+
+	// do linetrace and get results
+	play Actor,double,Vector3 doTrace(PlayerPawn a,double i_angle,double i_rotation,Actor closest,double closest_distance, double max_dist){
+		FLineTraceData t;
+		Vector3 hitloc=(0,0,0);
+		//do a linetrace around i_a and i_r in a circle
+		if(a.LineTrace(a.angle+(sin(i_rotation)*i_angle),			//trace angle
+							max_dist,							//trace max distance
+							a.pitch+(cos(i_rotation)*i_angle*8),		//trace pitch (modified by factor 8)
+							TRF_NOSKY,								//trace flags
+							a.viewheight*a.player.crouchfactor,		//trace height
+							data:t									//output struct
+		)){
+			if(t.hitType==TRACE_HitActor){//if hit is an actor
+				
+				if(t.hitActor.bISMONSTER&&!t.hitActor.bFRIENDLY&&!t.hitActor.bCORPSE){//if hit is a monster and not friendly
+					if(!closest||a.Distance3D(t.HitActor)>closest_distance){//if it's closer than last hit
+						//change this as new closest
+						closest=t.HitActor;
+						closest_distance=a.Distance3D(t.HitActor);
+						hitloc=t.HitLocation;
+					}
+				}
+			}
+		}
+		return closest,closest_distance,hitloc;
+	}
+
+	//get angle and delta from two positions
+	static vector3, double, double lookAt(Vector3 pos1, Vector3 pos2){
+		//calculate difference between pos1 and pos2 (level.Vec3Diff takes portals into account)
+		
+		Vector3 delta=level.Vec3Diff(pos1, pos2);
+		
+		//calculate angle and pitch to other actor
+		double target_angle = atan2(delta.y, delta.x);
+		double target_pitch = -asin(delta.z/delta.length());
+
+		return delta, target_angle, target_pitch;
+	}
+
+	//main method, does all work
+	bool doAim(int pnum)
+	{
+		PlayerPawn pawn = players[pnum].mo;
+		Actor closest = null;
+		Actor hit = null;
+		Vector3 hitloc = (0, 0, 0);
+		cvar aimassist = CVar.GetCVar("IsoAimAssist", players[pnum]);
+		float max_dist = CVar.GetCVar("IsoAimAssistMaxDist", players[pnum]).GetFloat();
+		float closest_distance = max_dist + 1;
+		
+		//check straight ahead
+		[closest, closest_distance, hitloc] = doTrace(pawn, 0, 0, closest, closest_distance, max_dist);
+
+		// Convert these to CVars?
+		double precision = 0.5;
+		double radial_precision = 4;
+		double max_angle = 8;
+
+		//check in a circle around the direction player's looking
+		for(double i_a = precision; i_a <= max_angle; i_a += precision) {
+			for(double i_r = 0; i_r <= 360 && !closest; i_r += radial_precision) {
+			  [closest, closest_distance, hitloc] = doTrace(pawn, i_a, i_r, closest, closest_distance, max_dist);
+			}
+		}
+
+		//if there was an enemy found
+		if(closest){
+		  float pheight = pawn.viewheight*pawn.player.crouchfactor;
+		  Vector3 aimheight=(0, 0, closest.height);
+		  Vector3 delta;
+		  double target_angle,target_pitch;
+		  Vector3 view=pawn.pos + (0, 0, pheight);
+		  //get target angle and pitch
+		  [delta, target_angle, target_pitch] = lookAt(view, closest.pos + aimheight);
+			
+		  //check if view is obstructed
+		  FLineTraceData t;
+		  pawn.LineTrace(target_angle, max_dist, target_pitch,
+				 TRF_NOSKY, pawn.viewheight*pawn.player.crouchfactor, data:t);
+		  //aim correction
+		  if((t.hitType != TRACE_HitActor) || (t.hitActor != closest)){
+		    //try to aim at correct z
+		    [delta, target_angle, target_pitch] = lookAt(view, (hitloc.x, hitloc.y, closest.pos.z + aimheight.z));
+		    pawn.LineTrace(target_angle, max_dist, target_pitch, TRF_NOSKY, pawn.viewheight * pawn.player.crouchfactor, data:t);
+		  }
+		  if((t.hitType != TRACE_HitActor) || (t.hitActor != closest)){
+		    //try to aim at correct xy
+		    [delta, target_angle, target_pitch] = lookAt(view, (closest.pos.x, closest.pos.y, hitloc.z));
+		    pawn.LineTrace(target_angle, max_dist, target_pitch, TRF_NOSKY, pawn.viewheight * pawn.player.crouchfactor, data:t);
+		  }
+		  /* if((t.hitType != TRACE_HitActor) || (t.hitActor != closest)){ */
+		  /*   // target closest */
+		  /*   [delta, target_angle, target_pitch] = lookAt(view, hitloc); */
+		  /* } */
+		  if((t.hitType != TRACE_HitActor) || (t.hitActor != closest)){
+		    // Stop aiming
+		    return false;
+		  }
+
+		  //get angle difference
+		  double angle_diff = pawn.DeltaAngle(pawn.angle, target_angle);
+		  double pitch_diff = pawn.DeltaAngle(pawn.pitch, target_pitch);
+
+		  double rot_speed = 1;
+		  if (aimassist.GetBool())
+		  {
+		    //check rotation speed
+		    if(abs(angle_diff) > rot_speed){
+		      //if rotation speed is lower than difference, add/subtract rotation speed
+		      pawn.A_SetAngle(pawn.angle + (angle_diff > 0 ? rot_speed : -rot_speed), SPF_INTERPOLATE);
+		    } else {
+		      //if rotation speed is higher than differece, set to target angle
+		      pawn.A_SetAngle(target_angle, SPF_INTERPOLATE);
+		    }
+		  }
+		  
+		  if(abs(pitch_diff) > rot_speed){
+		    //if rotation speed is lower than difference, add/subtract rotation speed
+		    pawn.A_SetPitch(pawn.pitch + (pitch_diff > 0 ? rot_speed : -rot_speed), SPF_INTERPOLATE);
+		  } else {
+		    //if rotation speed is higher than differece, set to target pitch
+		    pawn.A_SetPitch(target_pitch, SPF_INTERPOLATE);
+		  }
+		  return true;
+		} else {
+		  return false;
+		}
+	}
+
+	override void WorldTick()
+	{
+	  for (int i = 0; i < MAXPLAYERS; i++)
+	  {
+	    if (PlayerInGame[i] && players[i].mo)
+	    {
+	      if (!doAim(i)) players[i].mo.A_SetPitch(0);
+	    }
+	  }
+	}
+
+}

@@ -1,0 +1,9 @@
+User HandlerClass(CameraChangeHandler) Float IsometricPitch = 30.0;
+User Float IsometricDist = 500.0;
+User Float IsometricYaw = 225.0;
+User Float IsometricSpeed = 5.0;
+User Bool RotatingLeft = false;
+User Bool RotatingRight = false;
+User Float DecelMult = 0.3;
+User Bool IsoAimAssist = true;
+User Float IsoAimAssistMaxDist = 1000.0;
