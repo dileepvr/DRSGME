@@ -175,9 +175,6 @@ class IsometricMovement : CustomInventory
 
 		  if(abs(diffangle) < 80 || abs(diffangle) > 100)
 		  {
-		    if (oldcmdyaw == cmd.yaw)
-		      newyaw += cmd.yaw;
-		    else
 		      newyaw += face_cam_mult*cmd.yaw;
 		  }
 		  oldcmdyaw = cmd.yaw;

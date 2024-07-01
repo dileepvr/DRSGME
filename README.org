@@ -37,7 +37,7 @@ A lot of mods, forum posts, and wikis were consulted to prepare this. Special th
 - Nash Muhandes
 - Ricardo Luís Vaz Silva
 
-All code and assets except the fonts are licensed under CC-0
+All code and assets except the the character sprites are licensed under CC-0
 
 Remember: Book. Not Plan.
  
