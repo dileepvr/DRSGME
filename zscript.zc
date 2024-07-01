@@ -1,4 +1,5 @@
 version "4.12"
 
+#include "zscript/DoomPlayer2_updated_sprites.zc"
 #include "zscript/CustomInventory.zc"
 #include "zscript/EventHandlers.zc"
