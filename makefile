@@ -1,7 +1,7 @@
 BUILDDIR=build
 ZIP=zip
 ZIPFLAGS=-r -FS
-ZIPEXCLUDES=-x '**~' 'build/*' '.*' 'makefile'
+ZIPEXCLUDES=-x '**~' 'build/*' '.*' 'makefile' "**new" "**py"
 ZIPTARGET=$(BUILDDIR)/$(notdir $(CURDIR)).pk3
 
 TARGETS=$(BUILDDIR) $(ZIPTARGET)

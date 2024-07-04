@@ -74,16 +74,37 @@ class Z_NashMove : CustomInventory
 		old_sidemove = Owner.player.cmd.sidemove;
 		if (Owner && Owner is "PlayerPawn")
 		{
-		  if (bIsOnFloor() && stopped_or_changed_movement)
+		  if (bIsOnFloor() && (DECEL_MULT.GetFloat() < 1.0))
+		    {
+		      if (stopped_or_changed_movement)
 			{
-			        // Owner.A_SetSpeed((2.0 - DECEL_MULT.GetFloat()) * 2);
-				// decelerate the player, if not in pain
-				if (!bIsInPain())
-				{
-				        Owner.vel.x *= DECEL_MULT.GetFloat();
-					Owner.vel.y *= DECEL_MULT.GetFloat();
-				}
+			  // Owner.A_SetSpeed((2.0 - DECEL_MULT.GetFloat()) * 2);
+			  // decelerate the player, if not in pain
+			  if (!bIsInPain())
+			    {
+			      Owner.vel.x *= DECEL_MULT.GetFloat();
+			      Owner.vel.y *= DECEL_MULT.GetFloat();
+			    }
 			}
+		      FLineTraceData tf, tb;
+		      bool bbf = Owner.LineTrace(Owner.angle, 1.5*Owner.radius, 0, TRF_NOSKY,
+						 0.5*Owner.height, 0, 0, tf);
+		      bool bbb = Owner.LineTrace(Owner.angle + 180, 1.5*Owner.radius, 0, TRF_NOSKY,
+						 0.5*Owner.height, 0, 0, tb);
+		      if ((Owner.player.cmd.sidemove == 0) && !bbf && !bbb)
+			{
+			  // decelarate perpendicular velocity if not sliding along any obstacle
+			  float unitx = Cos(Owner.angle);
+			  float unity = Sin(Owner.angle);
+			  float mycross = Owner.vel.x * unity - Owner.vel.y * unitx;
+			  float mydot = Owner.vel.x * unitx + Owner.vel.y * unity;
+			  if ((Owner.player.cmd.forwardmove != 0))
+			    {
+			      Owner.vel.x += (1.0 - DECEL_MULT.GetFloat()) * (mydot * unitx - Owner.vel.x);
+			      Owner.vel.y += (1.0 - DECEL_MULT.GetFloat()) * (mydot * unity - Owner.vel.y);
+			    }
+			}
+		    }
 		}
 		Super.Tick();
 	}
@@ -173,10 +194,11 @@ class IsometricMovement : CustomInventory
 		  if(diffangle >= 0) newyaw += 3*cmd.pitch;
 		  else if(diffangle < 0) newyaw -= 3*cmd.pitch;
 
-		  if(abs(diffangle) < 80 || abs(diffangle) > 100)
-		  {
-		      newyaw += face_cam_mult*cmd.yaw;
-		  }
+		  /* if(abs(diffangle) < 80 || abs(diffangle) > 100) */
+		  /* { */
+		  /*   newyaw += face_cam_mult*cmd.yaw; */
+		  /* } */
+		  newyaw += face_cam_mult*cmd.yaw;
 		  oldcmdyaw = cmd.yaw;
 
 		  Owner.angle += newyaw * (360./65536.);

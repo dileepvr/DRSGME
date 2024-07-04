@@ -3,3 +3,4 @@ build/*
 **.backup*
 **SAVE*
 **.dbs
+**.new
