@@ -89,7 +89,51 @@ class StartingInventoryHandler : EventHandler
 	{
 	        players[e.PlayerNumber].mo.A_GiveInventory("Z_NashMove", 1);
 		players[e.PlayerNumber].mo.A_GiveInventory("MoveTorch", 1);
-		players[e.PlayerNumber].mo.A_GiveInventory("IsometricMovement", 1);
+		// players[e.PlayerNumber].mo.A_GiveInventory("IsometricMovement", 1);
+	}
+}
+
+//Camera actor for player's scope
+class ScopeCamera : Actor
+{
+	playerpawn ppawn;
+	default
+	{
+	  height 0;
+	  radius 0;
+	  +noclip
+	  +nointeraction
+	  +noblockmap
+	}
+
+	override void postbeginplay()
+	{
+	  super.postbeginplay();
+	  ppawn=playerpawn(target);
+	}
+
+	override void tick()
+	{
+	  if(!ppawn)
+	  {
+	    destroy();
+	    return;
+	  }
+
+	  A_SetAngle(ppawn.angle, SPF_INTERPOLATE);
+	  A_SetPitch(ppawn.pitch, SPF_INTERPOLATE);
+	  A_SetRoll(ppawn.roll);
+
+	  SetOrigin(ppawn.pos + (ppawn.radius * Cos(ppawn.angle),
+				 ppawn.radius * Sin(ppawn.angle),
+				 0.25 * ppawn.height), true);
+	}
+
+	States
+	{
+	  Spawn:
+	    TNT1 A -1 NoDelay;
+	    Stop;
 	}
 }
 
@@ -97,6 +141,9 @@ class MyStaticEventHandler : StaticEventHandler
 {
   override void PlayerSpawned(playerEvent e)
   {
+    // Add a scope camera to each player, and store it in player.mo.tracer
+    players[e.PlayerNumber].mo.tracer = Actor.Spawn("ScopeCamera", players[e.PlayerNumber].mo.pos, ALLOW_REPLACE);
+    players[e.PlayerNumber].mo.tracer.target = players[e.PlayerNumber].mo;
     // When the player spawns, spawn an isometric spectator camera:
     players[e.PlayerNumber].camera = SpectatorCamera(Actor.Spawn("SpectatorCamera", players[e.PlayerNumber].mo.pos));
     players[e.PlayerNumber].camera.tracer = players[e.PlayerNumber].mo; // This makes camera follow the player
@@ -106,8 +153,8 @@ class MyStaticEventHandler : StaticEventHandler
     CVar isopitch = CVar.GetCVar("IsometricPitch", players[e.PlayerNumber]);
     SpectatorCamera(players[e.PlayerNumber].camera).Init(isodist.GetFloat(), isoyaw.GetFloat(), isopitch.GetFloat(), camflags);
     // The following has to come after Init
-    // SpectatorCamera(players[e.PlayerNumber].camera).lagdistance = 150.0; // Use for a lazy camera that only follows if you get away from center
-    // SpectatorCamera(players[e.PlayerNumber].camera).chasemode = 2; // 0: chase until tracer centered, 1: same but only when tracer is moving, 2: stop chase if tracer within lagdistance
+    SpectatorCamera(players[e.PlayerNumber].camera).lagdistance = 150.0; // Use for a lazy camera that only follows if you get away from center
+    SpectatorCamera(players[e.PlayerNumber].camera).chasemode = 2; // 0: chase until tracer centered, 1: same but only when tracer is moving, 2: stop chase if tracer within lagdistance
   }
 
   override void PlayerDisconnected (PlayerEvent e)
@@ -122,6 +169,9 @@ class MyStaticEventHandler : StaticEventHandler
       {
 	if (PlayerInGame[i] && players[i].mo)
 	  {
+	    // Add a scope camera to each player, and store it in player.mo.tracer
+	    players[i].mo.tracer = Actor.Spawn("ScopeCamera", players[i].mo.pos, ALLOW_REPLACE);
+	    players[i].mo.tracer.target = players[i].mo;
 	    players[i].camera = SpectatorCamera(Actor.Spawn("SpectatorCamera", players[i].mo.pos));
 	    players[i].camera.tracer = players[i].mo; // This makes camera follow the player
 	    int camflags = VPSF_ABSOLUTEOFFSET | VPSF_ALLOWOUTOFBOUNDS | VPSF_ORTHOGRAPHIC;
@@ -130,8 +180,8 @@ class MyStaticEventHandler : StaticEventHandler
 	    CVar isopitch = CVar.GetCVar("IsometricPitch", players[i]);
 	    SpectatorCamera(players[i].camera).Init(isodist.GetFloat(), isoyaw.GetFloat(), isopitch.GetFloat(), camflags);
 	    // The following has to come after Init
-	    // SpectatorCamera(players[i].camera).lagdistance = 150.0; // Use for a lazy camera that only follows if you get away from center
-	    // SpectatorCamera(players[i].camera).chasemode = 2; // 0: chase until tracer centered, 1: same but only when tracer is moving, 2: stop chase if tracer within lagdistance
+	    SpectatorCamera(players[i].camera).lagdistance = 150.0; // Use for a lazy camera that only follows if you get away from center
+	    SpectatorCamera(players[i].camera).chasemode = 2; // 0: chase until tracer centered, 1: same but only when tracer is moving, 2: stop chase if tracer within lagdistance
 	  }
       }
   }
@@ -162,19 +212,108 @@ class MyStaticEventHandler : StaticEventHandler
 class RenderCursorsOverlay : EventHandler
 {
         cvar isoyaw, isopitch, isoaimdist;
+	cvar showwep, showscope, showscopehealth;
+	cvar wepsize, wepxpos, wepypos;
+	cvar scopesize, scopexpos, scopeypos;
 	FLineTraceData t[MAXPLAYERS];
 	Vector3 hitloc;
-	bool actorhit[MAXPLAYERS];
+	Actor actorhit[MAXPLAYERS];
 
+	// getActorMaxHealth(), makeHpBar(), and makeRepeating() functions
+	// are derived from similar functions defined in the Target-Spy mod
+	// by Author m8f: https://github.com/mmaulwurff/target-spy
+	// The Target-Spy mod as released under the GPLv3 license, and a
+	// copy of said license is included in the root directory as
+	// GPLv3.txt
+
+	ui static int getActorMaxHealth(Actor a)
+	{
+	  if (a == NULL) { return 0; }
+
+	  if (a.player && a.player.mo) { return a.player.mo.getMaxHealth(); }
+
+	  int maxHealth = a.spawnHealth();
+
+	  return maxHealth;
+	}
+
+        ui static string makeHpBar(int health, int maxHealth, bool logScale = false)
+	{	  
+	  bool greenRedTheme = true;
+	  int greenColor = 3;
+	  int redColor = 6;
+	  string pip = "|";
+	  string emptyPip = "-";
+	  double lengthMultiplier = 1.0;
+    
+	  int length;
+	  if (logScale)               { length = int(Log(maxHealth)) * 2; }
+	  else if (maxHealth >= 2000) { length = 30; }
+	  else if (maxHealth >= 500)  { length = 20; }
+	  else                        { length = 10; }
+
+	  length = int(round(length * lengthMultiplier));
+
+	  int nPips;
+	  if (maxHealth < 1)
+	  {
+	    nPips = 0;
+	  }
+	  else
+	  {
+	    nPips = int(round(double(health) * length / maxHealth));
+	    nPips = clamp(nPips, 0, length);
+	  }
+
+	  string pipColor;
+	  string emptyColor;
+	  if (greenRedTheme)
+	  {
+	    pipColor   = String.Format("\c%c", 97 + greenColor); // 'a'
+	    emptyColor = String.Format("\c%c", 97 + redColor);   // 'a'
+	  }
+	  else
+	  {
+	    pipColor   = "";
+	    emptyColor = "";
+	  }
+
+	  return String.Format( "%s%s%s%s"
+				, pipColor
+				, MakeRepeating(pip, nPips)
+				, emptyColor
+				, MakeRepeating(emptyPip, length - nPips)
+				);
+
+	}
+
+	ui static string makeRepeating(string s, int n)
+	{
+	  if (n == 0) { return ""; }
+	  string format = string.format("%%%ds", n);
+	  string result = string.format(format, " ");
+	  result.replace(" ", s);
+	  return result;
+	}
+	
 	override void OnRegister()
 	{
 	  isoyaw = CVar.GetCVar("IsometricYaw", players[consoleplayer]);
 	  isopitch = CVar.GetCVar("IsometricPitch", players[consoleplayer]);
 	  isoaimdist = CVar.GetCVar("IsoAimAssistMaxDist", players[consoleplayer]);
+	  showwep = CVar.GetCVar("IsoHUDShowWeapon", players[consoleplayer]);
+	  showscope = CVar.GetCVar("IsoHUDShowTarget", players[consoleplayer]);
+	  showscopehealth = CVar.GetCVar("IsoHUDShowTargetHealth", players[consoleplayer]);
+	  wepsize = CVar.GetCVar("IsoHUDWeaponSize", players[consoleplayer]);
+	  wepxpos = CVar.GetCVar("IsoHUDWeaponXPos", players[consoleplayer]);
+	  wepypos = CVar.GetCVar("IsoHUDWeaponYPos", players[consoleplayer]);
+	  scopesize = CVar.GetCVar("IsoHUDTargetSize", players[consoleplayer]);
+	  scopexpos = CVar.GetCVar("IsoHUDTargetXPos", players[consoleplayer]);
+	  scopeypos = CVar.GetCVar("IsoHUDTargetYPos", players[consoleplayer]);
 	  hitloc = (0, 0, 0);
 	  for (int i = 0; i < MAXPLAYERS; i++)
 	  {
-	    actorhit[i] = false;
+	    actorhit[i] = NULL; // false;
 	  }
 	}
 
@@ -189,19 +328,19 @@ class RenderCursorsOverlay : EventHandler
 	      if (pmo.LineTrace(pmo.angle, max_dist, pmo.pitch, TRF_NOSKY, pmo.viewheight*pmo.player.crouchfactor, data:t[i]))
 	      {
 		if ((t[i].HitType == TRACE_HitActor) && t[i].hitActor.bISMONSTER && !t[i].hitActor.bFRIENDLY && !t[i].hitActor.bCORPSE)
-		  actorhit[i] = true;
+		  actorhit[i] = t[i].HitActor; // true;
 		else
-		  actorhit[i] = false;
+		  actorhit[i] = NULL; // false;
 	      }
 	      else
-		actorhit[i] = false;
+		actorhit[i] = NULL; // false;
 	    }
 	  }
 	}
 	
 	override void RenderOverlay(RenderEvent e)
 	{
-	  if (!automapactive)
+	  if (!automapactive && (gamestate == GS_LEVEL)) // level.mapName != "TITLEMAP")
 	  {
 	    PlayerPawn pmo = players[consoleplayer].mo;
 	    float pang = pmo.angle;
@@ -211,8 +350,15 @@ class RenderCursorsOverlay : EventHandler
 	    
 	    StatusBar.BeginHUD();
 
-	    StatusBar.DrawInventoryIcon(players[consoleplayer].readyweapon, (0, -50),
-					StatusBar.DI_SCREEN_CENTER_BOTTOM | StatusBar.DI_ITEM_CENTER);
+	    if(showwep.GetBool())
+	    {
+	      int wsize = clamp(wepsize.GetInt(), 1, 100);
+	      int wxpos = (int)(400*clamp(wepxpos.GetFloat(), -1.0, 1.0));
+	      int wypos = (int)(-400*clamp(wepypos.GetFloat(), 0.0, 1.0));
+	      StatusBar.DrawInventoryIcon(players[consoleplayer].readyweapon, (wxpos, wypos),
+					  StatusBar.DI_SCREEN_CENTER_BOTTOM | StatusBar.DI_ITEM_CENTER,
+					  1.0, (2*wsize, wsize), (0.03*wsize, 0.03*wsize)); // alpha, boxsize, scale
+	    }
 
 	    int cursordist = 75;
 	    float diffangle = pmo.deltaangle(pang, cyaw);
@@ -250,7 +396,7 @@ class RenderCursorsOverlay : EventHandler
 	      int sine2 = 0;
 	      if(players[consoleplayer].camera.ViewPos.Flags & VPSF_ORTHOGRAPHIC)
 	      { // If using orthographic projection
-		Vector3 tardisp = t[consoleplayer].HitActor.pos - players[consoleplayer].camera.pos;
+		Vector3 tardisp = actorhit[consoleplayer].pos - players[consoleplayer].camera.pos;
 		diffangle = pmo.deltaangle(tardisp.Angle(), cyaw);
 		// Translate game/map (x, y, z) position into screen (x, y) location
 		double xprj = 320/players[consoleplayer].camera.ViewPos.offset.length();
@@ -267,6 +413,34 @@ class RenderCursorsOverlay : EventHandler
 	      Screen.DrawLine(2*sine+halfw, 2*cosine+halfh, 2*sine2+halfw, 2*cosine2+halfh, Color(0xFF, 0xFF, 0x00, 0xFF)); // Why 2?!
 	      StatusBar.DrawImage("sprites/tar_hair.png", (sine2, cosine2),
 				  StatusBar.DI_SCREEN_CENTER | StatusBar.DI_ITEM_CENTER, scale: (0.75, 0.75));
+
+	      if(showscope.GetBool())
+	      {
+		double tardist = (actorhit[consoleplayer].pos - players[consoleplayer].camera.pos).length();
+		tardist -= (actorhit[consoleplayer].radius + pmo.radius);
+		double degree = 57.2957795 * actorhit[consoleplayer].height / (tardist > 0.0 ? tardist: 1.0); // in degrees
+		texman.setcameratotexture(players[consoleplayer].mo.tracer, "CAMTEX_1", degree);
+
+		float ssize = 0.02*clamp(scopesize.GetInt(), 1, 100);
+		int sxpos = (int)(400*clamp(scopexpos.GetFloat(), -1.0, 1.0));
+		int sypos = (int)(-400*clamp(scopeypos.GetFloat(), 0.0, 1.0));
+		StatusBar.DrawImage("CAMTEX_1", (sxpos, sypos),
+				    StatusBar.DI_SCREEN_CENTER_BOTTOM | StatusBar.DI_ITEM_CENTER,
+				    scale: (ssize, ssize));
+		StatusBar.DrawImage("sprites/scope_sight.png", (sxpos, sypos),
+				    StatusBar.DI_SCREEN_CENTER_BOTTOM | StatusBar.DI_ITEM_CENTER,
+				    scale: (0.8*ssize, 0.8*ssize));
+
+		if(showscopehealth.GetBool())
+		{
+		  string hpBar = makeHpBar(actorhit[consoleplayer].health,
+					   getActorMaxHealth(actorhit[consoleplayer]));
+		  HUDFont monospaceSmallfont = HUDFont.Create(smallfont, smallfont.GetCharWidth("0"), true);
+		  StatusBar.DrawString(monospaceSmallfont, hpBar, (sxpos-(int)(30*ssize), sypos-(int)(40*ssize)),
+				       StatusBar.DI_SCREEN_CENTER_BOTTOM | StatusBar.DI_ITEM_CENTER,
+				       scale: (0.8*ssize, 0.8*ssize));
+		}
+	      }
 	    }
 	  }
 	}

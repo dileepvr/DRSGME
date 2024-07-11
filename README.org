@@ -36,8 +36,12 @@ A lot of mods, forum posts, and wikis were consulted to prepare this. Special th
 - Rachel Alexanderson
 - Nash Muhandes
 - Ricardo Luís Vaz Silva
+- m8f (Author of [[https://github.com/mmaulwurff/target-spy][Target-Spy]])
 
-All code and assets except the the character sprites are licensed under CC-0
+All code and assets except the the character sprites are licensed
+under CC-0 (see [[./LICENSE.txt]]). A few =zscript= functions are derived
+from m8f's work in [[https://github.com/mmaulwurff/target-spy][Target-Spy]] and are licensed under GPLv3 (see
+[[./GPLv3.txt]]).
 
 Remember: Book. Not Plan.
  
