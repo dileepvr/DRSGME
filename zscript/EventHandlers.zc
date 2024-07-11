@@ -89,7 +89,7 @@ class StartingInventoryHandler : EventHandler
 	{
 	        players[e.PlayerNumber].mo.A_GiveInventory("Z_NashMove", 1);
 		players[e.PlayerNumber].mo.A_GiveInventory("MoveTorch", 1);
-		// players[e.PlayerNumber].mo.A_GiveInventory("IsometricMovement", 1);
+		players[e.PlayerNumber].mo.A_GiveInventory("IsometricMovement", 1);
 	}
 }
 
@@ -153,8 +153,8 @@ class MyStaticEventHandler : StaticEventHandler
     CVar isopitch = CVar.GetCVar("IsometricPitch", players[e.PlayerNumber]);
     SpectatorCamera(players[e.PlayerNumber].camera).Init(isodist.GetFloat(), isoyaw.GetFloat(), isopitch.GetFloat(), camflags);
     // The following has to come after Init
-    SpectatorCamera(players[e.PlayerNumber].camera).lagdistance = 150.0; // Use for a lazy camera that only follows if you get away from center
-    SpectatorCamera(players[e.PlayerNumber].camera).chasemode = 2; // 0: chase until tracer centered, 1: same but only when tracer is moving, 2: stop chase if tracer within lagdistance
+    // SpectatorCamera(players[e.PlayerNumber].camera).lagdistance = 150.0; // Use for a lazy camera that only follows if you get away from center
+    // SpectatorCamera(players[e.PlayerNumber].camera).chasemode = 2; // 0: chase until tracer centered, 1: same but only when tracer is moving, 2: stop chase if tracer within lagdistance
   }
 
   override void PlayerDisconnected (PlayerEvent e)
@@ -180,8 +180,8 @@ class MyStaticEventHandler : StaticEventHandler
 	    CVar isopitch = CVar.GetCVar("IsometricPitch", players[i]);
 	    SpectatorCamera(players[i].camera).Init(isodist.GetFloat(), isoyaw.GetFloat(), isopitch.GetFloat(), camflags);
 	    // The following has to come after Init
-	    SpectatorCamera(players[i].camera).lagdistance = 150.0; // Use for a lazy camera that only follows if you get away from center
-	    SpectatorCamera(players[i].camera).chasemode = 2; // 0: chase until tracer centered, 1: same but only when tracer is moving, 2: stop chase if tracer within lagdistance
+	    // SpectatorCamera(players[i].camera).lagdistance = 150.0; // Use for a lazy camera that only follows if you get away from center
+	    // SpectatorCamera(players[i].camera).chasemode = 2; // 0: chase until tracer centered, 1: same but only when tracer is moving, 2: stop chase if tracer within lagdistance
 	  }
       }
   }
