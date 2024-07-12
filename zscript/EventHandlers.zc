@@ -172,6 +172,7 @@ class MyStaticEventHandler : StaticEventHandler
 	    // Add a scope camera to each player, and store it in player.mo.tracer
 	    players[i].mo.tracer = Actor.Spawn("ScopeCamera", players[i].mo.pos, ALLOW_REPLACE);
 	    players[i].mo.tracer.target = players[i].mo;
+	    // When World loads, spawn an isometric spectator camera:
 	    players[i].camera = SpectatorCamera(Actor.Spawn("SpectatorCamera", players[i].mo.pos));
 	    players[i].camera.tracer = players[i].mo; // This makes camera follow the player
 	    int camflags = VPSF_ABSOLUTEOFFSET | VPSF_ALLOWOUTOFBOUNDS | VPSF_ORTHOGRAPHIC;

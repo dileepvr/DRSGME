@@ -269,7 +269,7 @@ class IsometricMovement : CustomInventory
 
 class MoveTorch : Inventory
 {
-  // MoveTorch given to me by Madame Rachelle
+        // MoveTorch given to me by Madame Rachelle
         DynamicLight light;
 
 	default
@@ -283,9 +283,8 @@ class MoveTorch : Inventory
 	{
 		Super.DoEffect();
 		if (!light)
-			light = DynamicLight(Actor.Spawn("DynamicLight"));
-		if (light)
 		{
+			light = DynamicLight(Actor.Spawn("DynamicLight"));
 			light.battenuate = true;
 			light.bnoshadowmap = true;
 			light.args[0] = 144;
