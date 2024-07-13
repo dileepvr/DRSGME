@@ -131,7 +131,7 @@ class Z_NashMove : CustomInventory
 class IsometricMovement : CustomInventory
 {
         int diffangle, face_cam_mult, oldcmdyaw, oldsidemove, oldforwardmove;
-	cvar isoyaw;
+	cvar isoyaw, aimassist;
 	bool sidedownfacecam, fwddownfacecam;
 	
 	Default
@@ -154,8 +154,12 @@ class IsometricMovement : CustomInventory
 
 	override void PostBeginPlay()
 	{
-	        if (Owner && Owner is "PlayerPawn") isoyaw = CVar.GetCVar("IsometricYaw", Owner.player);
 	        Super.PostBeginPlay();
+	        if (Owner && Owner is "PlayerPawn")
+		{
+		  isoyaw = CVar.GetCVar("IsometricYaw", Owner.player);
+		  aimassist = CVar.GetCVar("IsoAimAssist", Owner.player);
+		}
 		face_cam_mult = 1;
 		oldcmdyaw = 0;
 		oldsidemove = 0;
@@ -180,6 +184,7 @@ class IsometricMovement : CustomInventory
 		  if (abs(diffangle) > 90) face_cam_mult = -1; // Player is facing camera
 		  else face_cam_mult = 1; // Player is facing away from camera
 
+		  if (!(aimassist.GetBool())) Owner.A_SetPitch(0);
 		  // Owner.A_SetPitch(0); // No pitch in isometric mode
 		  /* if (level.IsFreelookAllowed() && cmd.pitch && (cmd.pitch != -32768)) */
 		  /* { */
@@ -189,16 +194,18 @@ class IsometricMovement : CustomInventory
 		  Owner.angle -= cmd.yaw * (360./65536.); // Cancel default mouse-turn first
 		  float newyaw;
 
-		  /* if(diffangle > 45 && diffangle < 135) newyaw += 3*cmd.pitch; */
-		  /* else if(diffangle > -135 && diffangle < -45) newyaw -= 3*cmd.pitch; */
-		  if(diffangle >= 0) newyaw += 3*cmd.pitch;
-		  else if(diffangle < 0) newyaw -= 3*cmd.pitch;
-
+ 		  if(diffangle >= 0) newyaw += cmd.pitch;
+		  else if(diffangle < 0) newyaw -= cmd.pitch;
+		  if(diffangle > 45 && diffangle < 135) newyaw += 2*cmd.pitch;
+		  else if(diffangle > -135 && diffangle < -45) newyaw -= 2*cmd.pitch;
+ 
 		  /* if(abs(diffangle) < 80 || abs(diffangle) > 100) */
 		  /* { */
 		  /*   newyaw += face_cam_mult*cmd.yaw; */
 		  /* } */
-		  newyaw += face_cam_mult*cmd.yaw;
+		  newyaw += 2*face_cam_mult*cmd.yaw;
+		  float absdiff = abs(diffangle);
+		  // if(absdiff < 45 || absdiff > 135) newyaw += 2*face_cam_mult*cmd.yaw;
 		  oldcmdyaw = cmd.yaw;
 
 		  Owner.angle += newyaw * (360./65536.);
@@ -271,7 +278,8 @@ class MoveTorch : Inventory
 {
         // MoveTorch given to me by Madame Rachelle
         DynamicLight light;
-
+	vector3 offs;
+	
 	default
 	{
 		Inventory.MaxAmount 1;
@@ -293,13 +301,20 @@ class MoveTorch : Inventory
 			light.args[3] = 10240;
 			light.args[4] = 10240;
 
-			vector3 offs = (0, 0, owner.height / 2);
-
+		        offs = (0, 0, owner.height / 2);
+			
 			light.SetOrigin(owner.pos + offs, true);
 			light.prev = owner.prev + offs;
 			light.vel = owner.vel;
 		}
 	}
+
+	override void Tick()
+	{
+	  light.prev = owner.prev + offs;
+	  light.vel = owner.vel;
+	}
+	
 	override void OnDestroy()
 	{
 		if (light)

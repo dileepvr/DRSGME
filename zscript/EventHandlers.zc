@@ -42,8 +42,9 @@ class MKeyEvents : EventHandler
 	    isodist.SetFloat(clamp(isodist.GetFloat()-10.0, 100.0, 500.0));
 	    isoyaw = CVar.GetCVar("IsometricYaw", players[e.Player]);
 	    isopitch = CVar.GetCVar("IsometricPitch", players[e.Player]);
-	    SpectatorCamera(players[e.Player].camera).Init(isodist.GetFloat(),
-							   isoyaw.GetFloat(), isopitch.GetFloat(), -1);
+	    if(players[e.Player].camera)
+	      SpectatorCamera(players[e.Player].camera).Init(isodist.GetFloat(),
+							     isoyaw.GetFloat(), isopitch.GetFloat(), -1);
 	  }
 	else
 	  {
@@ -54,8 +55,9 @@ class MKeyEvents : EventHandler
 		isodist.SetFloat(clamp(isodist.GetFloat()+10.0, 100.0, 500.0));
 		isoyaw = CVar.GetCVar("IsometricYaw", players[e.Player]);
 		isopitch = CVar.GetCVar("IsometricPitch", players[e.Player]);
-		SpectatorCamera(players[e.Player].camera).Init(isodist.GetFloat(),
-							       isoyaw.GetFloat(), isopitch.GetFloat(), -1);
+		if(players[e.Player].camera)
+		  SpectatorCamera(players[e.Player].camera).Init(isodist.GetFloat(),
+								 isoyaw.GetFloat(), isopitch.GetFloat(), -1);
 	      }
 	  }
 	[key1, key2] = Bindings.GetKeysForCommand("iso_aim_assist");
@@ -147,6 +149,7 @@ class MyStaticEventHandler : StaticEventHandler
     // When the player spawns, spawn an isometric spectator camera:
     players[e.PlayerNumber].camera = SpectatorCamera(Actor.Spawn("SpectatorCamera", players[e.PlayerNumber].mo.pos));
     players[e.PlayerNumber].camera.tracer = players[e.PlayerNumber].mo; // This makes camera follow the player
+    players[e.PlayerNumber].mo.tracer.tracer = players[e.PlayerNumber].camera; // Storage for retrieval in case player.camera gets changed
     int camflags = VPSF_ABSOLUTEOFFSET | VPSF_ALLOWOUTOFBOUNDS | VPSF_ORTHOGRAPHIC;
     CVar isodist = CVar.GetCVar("IsometricDist", players[e.PlayerNumber]);
     CVar isoyaw = CVar.GetCVar("IsometricYaw", players[e.PlayerNumber]);
@@ -175,6 +178,7 @@ class MyStaticEventHandler : StaticEventHandler
 	    // When World loads, spawn an isometric spectator camera:
 	    players[i].camera = SpectatorCamera(Actor.Spawn("SpectatorCamera", players[i].mo.pos));
 	    players[i].camera.tracer = players[i].mo; // This makes camera follow the player
+	    players[i].mo.tracer.tracer = players[i].camera; // Storage for retrieval in case player.camera gets changed
 	    int camflags = VPSF_ABSOLUTEOFFSET | VPSF_ALLOWOUTOFBOUNDS | VPSF_ORTHOGRAPHIC;
 	    CVar isodist = CVar.GetCVar("IsometricDist", players[i]);
 	    CVar isoyaw = CVar.GetCVar("IsometricYaw", players[i]);
@@ -193,18 +197,27 @@ class MyStaticEventHandler : StaticEventHandler
       {
 	if (PlayerInGame[i] && players[i].mo)
 	  {
-	    Bool rotateleft = CVar.GetCVar("RotatingLeft", players[i]).GetBool();
-	    Bool rotateright = CVar.GetCVar("RotatingRight", players[i]).GetBool();
-	    if (rotateleft || rotateright)
-	      {
-		CVar isodist = CVar.GetCVar("IsometricDist", players[i]);
-		CVar isoyaw = CVar.GetCVar("IsometricYaw", players[i]);
-		CVar isopitch = CVar.GetCVar("IsometricPitch", players[i]);
-		CVar isospeed = CVar.GetCVar("IsometricSpeed", players[i]);
-		isoyaw.SetFloat(isoyaw.GetFloat() + (rotateright ? 1 : -1) * isospeed.GetFloat());
-		int camflags = VPSF_ABSOLUTEOFFSET | VPSF_ALLOWOUTOFBOUNDS | VPSF_ORTHOGRAPHIC;
-		SpectatorCamera(players[i].camera).Init(isodist.GetFloat(), isoyaw.GetFloat(), isopitch.GetFloat(), camflags);
+	    if ((!players[i].camera || (players[i].camera == players[i].mo)) && players[i].mo.tracer && players[i].mo.tracer.tracer)
+	    {
+	      // player.camera was reset for some reason
+	      // Retreive from storage
+	      players[i].camera = players[i].mo.tracer.tracer;
+	    }
+	    if (players[i].camera)
+	    {
+	      Bool rotateleft = CVar.GetCVar("RotatingLeft", players[i]).GetBool();
+	      Bool rotateright = CVar.GetCVar("RotatingRight", players[i]).GetBool();
+	      if (rotateleft || rotateright)
+		{
+		  CVar isodist = CVar.GetCVar("IsometricDist", players[i]);
+		  CVar isoyaw = CVar.GetCVar("IsometricYaw", players[i]);
+		  CVar isopitch = CVar.GetCVar("IsometricPitch", players[i]);
+		  CVar isospeed = CVar.GetCVar("IsometricSpeed", players[i]);
+		  isoyaw.SetFloat(isoyaw.GetFloat() + (rotateright ? 1 : -1) * isospeed.GetFloat());
+		  int camflags = VPSF_ABSOLUTEOFFSET | VPSF_ALLOWOUTOFBOUNDS | VPSF_ORTHOGRAPHIC;
+		  SpectatorCamera(players[i].camera).Init(isodist.GetFloat(), isoyaw.GetFloat(), isopitch.GetFloat(), camflags);
 	      }
+	    }
 	  }
       }
   }
@@ -365,9 +378,9 @@ class RenderCursorsOverlay : EventHandler
 	    float diffangle = pmo.deltaangle(pang, cyaw);
 	    int cosine = (int)(-0.5*cursordist*Cos(diffangle));
 	    int sine = (int)(cursordist*Sin(diffangle));
-	    if(players[consoleplayer].camera != NULL && players[consoleplayer].camera.tracer != NULL)
+	    if(players[consoleplayer].camera && players[consoleplayer].camera.tracer)
 	    {
-	      if(players[consoleplayer].camera.ViewPos.Flags & VPSF_ORTHOGRAPHIC)
+	      if(players[consoleplayer].camera.ViewPos && (players[consoleplayer].camera.ViewPos.Flags & VPSF_ORTHOGRAPHIC))
 	      { // If using orthographic projection
 		Vector3 playerdisp = players[consoleplayer].camera.tracer.pos - players[consoleplayer].camera.pos;
 		diffangle = pmo.deltaangle(playerdisp.Angle(), cyaw);
@@ -395,7 +408,7 @@ class RenderCursorsOverlay : EventHandler
 	    {
 	      int cosine2 = 0;
 	      int sine2 = 0;
-	      if(players[consoleplayer].camera.ViewPos.Flags & VPSF_ORTHOGRAPHIC)
+	      if(players[consoleplayer].camera && players[consoleplayer].camera.ViewPos && (players[consoleplayer].camera.ViewPos.Flags & VPSF_ORTHOGRAPHIC))
 	      { // If using orthographic projection
 		Vector3 tardisp = actorhit[consoleplayer].pos - players[consoleplayer].camera.pos;
 		diffangle = pmo.deltaangle(tardisp.Angle(), cyaw);
@@ -509,11 +522,11 @@ class IsoAimAssistHandler : StaticEventHandler
 
 		// Convert these to CVars?
 		double precision = 0.5;
-		double radial_precision = 4;
+		double radial_precision = 8;
 		double max_angle = 8;
 
 		//check in a circle around the direction player's looking
-		for(double i_a = precision; i_a <= max_angle; i_a += precision) {
+		for(double i_a = 0; i_a <= max_angle; i_a += precision) {
 			for(double i_r = 0; i_r <= 360 && !closest; i_r += radial_precision) {
 			  [closest, closest_distance, hitloc] = doTrace(pawn, i_a, i_r, closest, closest_distance, max_dist);
 			}
