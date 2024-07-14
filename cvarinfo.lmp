@@ -1,5 +1,5 @@
 User HandlerClass(CameraChangeHandler) Float IsometricPitch = 30.0;
-User Float IsometricDist = 500.0;
+User Float IsometricDist = 300.0;
 User Float IsometricYaw = 225.0;
 User Float IsometricSpeed = 5.0;
 User Bool RotatingLeft = false;
@@ -16,3 +16,7 @@ User Float IsoHUDWeaponYPos = -0.15;
 User Int IsoHUDTargetSize = 50;
 User Float IsoHUDTargetXPos = 0.15;
 User Float IsoHUDTargetYPos = 0.15;
+
+user bool D4D_DamageIndicators = true;
+user float D4D_DIScale = 0.5;
+user float D4D_DIAlpha = 1.0;

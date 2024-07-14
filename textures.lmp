@@ -48,20 +48,10 @@ Sprite PLA7U0, 57, 33
 	Patch "sprites/PLA7U0.png", 0, 0
 	offset 24, 29
 }
-Sprite POSSC1, 31, 55
-{
-	Patch "sprites/POSSC1.png", 0, 0
-	offset 15, 51
-}
 Sprite PLA2D4, 28, 54
 {
 	Patch "sprites/PLA2D4.png", 0, 0
 	offset 11, 52
-}
-Sprite POSSD1, 32, 55
-{
-	Patch "sprites/POSSD1.png", 0, 0
-	offset 16, 51
 }
 Sprite PLA7A2A8, 39, 54
 {
@@ -72,16 +62,6 @@ Sprite PLA1C5, 31, 50
 {
 	Patch "sprites/PLA1C5.png", 0, 0
 	offset 16, 49
-}
-Sprite POSSE7, 55, 53
-{
-	Patch "sprites/POSSE7.png", 0, 0
-	offset 27, 49
-}
-Sprite POSSA1, 29, 55
-{
-	Patch "sprites/POSSA1.png", 0, 0
-	offset 14, 51
 }
 Sprite PLA9C2C8, 37, 55
 {
@@ -108,11 +88,6 @@ Sprite PLA7G3G7, 55, 55
 	Patch "sprites/PLA7G3G7.png", 0, 0
 	offset 33, 52
 }
-Sprite POSSD5, 30, 54
-{
-	Patch "sprites/POSSD5.png", 0, 0
-	offset 15, 50
-}
 Sprite PLA1A7, 41, 53
 {
 	Patch "sprites/PLA1A7.png", 0, 0
@@ -122,11 +97,6 @@ Sprite PLA4N0, 55, 14
 {
 	Patch "sprites/PLA4N0.png", 0, 0
 	offset 31, 9
-}
-Sprite POSSC2C8, 35, 54
-{
-	Patch "sprites/POSSC2C8.png", 0, 0
-	offset 17, 50
 }
 Sprite PLA5G1, 39, 55
 {
@@ -163,20 +133,10 @@ Sprite PLA9M0, 51, 14
 	Patch "sprites/PLA9M0.png", 0, 0
 	offset 27, 9
 }
-Sprite POSSF8, 41, 54
-{
-	Patch "sprites/POSSF8.png", 0, 0
-	offset 20, 50
-}
 Sprite PLA5G3G7, 46, 55
 {
 	Patch "sprites/PLA5G3G7.png", 0, 0
 	offset 24, 52
-}
-Sprite POSSH0, 47, 55
-{
-	Patch "sprites/POSSH0.png", 0, 0
-	offset 23, 51
 }
 Sprite PLA0G1, 35, 55
 {
@@ -368,11 +328,6 @@ Sprite PLA1F7, 51, 53
 	Patch "sprites/PLA1F7.png", 0, 0
 	offset 27, 50
 }
-Sprite POSSE5, 26, 51
-{
-	Patch "sprites/POSSE5.png", 0, 0
-	offset 13, 47
-}
 Sprite PLA1C6, 34, 55
 {
 	Patch "sprites/PLA1C6.png", 0, 0
@@ -553,25 +508,10 @@ Sprite PLA7C5, 29, 54
 	Patch "sprites/PLA7C5.png", 0, 0
 	offset 14, 50
 }
-Sprite POSSC3C7, 42, 55
-{
-	Patch "sprites/POSSC3C7.png", 0, 0
-	offset 21, 51
-}
-Sprite POSSD3D7, 38, 54
-{
-	Patch "sprites/POSSD3D7.png", 0, 0
-	offset 19, 50
-}
 Sprite PLA4G1, 43, 55
 {
 	Patch "sprites/PLA4G1.png", 0, 0
 	offset 24, 52
-}
-Sprite POSSE6, 45, 52
-{
-	Patch "sprites/POSSE6.png", 0, 0
-	offset 22, 48
 }
 Sprite PLA6A4A6, 48, 51
 {
@@ -688,11 +628,6 @@ Sprite PLA7E2E8, 47, 55
 	Patch "sprites/PLA7E2E8.png", 0, 0
 	offset 25, 51
 }
-Sprite POSSF2, 52, 55
-{
-	Patch "sprites/POSSF2.png", 0, 0
-	offset 26, 51
-}
 Sprite PLA9B5, 39, 54
 {
 	Patch "sprites/PLA9B5.png", 0, 0
@@ -793,11 +728,6 @@ Sprite PLA7E4E6, 40, 52
 	Patch "sprites/PLA7E4E6.png", 0, 0
 	offset 20, 48
 }
-Sprite POSSC5, 31, 55
-{
-	Patch "sprites/POSSC5.png", 0, 0
-	offset 15, 51
-}
 Sprite PLA1D2, 36, 55
 {
 	Patch "sprites/PLA1D2.png", 0, 0
@@ -873,11 +803,6 @@ Sprite PLA4B5, 40, 54
 	Patch "sprites/PLA4B5.png", 0, 0
 	offset 18, 51
 }
-Sprite POSSE2, 52, 55
-{
-	Patch "sprites/POSSE2.png", 0, 0
-	offset 26, 51
-}
 Sprite PLA5B5, 37, 54
 {
 	Patch "sprites/PLA5B5.png", 0, 0
@@ -888,20 +813,10 @@ Sprite PLA2I0, 55, 43
 	Patch "sprites/PLA2I0.png", 0, 0
 	offset 31, 39
 }
-Sprite POSSD4D6, 34, 54
-{
-	Patch "sprites/POSSD4D6.png", 0, 0
-	offset 17, 50
-}
 Sprite PLA0R0, 53, 52
 {
 	Patch "sprites/PLA0R0.png", 0, 0
 	offset 24, 49
-}
-Sprite POSSA5, 26, 51
-{
-	Patch "sprites/POSSA5.png", 0, 0
-	offset 13, 47
 }
 Sprite PLA0E1, 26, 56
 {
@@ -968,11 +883,6 @@ Sprite PLA0D2, 29, 55
 	Patch "sprites/PLA0D2.png", 0, 0
 	offset 12, 52
 }
-Sprite POSSF4, 35, 56
-{
-	Patch "sprites/POSSF4.png", 0, 0
-	offset 17, 52
-}
 Sprite PLA7D2D8, 37, 55
 {
 	Patch "sprites/PLA7D2D8.png", 0, 0
@@ -987,11 +897,6 @@ Sprite PLA6F3F7, 56, 53
 {
 	Patch "sprites/PLA6F3F7.png", 0, 0
 	offset 30, 50
-}
-Sprite POSSB3B7, 39, 55
-{
-	Patch "sprites/POSSB3B7.png", 0, 0
-	offset 19, 51
 }
 Sprite PLA2E8, 40, 55
 {
@@ -1013,11 +918,6 @@ Sprite PLA0I0, 35, 43
 	Patch "sprites/PLA0I0.png", 0, 0
 	offset 11, 39
 }
-Sprite POSSB2B8, 27, 54
-{
-	Patch "sprites/POSSB2B8.png", 0, 0
-	offset 13, 50
-}
 Sprite PLA2Q0, 55, 57
 {
 	Patch "sprites/PLA2Q0.png", 0, 0
@@ -1027,11 +927,6 @@ Sprite PLA9K0, 41, 38
 {
 	Patch "sprites/PLA9K0.png", 0, 0
 	offset 17, 34
-}
-Sprite POSSA2A8, 31, 54
-{
-	Patch "sprites/POSSA2A8.png", 0, 0
-	offset 15, 50
 }
 Sprite PLA4Q0, 55, 57
 {
@@ -1063,11 +958,6 @@ Sprite PLA0G2G8, 31, 56
 	Patch "sprites/PLA0G2G8.png", 0, 0
 	offset 11, 52
 }
-Sprite POSSE3, 53, 55
-{
-	Patch "sprites/POSSE3.png", 0, 0
-	offset 26, 51
-}
 Sprite PLA0E3E7, 55, 53
 {
 	Patch "sprites/PLA0E3E7.png", 0, 0
@@ -1087,11 +977,6 @@ Sprite PLA2C4, 31, 55
 {
 	Patch "sprites/PLA2C4.png", 0, 0
 	offset 12, 51
-}
-Sprite POSSA4A6, 35, 50
-{
-	Patch "sprites/POSSA4A6.png", 0, 0
-	offset 17, 46
 }
 Sprite PLA1C2, 39, 54
 {
@@ -1268,11 +1153,6 @@ Sprite PLA9D4D6, 40, 54
 	Patch "sprites/PLA9D4D6.png", 0, 0
 	offset 23, 52
 }
-Sprite POSSE8, 39, 54
-{
-	Patch "sprites/POSSE8.png", 0, 0
-	offset 19, 50
-}
 Sprite PLA3A4A6, 45, 51
 {
 	Patch "sprites/PLA3A4A6.png", 0, 0
@@ -1323,11 +1203,6 @@ Sprite PLA3D1, 40, 55
 	Patch "sprites/PLA3D1.png", 0, 0
 	offset 16, 52
 }
-Sprite POSSG2G8, 38, 55
-{
-	Patch "sprites/POSSG2G8.png", 0, 0
-	offset 19, 51
-}
 Sprite PLA3E5, 26, 51
 {
 	Patch "sprites/PLA3E5.png", 0, 0
@@ -1347,11 +1222,6 @@ Sprite PLA9C1, 43, 56
 {
 	Patch "sprites/PLA9C1.png", 0, 0
 	offset 22, 51
-}
-Sprite POSSF7, 58, 53
-{
-	Patch "sprites/POSSF7.png", 0, 0
-	offset 29, 49
 }
 Sprite PLA2B2, 27, 54
 {
@@ -1448,11 +1318,6 @@ Sprite PLA2B8, 30, 55
 	Patch "sprites/PLA2B8.png", 0, 0
 	offset 18, 52
 }
-Sprite POSSB1, 30, 55
-{
-	Patch "sprites/POSSB1.png", 0, 0
-	offset 15, 51
-}
 Sprite PLA5D5, 36, 54
 {
 	Patch "sprites/PLA5D5.png", 0, 0
@@ -1462,16 +1327,6 @@ Sprite PLA4H0, 50, 50
 {
 	Patch "sprites/PLA4H0.png", 0, 0
 	offset 22, 47
-}
-Sprite POSSC4C6, 36, 55
-{
-	Patch "sprites/POSSC4C6.png", 0, 0
-	offset 18, 51
-}
-Sprite POSSG5, 37, 53
-{
-	Patch "sprites/POSSG5.png", 0, 0
-	offset 18, 49
 }
 Sprite PLA3E4E6, 38, 52
 {
@@ -1507,11 +1362,6 @@ Sprite PLA5A1, 41, 56
 {
 	Patch "sprites/PLA5A1.png", 0, 0
 	offset 18, 51
-}
-Sprite POSSE1, 26, 54
-{
-	Patch "sprites/POSSE1.png", 0, 0
-	offset 13, 50
 }
 Sprite PLA5E5, 26, 51
 {
@@ -1708,11 +1558,6 @@ Sprite PLA2E2, 52, 55
 	Patch "sprites/PLA2E2.png", 0, 0
 	offset 24, 51
 }
-Sprite POSSG1, 43, 55
-{
-	Patch "sprites/POSSG1.png", 0, 0
-	offset 21, 51
-}
 Sprite PLA4G5, 39, 54
 {
 	Patch "sprites/PLA4G5.png", 0, 0
@@ -1838,11 +1683,6 @@ Sprite PLA9T0, 57, 40
 	Patch "sprites/PLA9T0.png", 0, 0
 	offset 24, 36
 }
-Sprite POSSB5, 30, 54
-{
-	Patch "sprites/POSSB5.png", 0, 0
-	offset 15, 50
-}
 Sprite PLA4C2C8, 37, 55
 {
 	Patch "sprites/PLA4C2C8.png", 0, 0
@@ -1868,11 +1708,6 @@ Sprite PLA3D2D8, 35, 55
 	Patch "sprites/PLA3D2D8.png", 0, 0
 	offset 17, 52
 }
-Sprite POSSE4, 33, 56
-{
-	Patch "sprites/POSSE4.png", 0, 0
-	offset 16, 52
-}
 Sprite PLA0N0, 51, 14
 {
 	Patch "sprites/PLA0N0.png", 0, 0
@@ -1887,11 +1722,6 @@ Sprite PLA9H0, 44, 50
 {
 	Patch "sprites/PLA9H0.png", 0, 0
 	offset 16, 47
-}
-Sprite POSSF6, 48, 52
-{
-	Patch "sprites/POSSF6.png", 0, 0
-	offset 24, 48
 }
 Sprite PLA5L0, 51, 14
 {
@@ -2048,11 +1878,6 @@ Sprite PLA1D5, 35, 54
 	Patch "sprites/PLA1D5.png", 0, 0
 	offset 16, 51
 }
-Sprite POSSA3A7, 45, 53
-{
-	Patch "sprites/POSSA3A7.png", 0, 0
-	offset 22, 49
-}
 Sprite PLA6D4D6, 40, 54
 {
 	Patch "sprites/PLA6D4D6.png", 0, 0
@@ -2087,11 +1912,6 @@ Sprite PLA9Q0, 48, 57
 {
 	Patch "sprites/PLA9Q0.png", 0, 0
 	offset 21, 54
-}
-Sprite POSSF1, 27, 54
-{
-	Patch "sprites/POSSF1.png", 0, 0
-	offset 13, 50
 }
 Sprite PLA9D3D7, 34, 54
 {
@@ -2128,11 +1948,6 @@ Sprite PLA5F3F7, 58, 53
 	Patch "sprites/PLA5F3F7.png", 0, 0
 	offset 33, 50
 }
-Sprite POSSF5, 26, 51
-{
-	Patch "sprites/POSSF5.png", 0, 0
-	offset 13, 47
-}
 Sprite PLA7G2G8, 39, 56
 {
 	Patch "sprites/PLA7G2G8.png", 0, 0
@@ -2142,11 +1957,6 @@ Sprite PLA4E1, 26, 56
 {
 	Patch "sprites/PLA4E1.png", 0, 0
 	offset 12, 51
-}
-Sprite POSSD2D8, 34, 54
-{
-	Patch "sprites/POSSD2D8.png", 0, 0
-	offset 17, 50
 }
 Sprite PLA9C3C7, 38, 54
 {
@@ -2297,11 +2107,6 @@ Sprite PLA2B6, 27, 54
 {
 	Patch "sprites/PLA2B6.png", 0, 0
 	offset 17, 52
-}
-Sprite POSSG3G7, 31, 54
-{
-	Patch "sprites/POSSG3G7.png", 0, 0
-	offset 15, 50
 }
 Sprite PLA4G4G6, 48, 52
 {
@@ -2503,11 +2308,6 @@ Sprite PLA1B5, 35, 54
 	Patch "sprites/PLA1B5.png", 0, 0
 	offset 15, 51
 }
-Sprite POSSF3, 55, 55
-{
-	Patch "sprites/POSSF3.png", 0, 0
-	offset 27, 51
-}
 Sprite PLA1C1, 32, 56
 {
 	Patch "sprites/PLA1C1.png", 0, 0
@@ -2672,16 +2472,6 @@ Sprite PLA4C4C6, 41, 55
 {
 	Patch "sprites/PLA4C4C6.png", 0, 0
 	offset 22, 51
-}
-Sprite POSSB4B6, 34, 54
-{
-	Patch "sprites/POSSB4B6.png", 0, 0
-	offset 17, 50
-}
-Sprite POSSG4G6, 34, 53
-{
-	Patch "sprites/POSSG4G6.png", 0, 0
-	offset 17, 49
 }
 Sprite PLA9D2D8, 35, 55
 {

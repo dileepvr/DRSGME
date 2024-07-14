@@ -67,7 +67,11 @@ class Z_NashMove : CustomInventory
 
 	override void Tick(void)
 	{
-	        bool stopped_or_changed_movement = !(Owner.player.cmd.forwardmove | Owner.player.cmd.sidemove);
+	        if (!(Owner && Owner is "PlayerPawn"))
+		{
+		  destroy(); return;
+		}
+		bool stopped_or_changed_movement = !(Owner.player.cmd.forwardmove | Owner.player.cmd.sidemove);
 		stopped_or_changed_movement |= (Owner.player.cmd.forwardmove != old_forwardmove);
 		stopped_or_changed_movement |= (Owner.player.cmd.sidemove != old_sidemove);
 		old_forwardmove = Owner.player.cmd.forwardmove;
@@ -176,6 +180,10 @@ class IsometricMovement : CustomInventory
 
 	override void Tick(void)
 	{
+	        if (!(Owner && Owner is "PlayerPawn"))
+		{
+		  destroy(); return;
+		}
 	        if (!automapactive && Owner && Owner is "PlayerPawn") // Remap controls for isometric mode
 		{
 		  let player = Owner.player;
@@ -184,7 +192,6 @@ class IsometricMovement : CustomInventory
 		  if (abs(diffangle) > 90) face_cam_mult = -1; // Player is facing camera
 		  else face_cam_mult = 1; // Player is facing away from camera
 
-		  if (!(aimassist.GetBool())) Owner.A_SetPitch(0);
 		  // Owner.A_SetPitch(0); // No pitch in isometric mode
 		  /* if (level.IsFreelookAllowed() && cmd.pitch && (cmd.pitch != -32768)) */
 		  /* { */
@@ -298,23 +305,18 @@ class MoveTorch : Inventory
 			light.args[0] = 144;
 			light.args[1] = 144;
 			light.args[2] = 144;
-			light.args[3] = 10240;
-			light.args[4] = 10240;
-
+			light.args[3] = 124;
+			light.args[4] = 124;
 		        offs = (0, 0, owner.height / 2);
-			
+		}
+		if (light)
+		{
 			light.SetOrigin(owner.pos + offs, true);
 			light.prev = owner.prev + offs;
 			light.vel = owner.vel;
 		}
 	}
 
-	override void Tick()
-	{
-	  light.prev = owner.prev + offs;
-	  light.vel = owner.vel;
-	}
-	
 	override void OnDestroy()
 	{
 		if (light)

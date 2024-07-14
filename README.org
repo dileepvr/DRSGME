@@ -37,11 +37,13 @@ A lot of mods, forum posts, and wikis were consulted to prepare this. Special th
 - Nash Muhandes
 - Ricardo Luís Vaz Silva
 - m8f (Author of [[https://github.com/mmaulwurff/target-spy][Target-Spy]])
+- Major Cooke
+- Whoever made the damage direction indicators for [[https://github.com/MajorCooke/Doom4Doom][D4D]] (possibly Major Cooke)
 
-All code and assets except the the character sprites are licensed
-under CC-0 (see [[./LICENSE.txt]]). A few =zscript= functions are derived
-from m8f's work in [[https://github.com/mmaulwurff/target-spy][Target-Spy]] and are licensed under GPLv3 (see
-[[./GPLv3.txt]]).
+All code and assets except the the character sprites and the 'damage
+direction indicator sprite' are licensed under CC-0 (see
+[[./LICENSE.txt]]). A few =zscript= functions are derived from m8f's work
+in [[https://github.com/mmaulwurff/target-spy][Target-Spy]] and are licensed under GPLv3 (see [[./GPLv3.txt]]).
 
 Remember: Book. Not Plan.
  

@@ -1,0 +1,1 @@
+cameratexture CAMTEX_1 50 50
