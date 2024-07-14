@@ -128,7 +128,7 @@ class ScopeCamera : Actor
 
 	  SetOrigin(ppawn.pos + (ppawn.radius * Cos(ppawn.angle),
 				 ppawn.radius * Sin(ppawn.angle),
-				 0.5 * ppawn.height), true);
+				 0.25 * ppawn.height), true);
 	}
 
 	States

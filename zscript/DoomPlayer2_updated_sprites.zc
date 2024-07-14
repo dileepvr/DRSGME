@@ -3,6 +3,7 @@ class DoomPlayer2 : DoomPlayer replaces DoomPlayer
   Default
     {
       Player.DisplayName "Accurate Weapons";
+      Player.CrouchSprite "PLYC";
       Player.StartItem "PistolNew";
       Player.StartItem "FistNew";
       Player.StartItem "Clip", 50;
@@ -16,7 +17,7 @@ class DoomPlayer2 : DoomPlayer replaces DoomPlayer
 
       +NOSKIN
     }
-
+	
   States
     {
     Spawn:
