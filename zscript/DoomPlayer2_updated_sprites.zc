@@ -1,4 +1,4 @@
-class DoomPlayer2 : DoomPlayer replaces DoomPlayer
+class DoomPlayer2 : DoomPlayer
 {
   Default
     {
