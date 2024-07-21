@@ -149,6 +149,7 @@ class MyStaticEventHandler : StaticEventHandler
     // When the player spawns, spawn an isometric spectator camera:
     players[e.PlayerNumber].camera = SpectatorCamera(Actor.Spawn("SpectatorCamera", players[e.PlayerNumber].mo.pos));
     players[e.PlayerNumber].camera.tracer = players[e.PlayerNumber].mo; // This makes camera follow the player
+	players[e.PlayerNumber].camera.player = players[e.PlayerNumber]; // Necessary for pain and pickup screen flashes
     players[e.PlayerNumber].mo.tracer.tracer = players[e.PlayerNumber].camera; // Storage for retrieval in case player.camera gets changed
     int camflags = VPSF_ABSOLUTEOFFSET | VPSF_ALLOWOUTOFBOUNDS | VPSF_ORTHOGRAPHIC;
     CVar isodist = CVar.GetCVar("IsometricDist", players[e.PlayerNumber]);
@@ -178,6 +179,7 @@ class MyStaticEventHandler : StaticEventHandler
 	    // When World loads, spawn an isometric spectator camera:
 	    players[i].camera = SpectatorCamera(Actor.Spawn("SpectatorCamera", players[i].mo.pos));
 	    players[i].camera.tracer = players[i].mo; // This makes camera follow the player
+		players[i].camera.player = players[i]; // Necessary for pain and pickup screen flashes
 	    players[i].mo.tracer.tracer = players[i].camera; // Storage for retrieval in case player.camera gets changed
 	    int camflags = VPSF_ABSOLUTEOFFSET | VPSF_ALLOWOUTOFBOUNDS | VPSF_ORTHOGRAPHIC;
 	    CVar isodist = CVar.GetCVar("IsometricDist", players[i]);
