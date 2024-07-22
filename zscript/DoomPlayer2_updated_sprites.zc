@@ -420,7 +420,7 @@ class FistNew : Fist replaces Fist
     }
 }
 
-class ChainsawNew : Chainsaw // replaces Chainsaw
+class ChainsawNew : Chainsaw replaces Chainsaw
 {
   default
     {
@@ -440,7 +440,7 @@ class ChainsawNew : Chainsaw // replaces Chainsaw
     }
 }
 
-class PistolNew : Pistol // replaces Pistol
+class PistolNew : Pistol replaces Pistol
 {
   default
     {
@@ -460,7 +460,7 @@ class PistolNew : Pistol // replaces Pistol
     }
 }
 
-class ShotgunNew : Shotgun // replaces Shotgun
+class ShotgunNew : Shotgun replaces Shotgun
 {
   default
     {
@@ -480,7 +480,7 @@ class ShotgunNew : Shotgun // replaces Shotgun
     }
 }
 
-class SuperShotgunNew : SuperShotgun // replaces SuperShotgun
+class SuperShotgunNew : SuperShotgun replaces SuperShotgun
 {
   default
     {
@@ -500,7 +500,7 @@ class SuperShotgunNew : SuperShotgun // replaces SuperShotgun
     }
 }
 
-class ChaingunNew : Chaingun // replaces Chaingun
+class ChaingunNew : Chaingun replaces Chaingun
 {
   default
     {
@@ -520,7 +520,7 @@ class ChaingunNew : Chaingun // replaces Chaingun
     }
 }
 
-class RocketLauncherNew : RocketLauncher // replaces RocketLauncher
+class RocketLauncherNew : RocketLauncher replaces RocketLauncher
 {
   States
     {
@@ -536,7 +536,7 @@ class RocketLauncherNew : RocketLauncher // replaces RocketLauncher
     }
 }
 
-class PlasmaRifleNew : PlasmaRifle // replaces PlasmaRifle
+class PlasmaRifleNew : PlasmaRifle replaces PlasmaRifle
 {
   States
     {
@@ -552,7 +552,7 @@ class PlasmaRifleNew : PlasmaRifle // replaces PlasmaRifle
     }
 }
 
-class BFG9000New : BFG9000 // replaces BFG9000
+class BFG9000New : BFG9000 replaces BFG9000
 {
   States
     {
