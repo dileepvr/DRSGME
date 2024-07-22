@@ -1,8 +1,8 @@
-class DoomPlayer2 : DoomPlayer
+class DoomPlayer2 : DoomPlayer replaces DoomPlayer
 {
   Default
     {
-      Player.DisplayName "Accurate Weapons";
+      Player.DisplayName "Marine";
       Player.CrouchSprite "PLYC";
       Player.StartItem "PistolNew";
       Player.StartItem "FistNew";
