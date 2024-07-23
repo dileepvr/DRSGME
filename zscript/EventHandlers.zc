@@ -360,7 +360,7 @@ class RenderCursorsOverlay : EventHandler
 	
 	override void RenderOverlay(RenderEvent e)
 	{
-	  if (!automapactive && (gamestate == GS_LEVEL)) // level.mapName != "TITLEMAP")
+	  if (!automapactive && (gamestate == GS_LEVEL) && (players[consoleplayer].camera.player == players[consoleplayer]))
 	  {
 	    PlayerPawn pmo = players[consoleplayer].mo;
 	    float pang = pmo.angle;
