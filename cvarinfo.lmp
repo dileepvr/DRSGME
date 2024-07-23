@@ -18,6 +18,7 @@ User Float IsoHUDTargetXPos = 0.15;
 User Float IsoHUDTargetYPos = 0.15;
 User Color IsoAimBeam = "ff 00 ff";
 User Int IsoHUDScopeType = 1;
+User Int IsoCursorDist = 150;
 
 user bool D4D_DamageIndicators = true;
 user float D4D_DIScale = 0.5;

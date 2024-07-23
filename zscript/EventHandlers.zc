@@ -149,7 +149,7 @@ class MyStaticEventHandler : StaticEventHandler
     // When the player spawns, spawn an isometric spectator camera:
     players[e.PlayerNumber].camera = SpectatorCamera(Actor.Spawn("SpectatorCamera", players[e.PlayerNumber].mo.pos));
     players[e.PlayerNumber].camera.tracer = players[e.PlayerNumber].mo; // This makes camera follow the player
-	players[e.PlayerNumber].camera.player = players[e.PlayerNumber]; // Necessary for pain and pickup screen flashes
+	players[e.PlayerNumber].camera.player = players[e.PlayerNumber]; // Necessary for pain and pickup screen flashes. Adds viewbob too.
     players[e.PlayerNumber].mo.tracer.tracer = players[e.PlayerNumber].camera; // Storage for retrieval in case player.camera gets changed
     int camflags = VPSF_ABSOLUTEOFFSET | VPSF_ALLOWOUTOFBOUNDS | VPSF_ORTHOGRAPHIC;
     CVar isodist = CVar.GetCVar("IsometricDist", players[e.PlayerNumber]);
@@ -179,7 +179,7 @@ class MyStaticEventHandler : StaticEventHandler
 	    // When World loads, spawn an isometric spectator camera:
 	    players[i].camera = SpectatorCamera(Actor.Spawn("SpectatorCamera", players[i].mo.pos));
 	    players[i].camera.tracer = players[i].mo; // This makes camera follow the player
-		players[i].camera.player = players[i]; // Necessary for pain and pickup screen flashes
+		players[i].camera.player = players[i]; // Necessary for pain and pickup screen flashes. Adds viewbob too.
 	    players[i].mo.tracer.tracer = players[i].camera; // Storage for retrieval in case player.camera gets changed
 	    int camflags = VPSF_ABSOLUTEOFFSET | VPSF_ALLOWOUTOFBOUNDS | VPSF_ORTHOGRAPHIC;
 	    CVar isodist = CVar.GetCVar("IsometricDist", players[i]);
@@ -231,7 +231,7 @@ class RenderCursorsOverlay : EventHandler
 	cvar showwep, showscope, showscopehealth;
 	cvar wepsize, wepxpos, wepypos;
 	cvar scopesize, scopexpos, scopeypos;
-	cvar aimbeam, scopetype;
+	cvar aimbeam, scopetype, cursdist;
 	FLineTraceData t[MAXPLAYERS];
 	Vector3 hitloc;
 	Actor actorhit[MAXPLAYERS];
@@ -329,6 +329,7 @@ class RenderCursorsOverlay : EventHandler
 	  scopeypos = CVar.GetCVar("IsoHUDTargetYPos", players[consoleplayer]);
 	  aimbeam  = CVar.GetCVar("IsoAimBeam", players[consoleplayer]);
 	  scopetype = CVar.GetCVar("IsoHUDScopeType", players[consoleplayer]);
+	  cursdist = CVar.GetCVar("IsoCursorDist", players[consoleplayer]);
 	  hitloc = (0, 0, 0);
 	  for (int i = 0; i < MAXPLAYERS; i++)
 	  {
@@ -372,7 +373,7 @@ class RenderCursorsOverlay : EventHandler
 
 	    if(showwep.GetBool())
 	    {
-	      int wsize = clamp(wepsize.GetInt(), 1, 100);
+		  int wsize = (int)(clamp(wepsize.GetInt(), 1, 100)*2/scaleFactor.x);
 	      int wxpos = (int)(200*clamp(wepxpos.GetFloat(), -1.0, 1.0)*scaleFactor.x);
 	      int wypos = (int)(-200*clamp(wepypos.GetFloat(), 0.0, 1.0)*scaleFactor.y);
 	      StatusBar.DrawInventoryIcon(players[consoleplayer].readyweapon, (wxpos, wypos),
@@ -380,7 +381,7 @@ class RenderCursorsOverlay : EventHandler
 					  1.0, (2*wsize, wsize), (0.03*wsize, 0.03*wsize)); // alpha, boxsize, scale
 	    }
 
-	    int cursordist = 75;
+	    int cursordist = cursdist.GetInt(); // 150;
 	    float diffangle = pmo.deltaangle(pang, cyaw);
 	    int cosine = (int)(-0.5*cursordist*Cos(diffangle));
 	    int sine = (int)(cursordist*Sin(diffangle));
@@ -391,7 +392,7 @@ class RenderCursorsOverlay : EventHandler
 		Vector3 playerdisp = players[consoleplayer].camera.tracer.pos - players[consoleplayer].camera.pos;
 		diffangle = pmo.deltaangle(playerdisp.Angle(), cyaw);
 		// Translate game/map (x, y, z) position into screen (x, y) location
-		double xproj = 320/players[consoleplayer].camera.ViewPos.offset.length();
+		double xproj = 640/players[consoleplayer].camera.ViewPos.offset.length();
 		double yproj = Sin(cpit)*xproj;
 		double zproj = Cos(cpit)*xproj;
 		cosine -= (int)(playerdisp.xy.length()*Cos(diffangle)*yproj);
@@ -403,11 +404,11 @@ class RenderCursorsOverlay : EventHandler
 
 	    if (CVar.GetCVar("IsoAimAssist", players[consoleplayer]).GetBool())
 	    {
-	      StatusBar.DrawImage("sprites/aim_hair.png", (sine, cosine),
-				  StatusBar.DI_SCREEN_CENTER | StatusBar.DI_ITEM_CENTER, scale: (1.2, 1.2));
+	      StatusBar.DrawImage("sprites/aim_hair.png", (sine/scaleFactor.x, cosine/scaleFactor.y),
+				  StatusBar.DI_SCREEN_CENTER | StatusBar.DI_ITEM_CENTER, scale: (2.4/scaleFactor.x, 2.4/scaleFactor.y));
 	    } else {
-	      StatusBar.DrawImage("sprites/dir_hair.png", (sine, cosine),
-				  StatusBar.DI_SCREEN_CENTER | StatusBar.DI_ITEM_CENTER, scale: (0.75, 0.75));
+	      StatusBar.DrawImage("sprites/dir_hair.png", (sine/scaleFactor.x, cosine/scaleFactor.y),
+				  StatusBar.DI_SCREEN_CENTER | StatusBar.DI_ITEM_CENTER, scale: (1.5/scaleFactor.x, 1.5/scaleFactor.y));
 	    }
 
 	    if (actorhit[consoleplayer])
@@ -420,7 +421,7 @@ class RenderCursorsOverlay : EventHandler
 				  - players[consoleplayer].camera.pos;
 			  diffangle = pmo.deltaangle(tardisp.Angle(), cyaw);
 			  // Translate game/map (x, y, z) position into screen (x, y) location
-			  double xprj = 360/players[consoleplayer].camera.ViewPos.offset.length();
+			  double xprj = 720/players[consoleplayer].camera.ViewPos.offset.length();
 			  double yprj = Sin(cpit)*xprj;
 			  double zprj = Cos(cpit)*xprj;
 			  cosine2 -= (int)(tardisp.xy.length()*Cos(diffangle)*yprj);
@@ -431,9 +432,9 @@ class RenderCursorsOverlay : EventHandler
 	      sine -= (int)(0.5*cursordist*Sin(diffangle));	      
 	      int halfw = (int)(Screen.GetWidth()/2);
 	      int halfh = (int)(Screen.GetHeight()/2);
-	      Screen.DrawLine(2*sine+halfw, 2*cosine+halfh, 2*sine2+halfw, 2*cosine2+halfh, Color(aimbeam.GetString())); // Why 2?! scaleFactor?
-	      StatusBar.DrawImage("sprites/tar_hair.png", (sine2, cosine2),
-				  StatusBar.DI_SCREEN_CENTER | StatusBar.DI_ITEM_CENTER, scale: (0.75, 0.75));
+	      Screen.DrawLine(sine+halfw, cosine+halfh, sine2+halfw, cosine2+halfh, Color(aimbeam.GetString()));
+	      StatusBar.DrawImage("sprites/tar_hair.png", (sine2/scaleFactor.x, cosine2/scaleFactor.y),
+				  StatusBar.DI_SCREEN_CENTER | StatusBar.DI_ITEM_CENTER, scale: (1.5/scaleFactor.x, 1.5/scaleFactor.x));
 
 	      if(showscope.GetBool())
 	      {
@@ -442,7 +443,7 @@ class RenderCursorsOverlay : EventHandler
 		double degree = 57.2957795 * actorhit[consoleplayer].height / (tardist > 0.0 ? tardist: 1.0); // in degrees
 		texman.setcameratotexture(players[consoleplayer].mo.tracer, "CAMTEX_1", degree);
 
-		float ssize = 0.02*clamp(scopesize.GetInt(), 1, 100);
+		float ssize = 0.04*clamp(scopesize.GetInt(), 1, 100)/scaleFactor.x;
 		int sxpos = (int)(200*clamp(scopexpos.GetFloat(), -1.0, 1.0)*scaleFactor.x);
 		int sypos = (int)(-200*clamp(scopeypos.GetFloat(), 0.0, 1.0)*scaleFactor.y);
 		StatusBar.DrawImage("CAMTEX_1", (sxpos, sypos),
