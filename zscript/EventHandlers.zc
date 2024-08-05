@@ -6,82 +6,457 @@ class CameraChangeHandler : CustomFloatCVar
   }
 }
 
+class PickupFlagHandler : CustomBoolCVar
+{
+  override bool ModifyValue(Name CVarName, bool val)
+  {
+	  players[consoleplayer].mo.bPickup = val;
+	  return val;
+  }
+}
+
 class MKeyEvents : EventHandler 
 {
-  cvar isodist, isopitch, isoyaw, isoaim;
+  cvar isodists[MAXPLAYERS], isopitches[MAXPLAYERS], isoyaws[MAXPLAYERS];
+  cvar isoaims[MAXPLAYERS], rotlefts[MAXPLAYERS], rotrights[MAXPLAYERS], isosel[MAXPLAYERS];
+  cvar selx[MAXPLAYERS], sely[MAXPLAYERS], selz[MAXPLAYERS];
+  array <Actor> selectables;
+  array <Line> switches;
+  int selnum, selobjsize, selswsize;
+  bool inobjarray, inswarray, cursec_usable;
+  Vector3 delta;
+  double target_angle, target_pitch, viewh;
+  FLineTraceData t;
+  Actor pmo;
+
+  override void OnRegister()
+  {
+	  selectables.Clear(); selobjsize = 0;
+	  switches.Clear(); selswsize = 0;
+	  selnum = 0;
+	  inobjarray = true;
+	  inswarray = false;
+	  cursec_usable = false;
+	  for (int i = 0; i < MAXPLAYERS; i++)
+	  {
+		  isosel[i] = CVar.GetCVar("IsoSelected", players[i]);
+		  isodists[i] = CVar.GetCVar("IsometricDist", players[i]);
+		  isopitches[i] = CVar.GetCVar("IsometricPitch", players[i]);
+		  isoyaws[i] = CVar.GetCVar("IsometricYaw", players[i]);
+		  isoaims[i] = CVar.GetCVar("IsoAimAssist", players[i]);
+		  rotlefts[i] = CVar.GetCVar("RotatingLeft", players[i]);
+		  rotrights[i] = CVar.GetCVar("RotatingRight", players[i]);
+		  selx[i] = CVar.GetCVar("SelXPos", players[i]);
+		  sely[i] = CVar.GetCVar("SelYPos", players[i]);
+		  selz[i] = CVar.GetCVar("SelZPos", players[i]);
+	  }
+  }
+  
+  //get angle and delta from two positions
+  static vector3, double, double lookAt(Vector3 pos1, Vector3 pos2)
+  {
+	  //calculate difference between pos1 and pos2 (level.Vec3Diff takes portals into account)
+	  
+	  Vector3 delta=level.Vec3Diff(pos1, pos2);
+		
+	  //calculate angle and pitch to other actor
+	  double target_angle = atan2(delta.y, delta.x);
+	  double target_pitch = -asin(delta.z/delta.length());
+
+	  return delta, target_angle, target_pitch;
+  }
+
+  //get shorted xy-distance between actor and line
+  static double shortest_dxy(Actor mo, Line ln)
+  {
+	  double lnlength = (ln.v1.p - ln.v2.p).length();
+	  if (lnlength == 0.0) return (mo.pos.xy - ln.v1.p).length();
+	  else
+	  {
+		  return abs((ln.v2.p.y - ln.v1.p.y)* mo.pos.x - (ln.v2.p.x - ln.v1.p.x)* mo.pos.y
+					 + ln.v2.p.x * ln.v1.p.y - ln.v2.p.y * ln.v1.p.x) / lnlength;
+	  }
+  }
+
   override bool InputProcess (InputEvent e)
   {
-    if (e.Type == InputEvent.Type_KeyDown)
-	SendNetworkEvent("MYKEYDOWN", e.KeyScan);
+	  if (e.Type == InputEvent.Type_KeyDown)
+		  SendNetworkEvent("MYKEYDOWN", e.KeyScan);
 
-    if (e.Type == InputEvent.Type_KeyUp)
-	SendNetworkEvent("MYKEYUP", e.KeyScan);
+	  if (e.Type == InputEvent.Type_KeyUp)
+		  SendNetworkEvent("MYKEYUP", e.KeyScan);
     
-    return false;
+	  return false;
   }
 
   override void NetworkProcess(ConsoleEvent e)
   {			
     if (e.Name == "MYKEYDOWN")
-      {
-	int key1, key2;
-	[key1, key2] = Bindings.GetKeysForCommand("rotate_cam_left");
-	if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
-	  CVar.GetCVar("RotatingLeft", players[e.Player]).SetBool(true);
-	else
-	  {
-	    [key1, key2] = Bindings.GetKeysForCommand("rotate_cam_right");
-	    if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
-	      CVar.GetCVar("RotatingRight", players[e.Player]).SetBool(true);
-	  }
+    {
+		pmo = players[e.Player].mo;
+		int key1, key2;
+		[key1, key2] = Bindings.GetKeysForCommand("rotate_cam_left");
+		if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
+			rotlefts[e.Player].SetBool(true);
+		else
+		{
+			[key1, key2] = Bindings.GetKeysForCommand("rotate_cam_right");
+			if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
+				rotrights[e.Player].SetBool(true);
+		}
 
-	[key1, key2] = Bindings.GetKeysForCommand("iso_zoom_in");
-	if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
-	  {
-	    isodist = CVar.GetCVar("IsometricDist", players[e.Player]);
-	    isodist.SetFloat(clamp(isodist.GetFloat()-10.0, 100.0, 500.0));
-	    isoyaw = CVar.GetCVar("IsometricYaw", players[e.Player]);
-	    isopitch = CVar.GetCVar("IsometricPitch", players[e.Player]);
-	    if(players[e.Player].camera)
-	      SpectatorCamera(players[e.Player].camera).Init(isodist.GetFloat(),
-							     isoyaw.GetFloat(), isopitch.GetFloat(), -1);
-	  }
-	else
-	  {
-	    [key1, key2] = Bindings.GetKeysForCommand("iso_zoom_out");
-	    if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
-	      {
-		isodist = CVar.GetCVar("IsometricDist", players[e.Player]);
-		isodist.SetFloat(clamp(isodist.GetFloat()+10.0, 100.0, 500.0));
-		isoyaw = CVar.GetCVar("IsometricYaw", players[e.Player]);
-		isopitch = CVar.GetCVar("IsometricPitch", players[e.Player]);
-		if(players[e.Player].camera)
-		  SpectatorCamera(players[e.Player].camera).Init(isodist.GetFloat(),
-								 isoyaw.GetFloat(), isopitch.GetFloat(), -1);
-	      }
-	  }
-	[key1, key2] = Bindings.GetKeysForCommand("iso_aim_assist");
-	if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
-	  {
-	    isoaim = CVar.GetCVar("IsoAimAssist", players[e.Player]);
-	    isoaim.SetBool(!isoaim.GetBool());
-	    if (isoaim.GetBool()) console.printf("Aim Assist Enabled");
-	    else console.printf("Aim Assist Disabled");
-	  }
-      }
+		[key1, key2] = Bindings.GetKeysForCommand("iso_zoom_in");
+		if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
+		{
+			if(players[e.Player].camera)
+				SpectatorCamera(players[e.Player].camera).Init(isodists[e.Player].GetFloat(),
+															   isoyaws[e.Player].GetFloat(),
+															   isopitches[e.Player].GetFloat(), -1);
+		}
+		else
+		{
+			[key1, key2] = Bindings.GetKeysForCommand("iso_zoom_out");
+			if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
+			{
+				if(players[e.Player].camera)
+					SpectatorCamera(players[e.Player].camera).Init(isodists[e.Player].GetFloat(),
+																   isoyaws[e.Player].GetFloat(),
+																   isopitches[e.Player].GetFloat(), -1);
+			}
+		}
+		[key1, key2] = Bindings.GetKeysForCommand("iso_aim_assist");
+		if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
+		{
+			isoaims[e.Player].SetBool(!isoaims[e.Player].GetBool());
+			if (isoaims[e.Player].GetBool()) console.printf("Aim Assist Enabled");
+			else console.printf("Aim Assist Disabled");
+		}
+
+		[key1, key2] = Bindings.GetKeysForCommand("clear_select");
+		if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
+		{
+			isosel[e.Player].SetBool(false);
+		}
+
+		[key1, key2] = Bindings.GetKeysForCommand("use_selected");
+		if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
+		{
+			if (isosel[e.Player].GetBool())
+			{
+				if (inswarray && (switches.Size() > selnum) && switches[selnum])
+				{
+					Vector3 midln = ((switches[selnum].v1.p.x + switches[selnum].v2.p.x)*0.5,
+									 (switches[selnum].v1.p.y + switches[selnum].v2.p.y)*0.5,
+									 pmo.pos.Z + viewh);
+					[delta, target_angle, target_pitch] = lookAt(pmo.pos + (0, 0, viewh), midln);
+					bool tbool = pmo.LineTrace(target_angle,
+											   (pmo.pos.xy - midln.xy).length() + 8.0,
+											   0, TRF_THRUACTORS | TRF_BLOCKUSE, viewh, data:t);
+					bool swvisible = true;
+					if (!tbool || (t.hitType != TRACE_HitWall) || !t.hitLine || (t.hitLine.Index() != switches[selnum].Index()))
+					{
+						// Center of wall not in line of sight of the player
+						swvisible = !tbool;
+						if (!tbool)
+						{
+							// Maybe the line isn't a wall! Check if it can for SPAC_UseBack condition
+							int plside = Level.ActorOnLineSide(pmo, switches[selnum]);
+							if (plside == 1 && !(switches[selnum].activation & SPAC_UseBack)) { swvisible = false; }
+							if (plside == 0 && ((switches[selnum].activation & (SPAC_Use | SPAC_UseThrough | SPAC_UseBack)) == SPAC_UseBack))
+							{ swvisible = false; }
+						}
+					}
+					if (swvisible)
+					{
+						if (switches[selnum].activation & (SPAC_Use | SPAC_UseThrough | SPAC_UseBack))
+						{
+							int side = 0; // Level.ActorOnLineSide(pmo, switches[selnum]); // SPAC_UseBack gives me segfaults
+							if (!switches[selnum].Activate(pmo, side, SPAC_Use)) // (side == 0 ? SPAC_Use : SPAC_UseBack)))
+								pmo.A_StartSound("noselect", CHAN_ITEM);
+						}
+					} else {
+						pmo.A_StartSound("noselect", CHAN_ITEM);
+					}
+				} else if (inobjarray && (selectables.Size() > selnum) && selectables[selnum]) {
+					[delta, target_angle, target_pitch] = lookAt(pmo.pos + (0, 0, viewh),
+																 selectables[selnum].pos + (0, 0, selectables[selnum].height*0.5));
+					bool tbool = pmo.LineTrace(target_angle, players[e.Player].mo.UseRange, target_pitch,
+											   TRF_ALLACTORS | TRF_BLOCKUSE, viewh, data:t);
+					if (!tbool || (t.hitType != TRACE_HitActor) || !t.hitActor || (t.hitActor != selectables[selnum]))
+					{
+						pmo.A_StartSound("noselect", CHAN_ITEM);
+					} else {
+						if (selectables[selnum].bSPECIAL)
+						{
+							selectables[selnum].Touch(pmo);
+						} else if (selectables[selnum].bUSESPECIAL && selectables[selnum].health > 0) {
+							// This whole segment is only for old DECORATE type activate functions
+							let thing = selectables[selnum];
+							if (thing.activationtype & (THINGSPEC_Activate | THINGSPEC_Deactivate | THINGSPEC_Switch))
+							{
+								if ((thing.activationtype & THINGSPEC_Switch)
+									&& !(thing.activationtype & (THINGSPEC_Activate | THINGSPEC_Deactivate)))
+								{
+									thing.activationtype |= THINGSPEC_Activate;
+								}
+								// Can it be activated?
+								if (thing.activationtype & THINGSPEC_Activate)
+								{
+									thing.activationtype &= ~THINGSPEC_Activate; // Clear flag
+									if (thing.activationtype & THINGSPEC_Switch) // Set other flag if switching
+										thing.activationtype |= THINGSPEC_Deactivate;
+									thing.Activate(pmo);
+								}
+								// If not, can it be deactivated?
+								else if (thing.activationtype & THINGSPEC_Deactivate)
+								{
+									thing.activationtype &= ~THINGSPEC_Deactivate; // Clear flag
+									if (thing.activationtype & THINGSPEC_Switch)	// Set other flag if switching
+										thing.activationtype |= THINGSPEC_Activate;
+									thing.Deactivate(pmo);
+								}
+							}
+						} else if (!selectables[selnum].Used(pmo)) {
+							pmo.A_StartSound("noselect", CHAN_ITEM);
+						}
+					}
+				} else if (cursec_usable && !inswarray && !inobjarray) {
+					if (!pmo.CurSector.SecActTarget || !pmo.CurSector.TriggerSectorActions(pmo, SectorAction.SECSPAC_Use))
+						pmo.A_StartSound("noselect", CHAN_ITEM);
+				}
+				isosel[e.Player].SetBool(false);
+			}
+		}
+
+		[key1, key2] = Bindings.GetKeysForCommand("cycle_select");
+		if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
+		{
+			viewh = players[e.Player].mo.height*0.5; // viewheight*players[e.Player].crouchfactor;
+			if (isosel[e.Player].GetBool())
+			{
+				// Handle next selection change, if possible
+				if (inswarray && (switches.Size() > 0))
+				{
+					if (++selnum >= switches.Size())
+					{
+						selnum = 0;
+						if (!cursec_usable && (selectables.Size() > 0)) { inobjarray = true; inswarray = false; }
+						else if (cursec_usable) { inswarray = false; }
+					}
+				} else if (inobjarray && (selectables.Size() > 0)) {					
+					if (++selnum >= selectables.Size())
+					{
+						selnum = 0;
+						if (!cursec_usable && (switches.Size() > 0)) { inobjarray = false; inswarray = true; }
+						else if (cursec_usable) { inobjarray = false; }
+					}
+				} else if (cursec_usable && !inswarray && !inobjarray) {
+					selnum = 0;
+					if (switches.Size() > 0) inswarray = true;
+					else if (selectables.Size() > 0) inobjarray = true;
+				}
+
+				// Update selected marker position
+				if (cursec_usable && !inswarray && !inobjarray)
+				{
+					selx[e.Player].SetFloat(pmo.pos.X);
+					sely[e.Player].SetFloat(pmo.pos.Y);
+					selz[e.Player].SetFloat(pmo.floorz);
+				} else if (inswarray && (switches.Size() > selnum)) {
+					Vector3 midln = ((switches[selnum].v1.p.x + switches[selnum].v2.p.x)*0.5,
+									 (switches[selnum].v1.p.y + switches[selnum].v2.p.y)*0.5,
+									 pmo.pos.Z + viewh);
+					[delta, target_angle, target_pitch] = lookAt(pmo.pos + (0, 0, viewh), midln);
+					bool tbool = pmo.LineTrace(target_angle,
+											   (pmo.pos.xy - midln.xy).length() + 8.0,
+											   0, TRF_THRUACTORS | TRF_BLOCKUSE, viewh, data:t);
+					if (!tbool || (t.hitType != TRACE_HitWall) || !t.hitLine || (t.hitLine.Index() != switches[selnum].Index()))
+					{
+						// Center of wall not in line of sight of the player
+						bool setfalse = tbool;
+						if (!tbool)
+						{
+							// Maybe the line isn't a wall! Check if it can for SPAC_UseBack condition
+							int plside = Level.ActorOnLineSide(pmo, switches[selnum]);
+							if (plside == 1 && !(switches[selnum].activation & SPAC_UseBack)) { setfalse = true; }
+							if (plside == 0 && ((switches[selnum].activation & (SPAC_Use | SPAC_UseThrough | SPAC_UseBack)) == SPAC_UseBack))
+							{ setfalse = true; }
+						}
+						if (setfalse)
+						{
+							// Something is obstucting it from the player
+							pmo.A_StartSound("noselect", CHAN_ITEM);
+							isosel[e.Player].SetBool(false);
+						}
+					}
+					if (isosel[e.Player].GetBool()) {
+						selx[e.Player].SetFloat((switches[selnum].v1.p.x + switches[selnum].v2.p.x)*0.5);
+						sely[e.Player].SetFloat((switches[selnum].v1.p.y + switches[selnum].v2.p.y)*0.5);
+						selz[e.Player].SetFloat(pmo.pos.Z + viewh);
+					}
+				} else if (inobjarray && (selectables.Size() > selnum)) {
+					[delta, target_angle, target_pitch] = lookAt(pmo.pos + (0, 0, viewh),
+																 selectables[selnum].pos + (0, 0, selectables[selnum].height*0.5));
+					bool tbool = players[e.Player].mo.LineTrace(target_angle, players[e.Player].mo.UseRange, target_pitch,
+																TRF_ALLACTORS | TRF_BLOCKUSE, viewh, data:t);
+					if (!tbool || (t.hitType != TRACE_HitActor) || !t.hitActor || (t.hitActor != selectables[selnum]))
+					{
+						pmo.A_StartSound("noselect", CHAN_ITEM);
+						isosel[e.Player].SetBool(false);
+					} else {
+						selx[e.Player].SetFloat(selectables[selnum].Pos.X);
+						sely[e.Player].SetFloat(selectables[selnum].Pos.Y);
+						selz[e.Player].SetFloat(selectables[selnum].Pos.Z + selectables[selnum].height*0.5);
+						console.printf("%s selected\n", selectables[selnum].GetClassName());
+					}
+				}
+
+				if (!(inobjarray || inswarray || cursec_usable))//(selectables.Size() == 0) && (switches.Size() == 0))
+				{				
+					pmo.A_StartSound("noselect", CHAN_ITEM);
+					isosel[e.Player].SetBool(false);
+				}
+			} else {
+				selectables.Clear(); selobjsize = 0;
+				switches.Clear(); selswsize = 0;
+				selnum = 0;
+				inobjarray = true;
+				inswarray = false;
+				cursec_usable = (pmo.CurSector.SecActTarget != null);
+				BlockThingsIterator it = BlockThingsIterator.Create(pmo, players[e.Player].mo.UseRange);
+				Actor obj;
+				while (it.Next())
+				{
+					obj = it.Thing;
+					if (!obj || obj.player || obj.bISMONSTER || obj.bCORPSE || obj.bMASTERNOSEE || obj.bONLYVISIBLEINMIRRORS || obj.bDORMANT || obj.bINVISIBLE || obj.bMISSILE || obj.bNOINTERACTION || obj.bICECORPSE || obj.bCRASHED || obj.bINCONVERSATION || pmo.Distance3D(obj) > players[e.Player].mo.UseRange)
+						continue;
+					[delta, target_angle, target_pitch] = lookAt(pmo.pos + (0, 0, viewh),
+																 obj.pos + (0, 0, obj.height*0.5));
+					bool tbool = pmo.LineTrace(target_angle, players[e.Player].mo.UseRange, target_pitch,
+											   TRF_ALLACTORS | TRF_BLOCKUSE, viewh, data:t);
+					if (!tbool || (t.hitType != TRACE_HitActor) || !t.HitActor || (t.HitActor != obj))
+						continue;
+					selectables.Push(obj);
+					selobjsize++;
+					// console.printf("Added %s\n", obj.GetClassName());
+				}
+				BlockLinesIterator it2 = BlockLinesIterator.Create(pmo, players[e.Player].mo.UseRange);
+				Line ln;
+				while (it2.Next())
+				{
+					ln = it2.CurLine;
+					
+					if (shortest_dxy(pmo, ln) > players[e.Player].mo.UseRange)
+						continue;
+
+					if (((pmo.pos.xy - ln.v1.p) dot (ln.v2.p - ln.v1.p) < 0)
+						|| ((pmo.pos.xy - ln.v2.p) dot (ln.v1.p - ln.v2.p) < 0))
+					{
+						if ((pmo.pos.xy - ln.v1.p).length() > players[e.Player].mo.UseRange
+							&& (pmo.pos.xy - ln.v2.p).length() > players[e.Player].mo.UseRange) continue;
+					}
+
+					if (!(ln.activation & (SPAC_Use | SPAC_UseThrough | SPAC_UseBack)) && (ln.special == 0))
+					{
+						int pside = Level.ActorOnLineSide(pmo, ln);
+						Sector sec = pside == 0 ? ln.frontsector : ln.backsector;
+						if (((sec != null) && (sec.SecActTarget == null)))
+							continue;
+					}
+					switches.Push(ln);
+					selswsize++;
+				}
+				for (int iter = 0; iter < switches.Size(); iter++)
+				{
+					// Something in LineTrace() prevents this from being called inside the BlockLineIterator while loop
+					ln = switches[iter];
+					Vector3 midln = ((ln.v1.p.x + ln.v2.p.x)*0.5,
+									 (ln.v1.p.y + ln.v2.p.y)*0.5,
+									 pmo.pos.Z + viewh);
+					[delta, target_angle, target_pitch] = lookAt(pmo.pos + (0, 0, viewh), midln);
+					bool tempbool = pmo.LineTrace(target_angle,
+												  (pmo.pos.xy - midln.xy).length() + 8.0,
+												  0, TRF_THRUACTORS | TRF_BLOCKUSE, viewh, data:t);
+					if (!tempbool || (t.HitType != TRACE_HitWall) || !t.HitLine || (t.HitLine.Index() != ln.Index()))
+					{
+						// Center of wall not in line of sight of the player
+						if (!tempbool)
+						{
+							// Maybe the line isn't a wall! Check if it can for SPAC_UseBack condition
+							int plside = Level.ActorOnLineSide(pmo, ln);
+							if (plside == 1 && !(ln.activation & SPAC_UseBack)) { switches.Delete(iter--); }
+							if (plside == 0 && ((ln.activation & (SPAC_Use | SPAC_UseThrough | SPAC_UseBack)) == SPAC_UseBack))
+							{ switches.Delete(iter--); }
+						} else {
+							// Something is obstucting it from the player
+							switches.Delete(iter--);
+						}
+					}
+				}
+				selswsize = switches.Size();
+				isosel[e.Player].SetBool(cursec_usable || (selswsize > 0) || (selobjsize > 0));
+				if (cursec_usable) {
+					selx[e.Player].SetFloat(pmo.pos.X);
+					sely[e.Player].SetFloat(pmo.pos.Y);
+					selz[e.Player].SetFloat(pmo.floorz);
+				} else if (selswsize > 0) {
+					inswarray = true;
+					selx[e.Player].SetFloat((switches[0].v1.p.x + switches[0].v2.p.x)*0.5);
+					sely[e.Player].SetFloat((switches[0].v1.p.y + switches[0].v2.p.y)*0.5);
+					selz[e.Player].SetFloat(pmo.pos.Z + viewh);
+					// console.printf("%d Lines selected\n", selswsize);
+				} else if (selobjsize > 0) {
+					inobjarray = true;
+					selx[e.Player].SetFloat(selectables[0].Pos.X);
+					sely[e.Player].SetFloat(selectables[0].Pos.Y);
+					selz[e.Player].SetFloat(selectables[0].Pos.Z + selectables[0].height*0.5);
+					console.printf("%s selected\n", selectables[0].GetClassName());
+				} else {
+					pmo.A_StartSound("noselect", CHAN_ITEM);
+				}
+			}
+		}
+	}
     else if (e.Name == "MYKEYUP")
-      {
-	int key1, key2;
-	[key1, key2] = Bindings.GetKeysForCommand("rotate_cam_left");
-	if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
-	  CVar.GetCVar("RotatingLeft", players[e.Player]).SetBool(false);
-	else
+    {
+		int key1, key2;
+		[key1, key2] = Bindings.GetKeysForCommand("rotate_cam_left");
+		if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
+			rotlefts[e.Player].SetBool(false);
+		else
+		{
+			[key1, key2] = Bindings.GetKeysForCommand("rotate_cam_right");
+			if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
+				rotrights[e.Player].SetBool(false);
+		}
+	}
+  }
+
+  override void WorldThingDestroyed(WorldEvent e) 
+  {
+	  if (e.Thing && (selobjsize > 0))
 	  {
-	    [key1, key2] = Bindings.GetKeysForCommand("rotate_cam_right");
-	    if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
-	      CVar.GetCVar("RotatingRight", players[e.Player]).SetBool(false);
+		  int thindex = selectables.Find(e.Thing);
+		  if (thindex != selobjsize) // selectables.Size()
+		  {
+			  selectables.Delete(thindex);
+			  selobjsize--;
+		  }
 	  }
-      }
+  }
+
+  override void WorldTick()
+  {
+	  for (int i = 0; i < MAXPLAYERS; i++)
+	  {
+		  if (PlayerInGame[i] && players[i].mo && isosel[i].GetBool())
+		  {
+			  if ((players[i].mo.Vel.X != 0) || (players[i].mo.Vel.Y != 0))
+			  {
+				  isosel[i].SetBool(false);
+			  }
+		  }
+	  }
   }
 }
 
@@ -139,8 +514,10 @@ class ScopeCamera : Actor
 	}
 }
 
-class MyStaticEventHandler : StaticEventHandler
+class CameraSpawnHandler : EventHandler // Can't be static because camera actor gets spawned
 {
+	cvar isodists[MAXPLAYERS], isoyaws[MAXPLAYERS], isopitches[MAXPLAYERS];
+	cvar isospeeds[MAXPLAYERS], rotatelefts[MAXPLAYERS], rotaterights[MAXPLAYERS];
   override void PlayerSpawned(playerEvent e)
   {
     // Add a scope camera to each player, and store it in player.mo.tracer
@@ -182,10 +559,13 @@ class MyStaticEventHandler : StaticEventHandler
 		players[i].camera.player = players[i]; // Necessary for pain and pickup screen flashes. Adds viewbob too.
 	    players[i].mo.tracer.tracer = players[i].camera; // Storage for retrieval in case player.camera gets changed
 	    int camflags = VPSF_ABSOLUTEOFFSET | VPSF_ALLOWOUTOFBOUNDS | VPSF_ORTHOGRAPHIC;
-	    CVar isodist = CVar.GetCVar("IsometricDist", players[i]);
-	    CVar isoyaw = CVar.GetCVar("IsometricYaw", players[i]);
-	    CVar isopitch = CVar.GetCVar("IsometricPitch", players[i]);
-	    SpectatorCamera(players[i].camera).Init(isodist.GetFloat(), isoyaw.GetFloat(), isopitch.GetFloat(), camflags);
+	    isodists[i] = CVar.GetCVar("IsometricDist", players[i]);
+	    isoyaws[i] = CVar.GetCVar("IsometricYaw", players[i]);
+	    isopitches[i] = CVar.GetCVar("IsometricPitch", players[i]);
+		isospeeds[i] = CVar.GetCVar("IsometricSpeed", players[i]);
+		rotatelefts[i] = CVar.GetCVar("RotatingLeft", players[i]);
+	    rotaterights[i] = CVar.GetCVar("RotatingRight", players[i]);
+	    SpectatorCamera(players[i].camera).Init(isodists[i].GetFloat(), isoyaws[i].GetFloat(), isopitches[i].GetFloat(), camflags);
 	    // The following has to come after Init
 	    // SpectatorCamera(players[i].camera).lagdistance = 150.0; // Use for a lazy camera that only follows if you get away from center
 	    // SpectatorCamera(players[i].camera).chasemode = 2; // 0: chase until tracer centered, 1: same but only when tracer is moving, 2: stop chase if tracer within lagdistance
@@ -196,42 +576,39 @@ class MyStaticEventHandler : StaticEventHandler
   override void WorldTick()
   {
     for (int i = 0; i < MAXPLAYERS; i++)
-      {
-	if (PlayerInGame[i] && players[i].mo)
-	  {
-	    if ((!players[i].camera || (players[i].camera == players[i].mo)) && players[i].mo.tracer && players[i].mo.tracer.tracer)
-	    {
-	      // player.camera was reset for some reason
-	      // Retreive from storage
-	      players[i].camera = players[i].mo.tracer.tracer;
-	    }
-	    if (players[i].camera)
-	    {
-	      Bool rotateleft = CVar.GetCVar("RotatingLeft", players[i]).GetBool();
-	      Bool rotateright = CVar.GetCVar("RotatingRight", players[i]).GetBool();
-	      if (rotateleft || rotateright)
+    {
+		if (PlayerInGame[i] && players[i].mo)
 		{
-		  CVar isodist = CVar.GetCVar("IsometricDist", players[i]);
-		  CVar isoyaw = CVar.GetCVar("IsometricYaw", players[i]);
-		  CVar isopitch = CVar.GetCVar("IsometricPitch", players[i]);
-		  CVar isospeed = CVar.GetCVar("IsometricSpeed", players[i]);
-		  isoyaw.SetFloat(isoyaw.GetFloat() + (rotateright ? 1 : -1) * isospeed.GetFloat());
-		  int camflags = VPSF_ABSOLUTEOFFSET | VPSF_ALLOWOUTOFBOUNDS | VPSF_ORTHOGRAPHIC;
-		  SpectatorCamera(players[i].camera).Init(isodist.GetFloat(), isoyaw.GetFloat(), isopitch.GetFloat(), camflags);
-	      }
-	    }
-	  }
-      }
+			if ((!players[i].camera || (players[i].camera == players[i].mo)) && players[i].mo.tracer && players[i].mo.tracer.tracer)
+			{
+				// player.camera was reset for some reason
+				// Retreive from storage
+				players[i].camera = players[i].mo.tracer.tracer;
+			}
+			if (players[i].camera)
+			{
+				if (rotatelefts[i].GetBool() || rotaterights[i].GetBool())
+				{
+					isoyaws[i].SetFloat(isoyaws[i].GetFloat() + (rotaterights[i].GetBool() ? 1 : -1) * isospeeds[i].GetFloat());
+					int camflags = VPSF_ABSOLUTEOFFSET | VPSF_ALLOWOUTOFBOUNDS | VPSF_ORTHOGRAPHIC;
+					SpectatorCamera(players[i].camera).Init(isodists[i].GetFloat(),
+															isoyaws[i].GetFloat(),
+															isopitches[i].GetFloat(), camflags);
+				}
+			}
+		}
+	}
   }
 }
 
 class RenderCursorsOverlay : EventHandler
 {
-	cvar isoyaw, isopitch, isoaimdist;
+	cvar isoyaw, isopitch, isoaimdist, isoaimassist;
 	cvar showwep, showscope, showscopehealth;
 	cvar wepsize, wepxpos, wepypos;
 	cvar scopesize, scopexpos, scopeypos;
 	cvar aimbeam, scopetype, cursdist;
+	cvar isosel, selx, sely, selz;
 	FLineTraceData t[MAXPLAYERS];
 	Vector3 hitloc;
 	Actor actorhit[MAXPLAYERS];
@@ -318,6 +695,7 @@ class RenderCursorsOverlay : EventHandler
 	  isoyaw = CVar.GetCVar("IsometricYaw", players[consoleplayer]);
 	  isopitch = CVar.GetCVar("IsometricPitch", players[consoleplayer]);
 	  isoaimdist = CVar.GetCVar("IsoAimAssistMaxDist", players[consoleplayer]);
+	  isoaimassist = CVar.GetCVar("IsoAimAssist", players[consoleplayer]);
 	  showwep = CVar.GetCVar("IsoHUDShowWeapon", players[consoleplayer]);
 	  showscope = CVar.GetCVar("IsoHUDShowTarget", players[consoleplayer]);
 	  showscopehealth = CVar.GetCVar("IsoHUDShowTargetHealth", players[consoleplayer]);
@@ -330,6 +708,10 @@ class RenderCursorsOverlay : EventHandler
 	  aimbeam  = CVar.GetCVar("IsoAimBeam", players[consoleplayer]);
 	  scopetype = CVar.GetCVar("IsoHUDScopeType", players[consoleplayer]);
 	  cursdist = CVar.GetCVar("IsoCursorDist", players[consoleplayer]);
+	  isosel = CVar.GetCVar("IsoSelected", players[consoleplayer]);
+	  selx = CVar.GetCVar("SelXPos", players[consoleplayer]);
+	  sely = CVar.GetCVar("SelYPos", players[consoleplayer]);
+	  selz = CVar.GetCVar("SelZPos", players[consoleplayer]);
 	  hitloc = (0, 0, 0);
 	  for (int i = 0; i < MAXPLAYERS; i++)
 	  {
@@ -344,7 +726,7 @@ class RenderCursorsOverlay : EventHandler
 		if (PlayerInGame[i] && players[i].mo)
 		{
 			PlayerPawn pmo = players[i].mo;
-			float max_dist = CVar.GetCVar("IsoAimAssistMaxDist", players[consoleplayer]).GetFloat();
+			float max_dist = isoaimdist.GetFloat();
 			if (pmo.LineTrace(pmo.angle, max_dist, pmo.pitch, TRF_NOSKY, pmo.viewheight*pmo.player.crouchfactor, data:t[i]))
 			{
 				if ((t[i].HitType == TRACE_HitActor) && t[i].hitActor.bISMONSTER && !t[i].hitActor.bFRIENDLY && !t[i].hitActor.bCORPSE)
@@ -376,38 +758,59 @@ class RenderCursorsOverlay : EventHandler
 		  int wsize = (int)(clamp(wepsize.GetInt(), 1, 100)*2/scaleFactor.x);
 	      int wxpos = (int)(200*clamp(wepxpos.GetFloat(), -1.0, 1.0)*scaleFactor.x);
 	      int wypos = (int)(-200*clamp(wepypos.GetFloat(), 0.0, 1.0)*scaleFactor.y);
-	      StatusBar.DrawInventoryIcon(players[consoleplayer].readyweapon, (wxpos, wypos),
-					  StatusBar.DI_SCREEN_CENTER_BOTTOM | StatusBar.DI_ITEM_CENTER,
-					  1.0, (2*wsize, wsize), (0.03*wsize, 0.03*wsize)); // alpha, boxsize, scale
+		  let curwep = players[consoleplayer].readyweapon;
+		  let curpsp = players[consoleplayer].FindPSprite(PSP_WEAPON);
+		  if (players[consoleplayer].mo.health > 0) // necessary check to prevent crash
+		  {
+			  StatusBar.DrawInventoryIcon(curwep, (wxpos, wypos),
+										  StatusBar.DI_SCREEN_CENTER_BOTTOM | StatusBar.DI_ITEM_CENTER,
+										  (curpsp.CurState == curwep.FindState("Fire") ) ||
+										  curpsp.CurState.InStateSequence(curwep.FindState("Ready")) ? 1.0 : 0.7, // alpha
+										  (2*wsize, wsize), (0.03*wsize, 0.03*wsize)); // boxsize, scale
+		  }
 	    }
 
 	    int cursordist = cursdist.GetInt(); // 150;
 	    float diffangle = pmo.deltaangle(pang, cyaw);
 	    int cosine = (int)(-0.5*cursordist*Cos(diffangle));
 	    int sine = (int)(cursordist*Sin(diffangle));
+		int selcos = 0;
+		int selsin = 0;
 	    if(players[consoleplayer].camera && players[consoleplayer].camera.tracer)
 	    {
 	      if(players[consoleplayer].camera.ViewPos && (players[consoleplayer].camera.ViewPos.Flags & VPSF_ORTHOGRAPHIC))
 	      { // If using orthographic projection
-		Vector3 playerdisp = players[consoleplayer].camera.tracer.pos - players[consoleplayer].camera.pos;
-		diffangle = pmo.deltaangle(playerdisp.Angle(), cyaw);
-		// Translate game/map (x, y, z) position into screen (x, y) location
-		double xproj = 640/players[consoleplayer].camera.ViewPos.offset.length();
-		double yproj = Sin(cpit)*xproj;
-		double zproj = Cos(cpit)*xproj;
-		cosine -= (int)(playerdisp.xy.length()*Cos(diffangle)*yproj);
-		cosine -= (int)(playerdisp.z*zproj);
-		// cosine -= (int)(players[consoleplayer].camera.tracer.height*0.5*zproj);
-		sine += (int)(playerdisp.xy.length()*Sin(diffangle)*xproj);
-	      } // else use libEye to locate camera.tracer's screen coordinates
+			  Vector3 playerdisp = players[consoleplayer].camera.tracer.pos - players[consoleplayer].camera.pos;
+			  diffangle = pmo.deltaangle(playerdisp.Angle(), cyaw);
+			  // Translate game/map (x, y, z) position into screen (x, y) location
+			  double xproj = 640/players[consoleplayer].camera.ViewPos.offset.length();
+			  double yproj = Sin(cpit)*xproj;
+			  double zproj = Cos(cpit)*xproj;
+			  cosine -= (int)(playerdisp.xy.length()*Cos(diffangle)*yproj); // + playerdisp.z*zproj); no need since Spectatorcamera tracks zpos
+			  cosine -= (int)(players[consoleplayer].camera.tracer.height*0.5*zproj);
+			  sine += (int)(playerdisp.xy.length()*Sin(diffangle)*xproj);
+			  // else use libEye to locate camera.tracer's screen coordinates
+
+			  // Do the same for position of selected object or switch
+			  Vector3 seldisp = (selx.GetFloat(), sely.GetFloat(), selz.GetFloat()) - players[consoleplayer].camera.pos;
+			  diffangle = pmo.deltaangle(seldisp.Angle(), cyaw);
+			  selcos -= (int)(seldisp.xy.length()*Cos(diffangle)*yproj + seldisp.z*zproj);
+			  selsin += (int)(seldisp.xy.length()*Sin(diffangle)*xproj);
+	      }
 	    }
 
-	    if (CVar.GetCVar("IsoAimAssist", players[consoleplayer]).GetBool())
+	    if (isoaimassist.GetBool())
 	    {
 	      StatusBar.DrawImage("sprites/aim_hair.png", (sine/scaleFactor.x, cosine/scaleFactor.y),
 				  StatusBar.DI_SCREEN_CENTER | StatusBar.DI_ITEM_CENTER, scale: (2.4/scaleFactor.x, 2.4/scaleFactor.y));
 	    } else {
 	      StatusBar.DrawImage("sprites/dir_hair.png", (sine/scaleFactor.x, cosine/scaleFactor.y),
+				  StatusBar.DI_SCREEN_CENTER | StatusBar.DI_ITEM_CENTER, scale: (1.5/scaleFactor.x, 1.5/scaleFactor.y));
+	    }
+
+		if (isosel.GetBool())
+	    {
+	      StatusBar.DrawImage("sprites/sel_hair.png", (selsin/scaleFactor.x, selcos/scaleFactor.y),
 				  StatusBar.DI_SCREEN_CENTER | StatusBar.DI_ITEM_CENTER, scale: (1.5/scaleFactor.x, 1.5/scaleFactor.y));
 	    }
 
@@ -450,6 +853,7 @@ class RenderCursorsOverlay : EventHandler
 				    StatusBar.DI_SCREEN_CENTER_BOTTOM | StatusBar.DI_ITEM_CENTER,
 				    scale: (ssize, ssize));
 		string scopesprite = (scopetype.GetInt() == 1 ? "sprites/scope_sight.png" : "sprites/scope_sight2.png");
+		if (scopetype.GetInt() == 3) scopesprite = "sprites/scope_sight3.png";
 		StatusBar.DrawImage(scopesprite, (sxpos, sypos),
 				    StatusBar.DI_SCREEN_CENTER_BOTTOM | StatusBar.DI_ITEM_CENTER,
 				    scale: (0.8*ssize, 0.8*ssize));
@@ -474,6 +878,21 @@ class IsoAimAssistHandler : StaticEventHandler
 	// copying RicardoLuis0's Aim Assist Mod v0.8
 	// https://forum.zdoom.org/viewtopic.php?t=62895
 	FLineTraceData tarray[MAXPLAYERS];
+	cvar aimassists[MAXPLAYERS]; // They say that GetCVar() inside WorldTick() is slow?
+	cvar max_dists[MAXPLAYERS];
+
+	override void WorldLoaded (WorldEvent e)
+	{
+		for (int i = 0; i < MAXPLAYERS; i++)
+		{
+			if (PlayerInGame[i] && players[i].mo)
+			{
+				aimassists[i] = CVar.GetCVar("IsoAimAssist", players[i]);
+				max_dists[i] = CVar.GetCVar("IsoAimAssistMaxDist", players[i]);
+				players[i].mo.bPickup = CVar.GetCVar("IsoAllowTouchPickup", players[i]).GetBool(); // Didn't wanna make another eventhandler
+			}
+		}
+	}
 
 	// do linetrace and get results
 	play Actor,double,Vector3 doTrace(PlayerPawn a,double i_angle,double i_rotation,Actor closest,double closest_distance, double max_dist){
@@ -522,8 +941,8 @@ class IsoAimAssistHandler : StaticEventHandler
 		Actor closest = null;
 		Actor hit = null;
 		Vector3 hitloc = (0, 0, 0);
-		cvar aimassist = CVar.GetCVar("IsoAimAssist", players[pnum]);
-		float max_dist = CVar.GetCVar("IsoAimAssistMaxDist", players[pnum]).GetFloat();
+		cvar aimassist = aimassists[pnum];
+		float max_dist = max_dists[pnum].GetFloat();
 		float closest_distance = max_dist + 1;
 		
 		//check straight ahead

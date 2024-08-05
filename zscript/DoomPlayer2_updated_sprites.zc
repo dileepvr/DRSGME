@@ -1,19 +1,9 @@
-class DoomPlayer2 : DoomPlayer replaces DoomPlayer
+class DoomPlayer2 : DoomPlayer // replaces DoomPlayer
 {
   Default
     {
-      Player.DisplayName "Marine";
+      Player.DisplayName "Doomguy2";
       Player.CrouchSprite "PLYC";
-      Player.StartItem "PistolNew";
-      Player.StartItem "FistNew";
-      Player.StartItem "Clip", 50;
-      Player.WeaponSlot 1, "FistNew", "ChainsawNew";
-      Player.WeaponSlot 2, "PistolNew";
-      Player.WeaponSlot 3, "ShotgunNew", "SuperShotgunNew";
-      Player.WeaponSlot 4, "ChaingunNew";
-      Player.WeaponSlot 5, "RocketLauncherNew";
-      Player.WeaponSlot 6, "PlasmaRifleNew";
-      Player.WeaponSlot 7, "BFG9000New";
 
       +NOSKIN
     }
@@ -21,15 +11,39 @@ class DoomPlayer2 : DoomPlayer replaces DoomPlayer
   States
     {
     Spawn:
-      PLAY A 0 A_JumpIfInventory("UsingFist",1,"SpawnFist");
-      PLAY A 0 A_JumpIfInventory("UsingChainsaw",1,"SpawnChainsaw");
-      PLAY A 0 A_JumpIfInventory("UsingPistol",1,"SpawnPistol");
-      PLAY A 0 A_JumpIfInventory("UsingShotgun",1,"SpawnShotgun");
-      PLAY A 0 A_JumpIfInventory("UsingSSG",1,"SpawnSSG");
-      PLAY A 0 A_JumpIfInventory("UsingChaingun",1,"SpawnChaingun");
-      PLAY A 0 A_JumpIfInventory("UsingRocketlauncher",1,"SpawnRocketLauncher");
-      PLAY A 0 A_JumpIfInventory("UsingPlasmagun",1,"SpawnPlasmagun");
-      PLAY A 0 A_JumpIfInventory("UsingBFG",1,"SpawnBFG");
+	  PLAY A 0 {
+		  bool found;
+		  int slot;
+		  int index;
+		  [found, slot, index] = Player.Weapons.LocateWeapon(Player.ReadyWeapon.GetClass());
+		  switch (slot) {
+		  case 1:
+			  if (index == 0) SetStateLabel("SpawnFist");
+			  else SetStateLabel("SpawnChainsaw");
+			  break;
+		  case 2:
+			  SetStateLabel("SpawnPistol");
+			  break;
+		  case 3:
+			  if (index == 0) SetStateLabel("SpawnShotgun");
+			  else SetStateLabel("SpawnSSG");
+			  break;
+		  case 4:
+			  SetStateLabel("SpawnChaingun");
+			  break;
+		  case 5:
+			  SetStateLabel("SpawnRocketLauncher");
+			  break;
+		  case 6:
+			  SetStateLabel("SpawnPlasmagun");
+			  break;
+		  case 7:
+			  SetStateLabel("SpawnBFG");
+			  break;
+		  default:
+			  break;
+		  }
+	  }
       PLAY A 1;
       Loop;
     SpawnFist:
@@ -78,15 +92,39 @@ class DoomPlayer2 : DoomPlayer replaces DoomPlayer
       PLA7 A 1;
       Goto Spawn;
     See:
-      PLAY A 0 A_JumpIfInventory("UsingFist",1,"SeeFist");
-      PLAY A 0 A_JumpIfInventory("UsingChainsaw",1,"SeeChainsaw");
-      PLAY A 0 A_JumpIfInventory("UsingPistol",1,"SeePistol");
-      PLAY A 0 A_JumpIfInventory("UsingShotgun",1,"SeeShotgun");
-      PLAY A 0 A_JumpIfInventory("UsingSSG",1,"SeeSSG");
-      PLAY A 0 A_JumpIfInventory("UsingChaingun",1,"SeeChaingun");
-      PLAY A 0 A_JumpIfInventory("UsingRocketlauncher",1,"SeeRocketLauncher");
-      PLAY A 0 A_JumpIfInventory("UsingPlasmagun",1,"SeePlasmagun");
-      PLAY A 0 A_JumpIfInventory("UsingBFG",1,"SeeBFG");
+	  PLAY A 0 {
+		  bool found;
+		  int slot;
+		  int index;
+		  [found, slot, index] = Player.Weapons.LocateWeapon(Player.ReadyWeapon.GetClass());
+		  switch (slot) {
+		  case 1:
+			  if (index == 0) SetStateLabel("SpawnFist");
+			  else SetStateLabel("SpawnChainsaw");
+			  break;
+		  case 2:
+			  SetStateLabel("SpawnPistol");
+			  break;
+		  case 3:
+			  if (index == 0) SetStateLabel("SpawnShotgun");
+			  else SetStateLabel("SpawnSSG");
+			  break;
+		  case 4:
+			  SetStateLabel("SpawnChaingun");
+			  break;
+		  case 5:
+			  SetStateLabel("SpawnRocketLauncher");
+			  break;
+		  case 6:
+			  SetStateLabel("SpawnPlasmagun");
+			  break;
+		  case 7:
+			  SetStateLabel("SpawnBFG");
+			  break;
+		  default:
+			  break;
+		  }
+	  }
       PLAY ABCD 4;
       Loop;
     SeeFist:
@@ -117,15 +155,39 @@ class DoomPlayer2 : DoomPlayer replaces DoomPlayer
       PLA7 ABCD 4;
       Goto SpawnBFG;
     Missile:
-      PLAY E 0 A_JumpIfInventory("UsingFist",1,"MissileFist");
-      PLAY E 0 A_JumpIfInventory("UsingChainsaw",1,"MissileChainsaw");
-      PLAY E 0 A_JumpIfInventory("UsingPistol",1,"MissilePistol");
-      PLAY E 0 A_JumpIfInventory("UsingShotgun",1,"MissileShotgun");
-      PLAY E 0 A_JumpIfInventory("UsingChaingun",1,"MissileChaingun");
-      PLAY E 0 A_JumpIfInventory("UsingSSG",1,"MissileSSG");
-      PLAY E 0 A_JumpIfInventory("UsingRocketlauncher",1,"MissileRocketLauncher");
-      PLAY E 0 A_JumpIfInventory("UsingPlasmagun",1,"MissilePlasmagun");
-      PLAY E 0 A_JumpIfInventory("UsingBFG",1,"MissileBFG");
+	  PLAY E 0 {
+		  bool found;
+		  int slot;
+		  int index;
+		  [found, slot, index] = Player.Weapons.LocateWeapon(Player.ReadyWeapon.GetClass());
+		  switch (slot) {
+		  case 1:
+			  if (index == 0) SetStateLabel("MissileFist");
+			  else SetStateLabel("MissileChainsaw");
+			  break;
+		  case 2:
+			  SetStateLabel("MissilePistol");
+			  break;
+		  case 3:
+			  if (index == 0) SetStateLabel("MissileShotgun");
+			  else SetStateLabel("MissileSSG");
+			  break;
+		  case 4:
+			  SetStateLabel("MissileChaingun");
+			  break;
+		  case 5:
+			  SetStateLabel("MissileRocketLauncher");
+			  break;
+		  case 6:
+			  SetStateLabel("MissilePlasmagun");
+			  break;
+		  case 7:
+			  SetStateLabel("MissileBFG");
+			  break;
+		  default:
+			  break;
+		  }
+	  }
       PLAY E 12;
       Goto Spawn;
     MissileFist:
@@ -156,15 +218,39 @@ class DoomPlayer2 : DoomPlayer replaces DoomPlayer
       PLA7 E 12;
       Goto Spawn;
     Melee:
-      PLAY F 0 A_JumpIfInventory("UsingFist",1,"MeleeFist");
-      PLAY F 0 A_JumpIfInventory("UsingChainsaw",1,"MeleeChainsaw");
-      PLAY F 0 A_JumpIfInventory("UsingPistol",1,"MeleePistol");
-      PLAY F 0 A_JumpIfInventory("UsingShotgun",1,"MeleeShotgun");
-      PLAY F 0 A_JumpIfInventory("UsingSSG",1,"MeleeSSG");
-      PLAY F 0 A_JumpIfInventory("UsingChaingun",1,"MeleeChaingun");
-      PLAY F 0 A_JumpIfInventory("UsingRocketlauncher",1,"MeleeRocketLauncher");
-      PLAY F 0 A_JumpIfInventory("UsingPlasmagun",1,"MeleePlasmagun");
-      PLAY F 0 A_JumpIfInventory("UsingBFG",1,"MeleeBFG");
+	  PLAY F 0 {
+		  bool found;
+		  int slot;
+		  int index;
+		  [found, slot, index] = Player.Weapons.LocateWeapon(Player.ReadyWeapon.GetClass());
+		  switch (slot) {
+		  case 1:
+			  if (index == 0) SetStateLabel("MeleeFist");
+			  else SetStateLabel("MeleeChainsaw");
+			  break;
+		  case 2:
+			  SetStateLabel("MeleePistol");
+			  break;
+		  case 3:
+			  if (index == 0) SetStateLabel("MeleeShotgun");
+			  else SetStateLabel("MeleeSSG");
+			  break;
+		  case 4:
+			  SetStateLabel("MeleeChaingun");
+			  break;
+		  case 5:
+			  SetStateLabel("MeleeRocketLauncher");
+			  break;
+		  case 6:
+			  SetStateLabel("MeleePlasmagun");
+			  break;
+		  case 7:
+			  SetStateLabel("MeleeBFG");
+			  break;
+		  default:
+			  break;
+		  }
+	  }
       PLAY F 6 BRIGHT;
       Goto Missile;
     MeleeFist:
@@ -195,15 +281,39 @@ class DoomPlayer2 : DoomPlayer replaces DoomPlayer
       PLA7 F 6 BRIGHT;
       Goto Missile;
     Pain:
-      PLAY G 0 A_JumpIfInventory("UsingFist",1,"PainFist");
-      PLAY G 0 A_JumpIfInventory("UsingChainsaw",1,"PainChainsaw");
-      PLAY G 0 A_JumpIfInventory("UsingPistol",1,"PainPistol");
-      PLAY G 0 A_JumpIfInventory("UsingShotgun",1,"PainShotgun");
-      PLAY G 0 A_JumpIfInventory("UsingSSG",1,"PainSSG");
-      PLAY G 0 A_JumpIfInventory("UsingChaingun",1,"PainChaingun");
-      PLAY G 0 A_JumpIfInventory("UsingRocketlauncher",1,"PainRocketLauncher");
-      PLAY G 0 A_JumpIfInventory("UsingPlasmagun",1,"PainPlasmagun");
-      PLAY G 0 A_JumpIfInventory("UsingBFG",1,"PainBFG");
+	  PLAY G 0 {
+		  bool found;
+		  int slot;
+		  int index;
+		  [found, slot, index] = Player.Weapons.LocateWeapon(Player.ReadyWeapon.GetClass());
+		  switch (slot) {
+		  case 1:
+			  if (index == 0) SetStateLabel("PainFist");
+			  else SetStateLabel("PainChainsaw");
+			  break;
+		  case 2:
+			  SetStateLabel("PainPistol");
+			  break;
+		  case 3:
+			  if (index == 0) SetStateLabel("PainShotgun");
+			  else SetStateLabel("PainSSG");
+			  break;
+		  case 4:
+			  SetStateLabel("PainChaingun");
+			  break;
+		  case 5:
+			  SetStateLabel("PainRocketLauncher");
+			  break;
+		  case 6:
+			  SetStateLabel("PainPlasmagun");
+			  break;
+		  case 7:
+			  SetStateLabel("PainBFG");
+			  break;
+		  default:
+			  break;
+		  }
+	  }
       PLAY G 4;
       PLAY G 4 A_Pain;
       Goto Spawn;
@@ -244,15 +354,39 @@ class DoomPlayer2 : DoomPlayer replaces DoomPlayer
       PLA7 G 4 A_Pain;
       Goto Spawn;
     Death:
-      PLAY H 0 A_JumpIfInventory("UsingFist",1,"DeathFist");
-      PLAY H 0 A_JumpIfInventory("UsingChainsaw",1,"DeathChainsaw");
-      PLAY H 0 A_JumpIfInventory("UsingPistol",1,"DeathPistol");
-      PLAY H 0 A_JumpIfInventory("UsingShotgun",1,"DeathShotgun");
-      PLAY H 0 A_JumpIfInventory("UsingSSG",1,"DeathSSG");
-      PLAY H 0 A_JumpIfInventory("UsingChaingun",1,"DeathChaingun");
-      PLAY H 0 A_JumpIfInventory("UsingRocketlauncher",1,"DeathRocketLauncher");
-      PLAY H 0 A_JumpIfInventory("UsingPlasmagun",1,"DeathPlasmagun");
-      PLAY H 0 A_JumpIfInventory("UsingBFG",1,"DeathBFG");
+	  PLAY H 0 {
+		  bool found;
+		  int slot;
+		  int index;
+		  [found, slot, index] = Player.Weapons.LocateWeapon(Player.ReadyWeapon.GetClass());
+		  switch (slot) {
+		  case 1:
+			  if (index == 0) SetStateLabel("DeathFist");
+			  else SetStateLabel("DeathChainsaw");
+			  break;
+		  case 2:
+			  SetStateLabel("DeathPistol");
+			  break;
+		  case 3:
+			  if (index == 0) SetStateLabel("DeathShotgun");
+			  else SetStateLabel("DeathSSG");
+			  break;
+		  case 4:
+			  SetStateLabel("DeathChaingun");
+			  break;
+		  case 5:
+			  SetStateLabel("DeathRocketLauncher");
+			  break;
+		  case 6:
+			  SetStateLabel("DeathPlasmagun");
+			  break;
+		  case 7:
+			  SetStateLabel("DeathBFG");
+			  break;
+		  default:
+			  break;
+		  }
+	  }
       PLAY H 10;
       PLAY I 10 A_PlayerScream;
       PLAY J 10 A_NoBlocking;
@@ -323,15 +457,39 @@ class DoomPlayer2 : DoomPlayer replaces DoomPlayer
       PLA7 N -1;
       Stop;
     XDeath:
-      PLAY O 0 A_JumpIfInventory("UsingFist",1,"XDeathFist");
-      PLAY O 0 A_JumpIfInventory("UsingChainsaw",1,"XDeathChainsaw");
-      PLAY O 0 A_JumpIfInventory("UsingPistol",1,"XDeathPistol");
-      PLAY O 0 A_JumpIfInventory("UsingShotgun",1,"XDeathShotgun");
-      PLAY O 0 A_JumpIfInventory("UsingSSG",1,"XDeathSSG");
-      PLAY O 0 A_JumpIfInventory("UsingChaingun",1,"XDeathChaingun");
-      PLAY O 0 A_JumpIfInventory("UsingRocketlauncher",1,"XDeathRocketLauncher");
-      PLAY O 0 A_JumpIfInventory("UsingPlasmagun",1,"XDeathPlasmagun");
-      PLAY O 0 A_JumpIfInventory("UsingBFG",1,"XDeathBFG");
+	  PLAY O 0 {
+		  bool found;
+		  int slot;
+		  int index;
+		  [found, slot, index] = Player.Weapons.LocateWeapon(Player.ReadyWeapon.GetClass());
+		  switch (slot) {
+		  case 1:
+			  if (index == 0) SetStateLabel("XDeathFist");
+			  else SetStateLabel("XDeathChainsaw");
+			  break;
+		  case 2:
+			  SetStateLabel("XDeathPistol");
+			  break;
+		  case 3:
+			  if (index == 0) SetStateLabel("XDeathShotgun");
+			  else SetStateLabel("XDeathSSG");
+			  break;
+		  case 4:
+			  SetStateLabel("XDeathChaingun");
+			  break;
+		  case 5:
+			  SetStateLabel("XDeathRocketLauncher");
+			  break;
+		  case 6:
+			  SetStateLabel("XDeathPlasmagun");
+			  break;
+		  case 7:
+			  SetStateLabel("XDeathBFG");
+			  break;
+		  default:
+			  break;
+		  }
+	  }
       PLAY O 5;
       PLAY P 5 A_XScream;
       PLAY Q 5 A_NoBlocking;
@@ -404,176 +562,40 @@ class DoomPlayer2 : DoomPlayer replaces DoomPlayer
     }
 }
 
-class FistNew : Fist replaces Fist
+class Swi : TechLamp
 {
-  States
-    {
-    Select:
-      PUNG A 0 A_GiveInventory("UsingFist",1);
-      PUNG A 1 A_Raise;
-      Wait;
-    Deselect:
-      PUNG A 1 A_Lower;
-      PUNG A 0 A_TakeInventory("UsingFist",1);
-      PUNG A 1 A_Lower;
-      Wait;
-    }
-}
+	bool lamp_on; //Used to track whether the lamp is on
 
-class ChainsawNew : Chainsaw replaces Chainsaw
-{
-  default
-    {
-      Decal "BulletChip";
-    }
-  States
-    {
-    Select:
-      SAWG C 0 A_GiveInventory("UsingChainsaw",1);
-      SAWG C 1 A_Raise;
-      Wait;
-    Deselect:
-      SAWG C 1 A_Lower;
-      SAWG C 0 A_TakeInventory("UsingChainsaw",1);
-      SAWG C 1 A_Lower;
-      Wait;
-    }
-}
+	override bool Used (Actor user)
+	{
+		if (!lamp_on)
+		{
+			// Attach dynamic light, play a standard switch sound
+			// and move to the LampOn state label:
+			A_AttachLight('lamplight', DynamicLight.PulseLight, "DDDDFF", 96, 99, DYNAMICLIGHT.LF_ATTENUATE, (0,0,72), 0.4);
+			A_StartSound("switches/normbutn");
+			SetStateLabel("LampOn");
+		}
+		else
+		{
+			// Remove the light, play the sound, change states:
+			A_RemoveLight('lamplight');
+			A_StartSound("switches/normbutn");
+			SetStateLabel("Spawn");
+		}
+		// flip the value of lamp_on:
+		lamp_on = !lamp_on;
+		return true;
+	}
 
-class PistolNew : Pistol replaces Pistol
-{
-  default
-    {
-      Decal "BulletChip";
-    }
-  States
-    {
-    Select:
-      PISG A 0 A_GiveInventory("UsingPistol",1);
-      PISG A 1 A_Raise;
-      Wait;
-    Deselect:
-      PISG A 1 A_Lower;
-      PISG A 0 A_TakeInventory("UsingPistol",1);
-      PISG A 1 A_Lower;
-      Wait;
-    }
+	States
+	{
+	Spawn:
+		TLMP C -1;
+		stop;
+	LampOn:
+		// This is how the regular TechLamp looks:
+		TLMP ABCD 4 Bright;
+		Loop;
+	}
 }
-
-class ShotgunNew : Shotgun replaces Shotgun
-{
-  default
-    {
-      Decal "BulletChip";
-    }
-  States
-    {
-    Select:
-      SHTG A 0 A_GiveInventory("UsingShotgun",1);
-      SHTG A 1 A_Raise;
-      Wait;
-    Deselect:
-      SHTG A 1 A_Lower;
-      SHTG A 0 A_TakeInventory("UsingShotgun",1);
-      SHTG A 1 A_Lower;
-      Wait;
-    }
-}
-
-class SuperShotgunNew : SuperShotgun replaces SuperShotgun
-{
-  default
-    {
-      Decal "BulletChip";
-    }
-  States
-    {
-    Select:
-      SHT2 A 0 A_GiveInventory("UsingSSG",1);
-      SHT2 A 1 A_Raise;
-      Wait;
-    Deselect:
-      SHT2 A 1 A_Lower;
-      SHT2 A 0 A_TakeInventory("UsingSSG",1);
-      SHT2 A 1 A_Lower;
-      Wait;
-    }
-}
-
-class ChaingunNew : Chaingun replaces Chaingun
-{
-  default
-    {
-      Decal "BulletChip";
-    }
-  States
-    {
-    Select:
-      CHGG A 0 A_GiveInventory("UsingChaingun",1);
-      CHGG A 1 A_Raise;
-      Wait;
-    Deselect:
-      CHGG A 1 A_Lower;
-      CHGG A 0 A_TakeInventory("UsingChaingun",1);
-      CHGG A 1 A_Lower;
-      Wait;
-    }
-}
-
-class RocketLauncherNew : RocketLauncher replaces RocketLauncher
-{
-  States
-    {
-    Select:
-      MISG A 0 A_GiveInventory("UsingRocketlauncher",1);
-      MISG A 1 A_Raise;
-      Wait;
-    Deselect:
-      MISG A 1 A_Lower;
-      MISG A 0 A_TakeInventory("UsingRocketlauncher",1);
-      MISG A 1 A_Lower;
-      Wait;
-    }
-}
-
-class PlasmaRifleNew : PlasmaRifle replaces PlasmaRifle
-{
-  States
-    {
-    Select:
-      PLSG A 0 A_GiveInventory("UsingPlasmagun",1);
-      PLSG A 1 A_Raise;
-      Wait;
-    Deselect:
-      PLSG A 1 A_Lower;
-      PLSG A 0 A_TakeInventory("UsingPlasmagun",1);
-      PLSG A 1 A_Lower;
-      Wait;
-    }
-}
-
-class BFG9000New : BFG9000 replaces BFG9000
-{
-  States
-    {
-    Select:
-      BFGG A 0 A_GiveInventory("UsingBFG",1);
-      BFGG A 1 A_Raise;
-      Wait;
-    Deselect:
-      BFGG A 1 A_Lower;
-      BFGG A 0 A_TakeInventory("UsingBFG",1);
-      BFGG A 1 A_Lower;
-      Wait;
-    }
-}
-
-class UsingFist : Inventory {}
-class UsingChainsaw : Inventory {}
-class UsingPistol : Inventory {}
-class UsingShotgun: Inventory {}
-class UsingSSG : Inventory {}
-class UsingChaingun : Inventory {}
-class UsingRocketlauncher: Inventory {}
-class UsingPlasmagun : Inventory {}
-class UsingBFG : Inventory {}
