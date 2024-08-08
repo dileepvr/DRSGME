@@ -23,4 +23,7 @@ defaultbind G "use_selected"
 addmenukey "Clear Selection" "clear_select"
 alias "clear_select" ""
 defaultbind X "clear_select"
+addmenukey "Look Down" "look_down"
+alias "look_down" ""
+defaultbind Z "look_down"
 

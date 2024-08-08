@@ -20,6 +20,7 @@ class MKeyEvents : EventHandler
   cvar isodists[MAXPLAYERS], isopitches[MAXPLAYERS], isoyaws[MAXPLAYERS];
   cvar isoaims[MAXPLAYERS], rotlefts[MAXPLAYERS], rotrights[MAXPLAYERS], isosel[MAXPLAYERS];
   cvar selx[MAXPLAYERS], sely[MAXPLAYERS], selz[MAXPLAYERS];
+  cvar lookingdown[MAXPLAYERS];
   array <Actor> selectables;
   array <Line> switches;
   int selnum, selobjsize, selswsize;
@@ -49,6 +50,7 @@ class MKeyEvents : EventHandler
 		  selx[i] = CVar.GetCVar("SelXPos", players[i]);
 		  sely[i] = CVar.GetCVar("SelYPos", players[i]);
 		  selz[i] = CVar.GetCVar("SelZPos", players[i]);
+		  lookingdown[i] = CVar.GetCVar("IsoLookingDown", players[i]);
 	  }
   }
   
@@ -136,6 +138,12 @@ class MKeyEvents : EventHandler
 		if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
 		{
 			isosel[e.Player].SetBool(false);
+		}
+
+		[key1, key2] = Bindings.GetKeysForCommand("look_down");
+		if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
+		{
+			lookingdown[e.Player].SetBool(true);
 		}
 
 		[key1, key2] = Bindings.GetKeysForCommand("use_selected");
@@ -429,6 +437,12 @@ class MKeyEvents : EventHandler
 			if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
 				rotrights[e.Player].SetBool(false);
 		}
+
+		[key1, key2] = Bindings.GetKeysForCommand("look_down");
+		if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
+		{
+			lookingdown[e.Player].SetBool(false);
+		}
 	}
   }
 
@@ -609,6 +623,7 @@ class RenderCursorsOverlay : EventHandler
 	cvar scopesize, scopexpos, scopeypos;
 	cvar aimbeam, scopetype, cursdist;
 	cvar isosel, selx, sely, selz;
+	cvar lookingdown;
 	FLineTraceData t[MAXPLAYERS];
 	Vector3 hitloc;
 	Actor actorhit[MAXPLAYERS];
@@ -712,6 +727,7 @@ class RenderCursorsOverlay : EventHandler
 	  selx = CVar.GetCVar("SelXPos", players[consoleplayer]);
 	  sely = CVar.GetCVar("SelYPos", players[consoleplayer]);
 	  selz = CVar.GetCVar("SelZPos", players[consoleplayer]);
+	  lookingdown = CVar.GetCVar("IsoLookingDown", players[consoleplayer]);
 	  hitloc = (0, 0, 0);
 	  for (int i = 0; i < MAXPLAYERS; i++)
 	  {
@@ -770,7 +786,8 @@ class RenderCursorsOverlay : EventHandler
 		  }
 	    }
 
-	    int cursordist = cursdist.GetInt(); // 150;
+		bool ldown = lookingdown.GetBool();
+	    int cursordist = ldown ? players[consoleplayer].mo.viewheight*2.0 : cursdist.GetInt(); // 150;
 	    float diffangle = pmo.deltaangle(pang, cyaw);
 	    int cosine = (int)(-0.5*cursordist*Cos(diffangle));
 	    int sine = (int)(cursordist*Sin(diffangle));
@@ -787,7 +804,7 @@ class RenderCursorsOverlay : EventHandler
 			  double yproj = Sin(cpit)*xproj;
 			  double zproj = Cos(cpit)*xproj;
 			  cosine -= (int)(playerdisp.xy.length()*Cos(diffangle)*yproj); // + playerdisp.z*zproj); no need since Spectatorcamera tracks zpos
-			  cosine -= (int)(players[consoleplayer].camera.tracer.height*0.5*zproj);
+			  if (!ldown) cosine -= (int)(players[consoleplayer].camera.tracer.height*0.5*zproj);
 			  sine += (int)(playerdisp.xy.length()*Sin(diffangle)*xproj);
 			  // else use libEye to locate camera.tracer's screen coordinates
 
@@ -799,7 +816,7 @@ class RenderCursorsOverlay : EventHandler
 	      }
 	    }
 
-	    if (isoaimassist.GetBool())
+	    if (isoaimassist.GetBool() && !ldown)
 	    {
 	      StatusBar.DrawImage("sprites/aim_hair.png", (sine/scaleFactor.x, cosine/scaleFactor.y),
 				  StatusBar.DI_SCREEN_CENTER | StatusBar.DI_ITEM_CENTER, scale: (2.4/scaleFactor.x, 2.4/scaleFactor.y));
@@ -880,6 +897,7 @@ class IsoAimAssistHandler : StaticEventHandler
 	FLineTraceData tarray[MAXPLAYERS];
 	cvar aimassists[MAXPLAYERS]; // They say that GetCVar() inside WorldTick() is slow?
 	cvar max_dists[MAXPLAYERS];
+	cvar lookingdown[MAXPLAYERS];
 
 	override void WorldLoaded (WorldEvent e)
 	{
@@ -889,7 +907,9 @@ class IsoAimAssistHandler : StaticEventHandler
 			{
 				aimassists[i] = CVar.GetCVar("IsoAimAssist", players[i]);
 				max_dists[i] = CVar.GetCVar("IsoAimAssistMaxDist", players[i]);
-				players[i].mo.bPickup = CVar.GetCVar("IsoAllowTouchPickup", players[i]).GetBool(); // Didn't wanna make another eventhandler
+				lookingdown[i] = CVar.GetCVar("IsoLookingDown", players[i]);
+				players[i].mo.bPickup = CVar.GetCVar("IsoAllowTouchPickup", players[i]).GetBool(); // Didn't want another staticeventhandler
+				CVar.GetCVar("IsoSelected", players[i]).SetBool(false); // Didn't want another staticeventhandler
 			}
 		}
 	}
@@ -1030,7 +1050,8 @@ class IsoAimAssistHandler : StaticEventHandler
 	  {
 	    if (PlayerInGame[i] && players[i].mo)
 	    {
-	      if (!doAim(i)) players[i].mo.A_SetPitch(0);
+			if (lookingdown[i].GetBool()) players[i].mo.A_SetPitch(45);
+			else if (!doAim(i)) players[i].mo.A_SetPitch(0);
 	    }
 	  }
 	}

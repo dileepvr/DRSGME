@@ -30,6 +30,7 @@ OptionMenu "IsoModOptions"
 	Control "Cycle Select Switches/Objects", "cycle_select"
 	Control "Use Selected Switches/Objects", "use_selected"
 	Control "Clear Selection", "clear_select"
+	Control "Look Down", "look_down"
     StaticText ""
     StaticText "HUD Overlays"
 	Slider "Direction Cursor Distance", IsoCursorDist, 0, 300, 10, 0
