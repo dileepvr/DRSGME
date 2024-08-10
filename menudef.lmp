@@ -34,6 +34,7 @@ OptionMenu "IsoModOptions"
     StaticText ""
     StaticText "HUD Overlays"
 	Slider "Direction Cursor Distance", IsoCursorDist, 0, 300, 10, 0
+	Slider "Direction Cursor Vertical Offset", IsoCursorOffsetY, -100, 100, 10, 0
 	ColorPicker "Aim Beam Color", "IsoAimBeam"
 	Option "Show Weapon Icon", "IsoHUDShowWeapon", "OnOff"
     Slider "Weapon Icon Size", IsoHUDWeaponSize, 25, 100, 1, 0, "IsoHUDShowWeapon"

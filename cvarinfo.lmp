@@ -19,6 +19,7 @@ User Float IsoHUDTargetYPos = 0.15;
 User Color IsoAimBeam = "ff 00 ff";
 User Int IsoHUDScopeType = 1;
 User Int IsoCursorDist = 150;
+User Int IsoCursorOffsetY = 0;
 User Bool IsoSelected = false;
 User Float SelXPos = 0.0;
 User Float SelYPos = 0.0;

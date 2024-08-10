@@ -111,9 +111,12 @@ class MKeyEvents : EventHandler
 		if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
 		{
 			if(players[e.Player].camera)
+			{
+				isodists[e.Player].SetFloat(clamp(isodists[e.Player].GetFloat() - 10.0, 0.0, 1000.0));
 				SpectatorCamera(players[e.Player].camera).Init(isodists[e.Player].GetFloat(),
 															   isoyaws[e.Player].GetFloat(),
 															   isopitches[e.Player].GetFloat(), -1);
+			}
 		}
 		else
 		{
@@ -121,9 +124,12 @@ class MKeyEvents : EventHandler
 			if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
 			{
 				if(players[e.Player].camera)
+				{
+					isodists[e.Player].SetFloat(clamp(isodists[e.Player].GetFloat() + 10.0, 0.0, 1000.0));
 					SpectatorCamera(players[e.Player].camera).Init(isodists[e.Player].GetFloat(),
 																   isoyaws[e.Player].GetFloat(),
 																   isopitches[e.Player].GetFloat(), -1);
+				}
 			}
 		}
 		[key1, key2] = Bindings.GetKeysForCommand("iso_aim_assist");
@@ -646,7 +652,7 @@ class RenderCursorsOverlay : EventHandler
 	cvar showwep, showscope, showscopehealth;
 	cvar wepsize, wepxpos, wepypos;
 	cvar scopesize, scopexpos, scopeypos;
-	cvar aimbeam, scopetype, cursdist;
+	cvar aimbeam, scopetype, cursdist, cursoffy;
 	cvar isosel, selx, sely, selz;
 	cvar lookingdown;
 	FLineTraceData t[MAXPLAYERS];
@@ -748,6 +754,7 @@ class RenderCursorsOverlay : EventHandler
 	  aimbeam  = CVar.GetCVar("IsoAimBeam", players[consoleplayer]);
 	  scopetype = CVar.GetCVar("IsoHUDScopeType", players[consoleplayer]);
 	  cursdist = CVar.GetCVar("IsoCursorDist", players[consoleplayer]);
+	  cursoffy = CVar.GetCVar("IsoCursorOffsetY", players[consoleplayer]);
 	  isosel = CVar.GetCVar("IsoSelected", players[consoleplayer]);
 	  selx = CVar.GetCVar("SelXPos", players[consoleplayer]);
 	  sely = CVar.GetCVar("SelYPos", players[consoleplayer]);
@@ -813,8 +820,9 @@ class RenderCursorsOverlay : EventHandler
 
 		bool ldown = lookingdown.GetBool();
 	    int cursordist = ldown ? players[consoleplayer].mo.viewheight*2.0 : cursdist.GetInt(); // 150;
+		int cursoroffy = cursoffy.GetInt();
 	    float diffangle = pmo.deltaangle(pang, cyaw);
-	    int cosine = (int)(-0.5*cursordist*Cos(diffangle));
+	    int cosine = (int)(-0.5*cursordist*Cos(diffangle)) - cursoroffy;
 	    int sine = (int)(cursordist*Sin(diffangle));
 		int selcos = 0;
 		int selsin = 0;
