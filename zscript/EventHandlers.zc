@@ -542,7 +542,7 @@ class LoadGameCameraHandler : StaticEventHandler
 					CVar isodist = CVar.GetCVar("IsometricDist", players[i]);
 					CVar isoyaw = CVar.GetCVar("IsometricYaw", players[i]);
 					CVar isopitch = CVar.GetCVar("IsometricPitch", players[i]);
-					if (players[i].mo.tracer.tracer)
+					if (players[i].mo.tracer && players[i].mo.tracer.tracer)
 					{
 						players[i].camera = players[i].mo.tracer.tracer;
 						SpectatorCamera(players[i].camera).Init(isodist.GetFloat(), isoyaw.GetFloat(), isopitch.GetFloat(), camflags);
