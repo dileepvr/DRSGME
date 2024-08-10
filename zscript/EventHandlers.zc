@@ -528,6 +528,31 @@ class ScopeCamera : Actor
 	}
 }
 
+class LoadGameCameraHandler : StaticEventHandler
+{
+	override void WorldLoaded (WorldEvent e) 
+	{
+		if(e.IsSaveGame)
+		{
+			for (int i = 0; i < MAXPLAYERS; i++)
+			{
+				if (PlayerInGame[i] && players[i].mo)
+				{
+					int camflags = VPSF_ABSOLUTEOFFSET | VPSF_ALLOWOUTOFBOUNDS | VPSF_ORTHOGRAPHIC;
+					CVar isodist = CVar.GetCVar("IsometricDist", players[i]);
+					CVar isoyaw = CVar.GetCVar("IsometricYaw", players[i]);
+					CVar isopitch = CVar.GetCVar("IsometricPitch", players[i]);
+					if (players[i].mo.tracer.tracer)
+					{
+						players[i].camera = players[i].mo.tracer.tracer;
+						SpectatorCamera(players[i].camera).Init(isodist.GetFloat(), isoyaw.GetFloat(), isopitch.GetFloat(), camflags);
+					}
+				}
+			}
+		}
+	}
+}
+
 class CameraSpawnHandler : EventHandler // Can't be static because camera actor gets spawned
 {
 	cvar isodists[MAXPLAYERS], isoyaws[MAXPLAYERS], isopitches[MAXPLAYERS];
@@ -560,31 +585,31 @@ class CameraSpawnHandler : EventHandler // Can't be static because camera actor 
 
   override void WorldLoaded (WorldEvent e)
   {
-    for (int i = 0; i < MAXPLAYERS; i++)
-      {
-	if (PlayerInGame[i] && players[i].mo)
+	  for (int i = 0; i < MAXPLAYERS; i++)
 	  {
-	    // Add a scope camera to each player, and store it in player.mo.tracer
-	    players[i].mo.tracer = Actor.Spawn("ScopeCamera", players[i].mo.pos, ALLOW_REPLACE);
-	    players[i].mo.tracer.target = players[i].mo;
-	    // When World loads, spawn an isometric spectator camera:
-	    players[i].camera = SpectatorCamera(Actor.Spawn("SpectatorCamera", players[i].mo.pos));
-	    players[i].camera.tracer = players[i].mo; // This makes camera follow the player
-		players[i].camera.player = players[i]; // Necessary for pain and pickup screen flashes. Adds viewbob too.
-	    players[i].mo.tracer.tracer = players[i].camera; // Storage for retrieval in case player.camera gets changed
-	    int camflags = VPSF_ABSOLUTEOFFSET | VPSF_ALLOWOUTOFBOUNDS | VPSF_ORTHOGRAPHIC;
-	    isodists[i] = CVar.GetCVar("IsometricDist", players[i]);
-	    isoyaws[i] = CVar.GetCVar("IsometricYaw", players[i]);
-	    isopitches[i] = CVar.GetCVar("IsometricPitch", players[i]);
-		isospeeds[i] = CVar.GetCVar("IsometricSpeed", players[i]);
-		rotatelefts[i] = CVar.GetCVar("RotatingLeft", players[i]);
-	    rotaterights[i] = CVar.GetCVar("RotatingRight", players[i]);
-	    SpectatorCamera(players[i].camera).Init(isodists[i].GetFloat(), isoyaws[i].GetFloat(), isopitches[i].GetFloat(), camflags);
-	    // The following has to come after Init
-	    // SpectatorCamera(players[i].camera).lagdistance = 150.0; // Use for a lazy camera that only follows if you get away from center
-	    // SpectatorCamera(players[i].camera).chasemode = 2; // 0: chase until tracer centered, 1: same but only when tracer is moving, 2: stop chase if tracer within lagdistance
+		  if (PlayerInGame[i] && players[i].mo)
+		  {
+			  // Add a scope camera to each player, and store it in player.mo.tracer
+			  players[i].mo.tracer = Actor.Spawn("ScopeCamera", players[i].mo.pos, ALLOW_REPLACE);
+			  players[i].mo.tracer.target = players[i].mo;
+			  // When World loads, spawn an isometric spectator camera:
+			  players[i].camera = SpectatorCamera(Actor.Spawn("SpectatorCamera", players[i].mo.pos));
+			  players[i].camera.tracer = players[i].mo; // This makes camera follow the player
+			  players[i].camera.player = players[i]; // Necessary for pain and pickup screen flashes. Adds viewbob too.
+			  players[i].mo.tracer.tracer = players[i].camera; // Storage for retrieval in case player.camera gets changed			  
+			  int camflags = VPSF_ABSOLUTEOFFSET | VPSF_ALLOWOUTOFBOUNDS | VPSF_ORTHOGRAPHIC;
+			  isodists[i] = CVar.GetCVar("IsometricDist", players[i]);
+			  isoyaws[i] = CVar.GetCVar("IsometricYaw", players[i]);
+			  isopitches[i] = CVar.GetCVar("IsometricPitch", players[i]);
+			  isospeeds[i] = CVar.GetCVar("IsometricSpeed", players[i]);
+			  rotatelefts[i] = CVar.GetCVar("RotatingLeft", players[i]);
+			  rotaterights[i] = CVar.GetCVar("RotatingRight", players[i]);
+			  SpectatorCamera(players[i].camera).Init(isodists[i].GetFloat(), isoyaws[i].GetFloat(), isopitches[i].GetFloat(), camflags);
+			  // The following has to come after Init
+			  // SpectatorCamera(players[i].camera).lagdistance = 150.0; // Use for a lazy camera that only follows if you get away from center
+			  // SpectatorCamera(players[i].camera).chasemode = 2; // 0: chase until tracer centered, 1: same but only when tracer is moving, 2: stop chase if tracer within lagdistance
+		  }
 	  }
-      }
   }
 
   override void WorldTick()

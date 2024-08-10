@@ -1,5 +1,5 @@
 Gameinfo
 {
     AddPlayerClasses = "DoomPlayer2" // Might not work with all iwads
-	AddEventHandlers = "CameraSpawnHandler", "RenderCursorsOverlay", "MKeyEvents", "StartingInventoryHandler", "IsoAimAssistHandler", "D4DHandler"
+	AddEventHandlers = "CameraSpawnHandler", "LoadGameCameraHandler", "RenderCursorsOverlay", "MKeyEvents", "StartingInventoryHandler", "IsoAimAssistHandler", "D4DHandler"
 }
