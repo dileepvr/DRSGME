@@ -14,6 +14,7 @@ OptionMenu "IsoModOptions"
     Slider "Isometric Camera Pitch", IsometricPitch, 1, 89, 1
     Slider "Deceleration Multiplier", DecelMult, 0.1, 1.0, 0.1
     Slider "Aim Assist Max. Distance", IsoAimAssistMaxDist, 100, 5000, 100
+	Slider "Monster's Max. Shooting Distance", IsoMonsterAimMaxDist, 100, 5000, 100
     Option "Isometric Fog of War", "r_radarclipper", "OnOff"
     Option "Visibility Through Level Geometry", "r_dithertransparency", "OnOff"
     StaticText ""

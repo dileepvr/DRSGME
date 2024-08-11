@@ -7,6 +7,7 @@ User Bool RotatingRight = false;
 User Float DecelMult = 0.3;
 User Bool IsoAimAssist = true;
 User Float IsoAimAssistMaxDist = 1000.0;
+Server Float IsoMonsterAimMaxDist = 1000.0;
 User Bool IsoHUDShowWeapon = true;
 User Bool IsoHUDShowTarget = true;
 User Bool IsoHUDShowTargetHealth = true;

@@ -591,6 +591,12 @@ class CameraSpawnHandler : EventHandler // Can't be static because camera actor 
 
   override void WorldLoaded (WorldEvent e)
   {
+	  ThinkerIterator MonsterFinder = ThinkerIterator.Create("Actor");
+	  Actor mo;
+	  while ((mo = Actor(MonsterFinder.Next())))
+	  {
+		  if (mo.bIsMonster) mo.MaxTargetRange = IsoMonsterAimMaxDist;
+	  }
 	  for (int i = 0; i < MAXPLAYERS; i++)
 	  {
 		  if (PlayerInGame[i] && players[i].mo)
