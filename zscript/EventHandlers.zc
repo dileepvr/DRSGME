@@ -595,7 +595,7 @@ class CameraSpawnHandler : EventHandler // Can't be static because camera actor 
 	  Actor mo;
 	  while ((mo = Actor(MonsterFinder.Next())))
 	  {
-		  if (mo.bIsMonster) mo.MaxTargetRange = IsoMonsterAimMaxDist;
+		  if (mo.bIsMonster && mo.MaxTargetRange > IsoMonsterAimMaxDist) mo.MaxTargetRange = IsoMonsterAimMaxDist;
 	  }
 	  for (int i = 0; i < MAXPLAYERS; i++)
 	  {
@@ -814,7 +814,7 @@ class RenderCursorsOverlay : EventHandler
 	      int wypos = (int)(-200*clamp(wepypos.GetFloat(), 0.0, 1.0)*scaleFactor.y);
 		  let curwep = players[consoleplayer].readyweapon;
 		  let curpsp = players[consoleplayer].FindPSprite(PSP_WEAPON);
-		  if (players[consoleplayer].mo.health > 0) // necessary check to prevent crash
+		  if (curwep && curpsp && players[consoleplayer].mo.health > 0) // necessary check to prevent crash
 		  {
 			  StatusBar.DrawInventoryIcon(curwep, (wxpos, wypos),
 										  StatusBar.DI_SCREEN_CENTER_BOTTOM | StatusBar.DI_ITEM_CENTER,
