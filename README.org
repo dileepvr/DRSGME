@@ -38,12 +38,25 @@ A lot of mods, forum posts, and wikis were consulted to prepare this. Special th
 - Ricardo Luís Vaz Silva
 - m8f (Author of [[https://github.com/mmaulwurff/target-spy][Target-Spy]])
 - Major Cooke
-- Whoever made the damage direction indicators for [[https://github.com/MajorCooke/Doom4Doom][D4D]] (possibly Major Cooke)
+- Whoever made the damage direction indicators for [[https://github.com/MajorCooke/Doom4Doom][D4D]] (probably Major Cooke again)
 
 All code and assets except the the character sprites and the 'damage
 direction indicator sprite' are licensed under CC-0 (see
 [[./LICENSE.txt]]). A few =zscript= functions are derived from m8f's work
 in [[https://github.com/mmaulwurff/target-spy][Target-Spy]] and are licensed under GPLv3 (see [[./GPLv3.txt]]).
+
+*** Sprites credits:
+Fist Marine - Sprite by: Mark Quinn
+Chainsaw Marine - Sprite by: Mark Quinn and Xenaero
+Pistol Marine - Sprite by: Mark Quinn and Grimm
+Shotgun Marine - Sprite by: Mark Quinn
+Super Shotgun Marine - Sprite by: Xim, Xenaero and The Skulltag Team 
+Chaingun Marine - Sprite by: Anthony Cole
+Rocket Marine - Sprite by: Xim
+Plasma Marine - Sprite by: CaptainToenail
+BFG9000 Marine - Sprite by: Toke
+
+Sprites originally gathered in one place by Ivory Duke for WeaponMatchingPlayerSkin mod: https://forum.zdoom.org/viewtopic.php?t=67834
 
 Remember: Book. Not Plan.
  

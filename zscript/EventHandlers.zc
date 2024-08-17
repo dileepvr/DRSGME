@@ -110,7 +110,7 @@ class MKeyEvents : EventHandler
 		[key1, key2] = Bindings.GetKeysForCommand("iso_zoom_in");
 		if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
 		{
-			if(players[e.Player].camera)
+			if (!automapactive && (gamestate == GS_LEVEL) && players[e.Player].camera)
 			{
 				isodists[e.Player].SetFloat(clamp(isodists[e.Player].GetFloat() - 10.0, 0.0, 1000.0));
 				SpectatorCamera(players[e.Player].camera).Init(isodists[e.Player].GetFloat(),
@@ -123,7 +123,7 @@ class MKeyEvents : EventHandler
 			[key1, key2] = Bindings.GetKeysForCommand("iso_zoom_out");
 			if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
 			{
-				if(players[e.Player].camera)
+				if (!automapactive && (gamestate == GS_LEVEL) && players[e.Player].camera)
 				{
 					isodists[e.Player].SetFloat(clamp(isodists[e.Player].GetFloat() + 10.0, 0.0, 1000.0));
 					SpectatorCamera(players[e.Player].camera).Init(isodists[e.Player].GetFloat(),

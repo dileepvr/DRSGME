@@ -1,565 +1,81 @@
-class DoomPlayer2 : DoomPlayer // replaces DoomPlayer
+class DoomPlayer2 : DoomPlayer
 {
   Default
     {
       Player.DisplayName "Doomguy2";
-      Player.CrouchSprite "PLYC";
-
       +NOSKIN
     }
 	
-  States
-    {
-    Spawn:
-	  PLAY A 0 {
-		  bool found;
-		  int slot;
-		  int index;
-		  [found, slot, index] = Player.Weapons.LocateWeapon(Player.ReadyWeapon.GetClass());
-		  switch (slot) {
-		  case 1:
-			  if (index == 0) SetStateLabel("SpawnFist");
-			  else SetStateLabel("SpawnChainsaw");
-			  break;
-		  case 2:
-			  SetStateLabel("SpawnPistol");
-			  break;
-		  case 3:
-			  if (index == 0) SetStateLabel("SpawnShotgun");
-			  else SetStateLabel("SpawnSSG");
-			  break;
-		  case 4:
-			  SetStateLabel("SpawnChaingun");
-			  break;
-		  case 5:
-			  SetStateLabel("SpawnRocketLauncher");
-			  break;
-		  case 6:
-			  SetStateLabel("SpawnPlasmagun");
-			  break;
-		  case 7:
-			  SetStateLabel("SpawnBFG");
-			  break;
-		  default:
-			  break;
-		  }
-	  }
-      PLAY A 1;
-      Loop;
-    SpawnFist:
-      PLA1 A 0 A_JumpIf(Vel.X!=0,"SeeFist");
-      PLA1 A 0 A_JumpIf(Vel.Y!=0,"SeeFist");
-      PLA1 A 1;
-      Goto Spawn;
-    SpawnChainsaw:
-      PLA0 A 0 A_JumpIf(Vel.X!=0,"SeeChainsaw");
-      PLA0 A 0 A_JumpIf(Vel.Y!=0,"SeeChainsaw");
-      PLA0 A 1;
-      Goto Spawn;
-    SpawnPistol:
-      PLA2 A 0 A_JumpIf(Vel.X!=0,"SeePistol");
-      PLA2 A 0 A_JumpIf(Vel.Y!=0,"SeePistol");
-      PLA2 A 1;
-      Goto Spawn;
-    SpawnShotgun:
-      PLA3 A 0 A_JumpIf(Vel.X!=0,"SeeShotgun");
-      PLA3 A 0 A_JumpIf(Vel.Y!=0,"SeeShotgun");
-      PLA3 A 1;
-      Goto Spawn;
-    SpawnSSG:
-      PLA9 A 0 A_JumpIf(Vel.X!=0,"SeeSSG");
-      PLA9 A 0 A_JumpIf(Vel.Y!=0,"SeeSSG");
-      PLA9 A 1;
-      Goto Spawn;
-    SpawnChaingun:
-      PLA4 A 0 A_JumpIf(Vel.X!=0,"SeeChaingun");
-      PLA4 A 0 A_JumpIf(Vel.Y!=0,"SeeChaingun");
-      PLA4 A 1;
-      Goto Spawn;
-    SpawnRocketLauncher:
-      PLA5 A 0 A_JumpIf(Vel.X!=0,"SeeRocketLauncher");
-      PLA5 A 0 A_JumpIf(Vel.Y!=0,"SeeRocketLauncher");
-      PLA5 A 1;
-      Goto Spawn;
-    SpawnPlasmagun:
-      PLA6 A 0 A_JumpIf(Vel.X!=0,"SeePlasmagun");
-      PLA6 A 0 A_JumpIf(Vel.Y!=0,"SeePlasmagun");
-      PLA6 A 1;
-      Goto Spawn;
-    SpawnBFG:
-      PLA7 A 0 A_JumpIf(Vel.X!=0,"SeeBFG");
-      PLA7 A 0 A_JumpIf(Vel.Y!=0,"SeeBFG");
-      PLA7 A 1;
-      Goto Spawn;
-    See:
-	  PLAY A 0 {
-		  bool found;
-		  int slot;
-		  int index;
-		  [found, slot, index] = Player.Weapons.LocateWeapon(Player.ReadyWeapon.GetClass());
-		  switch (slot) {
-		  case 1:
-			  if (index == 0) SetStateLabel("SpawnFist");
-			  else SetStateLabel("SpawnChainsaw");
-			  break;
-		  case 2:
-			  SetStateLabel("SpawnPistol");
-			  break;
-		  case 3:
-			  if (index == 0) SetStateLabel("SpawnShotgun");
-			  else SetStateLabel("SpawnSSG");
-			  break;
-		  case 4:
-			  SetStateLabel("SpawnChaingun");
-			  break;
-		  case 5:
-			  SetStateLabel("SpawnRocketLauncher");
-			  break;
-		  case 6:
-			  SetStateLabel("SpawnPlasmagun");
-			  break;
-		  case 7:
-			  SetStateLabel("SpawnBFG");
-			  break;
-		  default:
-			  break;
-		  }
-	  }
-      PLAY ABCD 4;
-      Loop;
-    SeeFist:
-      PLA1 ABCD 4;
-      Goto Spawn;
-    SeeChainsaw:
-      PLA0 ABCD 4;
-      Goto Spawn;
-    SeePistol:
-      PLA2 ABCD 4;
-      Goto Spawn;
-    SeeShotgun:
-      PLA3 ABCD 4;
-      Goto Spawn;
-    SeeSSG:
-      PLA9 ABCD 4;
-      Goto Spawn;
-    SeeChaingun:
-      PLA4 ABCD 4;
-      Goto Spawn;
-    SeeRocketLauncher:
-      PLA5 ABCD 4;
-      Goto Spawn;
-    SeePlasmagun:
-      PLA6 ABCD 4;
-      Goto Spawn;
-    SeeBFG:
-      PLA7 ABCD 4;
-      Goto SpawnBFG;
-    Missile:
-	  PLAY E 0 {
-		  bool found;
-		  int slot;
-		  int index;
-		  [found, slot, index] = Player.Weapons.LocateWeapon(Player.ReadyWeapon.GetClass());
-		  switch (slot) {
-		  case 1:
-			  if (index == 0) SetStateLabel("MissileFist");
-			  else SetStateLabel("MissileChainsaw");
-			  break;
-		  case 2:
-			  SetStateLabel("MissilePistol");
-			  break;
-		  case 3:
-			  if (index == 0) SetStateLabel("MissileShotgun");
-			  else SetStateLabel("MissileSSG");
-			  break;
-		  case 4:
-			  SetStateLabel("MissileChaingun");
-			  break;
-		  case 5:
-			  SetStateLabel("MissileRocketLauncher");
-			  break;
-		  case 6:
-			  SetStateLabel("MissilePlasmagun");
-			  break;
-		  case 7:
-			  SetStateLabel("MissileBFG");
-			  break;
-		  default:
-			  break;
-		  }
-	  }
-      PLAY E 12;
-      Goto Spawn;
-    MissileFist:
-      PLA1 E 12;
-      Goto Spawn;
-    MissileChainsaw:
-      PLA0 E 12;
-      Goto Spawn;
-    MissilePistol:
-      PLA2 E 12;
-      Goto Spawn;
-    MissileShotgun:
-      PLA3 E 12;
-      Goto Spawn;
-    MissileSSG:
-      PLA9 E 12;
-      Goto Spawn;
-    MissileChaingun:
-      PLA4 E 12;
-      Goto Spawn;
-    MissileRocketLauncher:
-      PLA5 E 12;
-      Goto Spawn;
-    MissilePlasmagun:
-      PLA6 E 12;
-      Goto Spawn;
-    MissileBFG:
-      PLA7 E 12;
-      Goto Spawn;
-    Melee:
-	  PLAY F 0 {
-		  bool found;
-		  int slot;
-		  int index;
-		  [found, slot, index] = Player.Weapons.LocateWeapon(Player.ReadyWeapon.GetClass());
-		  switch (slot) {
-		  case 1:
-			  if (index == 0) SetStateLabel("MeleeFist");
-			  else SetStateLabel("MeleeChainsaw");
-			  break;
-		  case 2:
-			  SetStateLabel("MeleePistol");
-			  break;
-		  case 3:
-			  if (index == 0) SetStateLabel("MeleeShotgun");
-			  else SetStateLabel("MeleeSSG");
-			  break;
-		  case 4:
-			  SetStateLabel("MeleeChaingun");
-			  break;
-		  case 5:
-			  SetStateLabel("MeleeRocketLauncher");
-			  break;
-		  case 6:
-			  SetStateLabel("MeleePlasmagun");
-			  break;
-		  case 7:
-			  SetStateLabel("MeleeBFG");
-			  break;
-		  default:
-			  break;
-		  }
-	  }
-      PLAY F 6 BRIGHT;
-      Goto Missile;
-    MeleeFist:
-      PLA1 F 6 BRIGHT;
-      Goto Missile;
-    MeleeChainsaw:
-      PLA0 F 6 BRIGHT;
-      Goto Missile;
-    MeleePistol:
-      PLA2 F 6 BRIGHT;
-      Goto Missile;
-    MeleeShotgun:
-      PLA3 F 6 BRIGHT;
-      Goto Missile;
-    MeleeSSG:
-      PLA9 F 6 BRIGHT;
-      Goto Missile;
-    MeleeChaingun:
-      PLA4 F 6 BRIGHT;
-      Goto Missile;
-    MeleeRocketLauncher:
-      PLA5 F 6 BRIGHT;
-      Goto Missile;
-    MeleePlasmagun:
-      PLA6 F 6 BRIGHT;
-      Goto Missile;
-    MeleeBFG:
-      PLA7 F 6 BRIGHT;
-      Goto Missile;
-    Pain:
-	  PLAY G 0 {
-		  bool found;
-		  int slot;
-		  int index;
-		  [found, slot, index] = Player.Weapons.LocateWeapon(Player.ReadyWeapon.GetClass());
-		  switch (slot) {
-		  case 1:
-			  if (index == 0) SetStateLabel("PainFist");
-			  else SetStateLabel("PainChainsaw");
-			  break;
-		  case 2:
-			  SetStateLabel("PainPistol");
-			  break;
-		  case 3:
-			  if (index == 0) SetStateLabel("PainShotgun");
-			  else SetStateLabel("PainSSG");
-			  break;
-		  case 4:
-			  SetStateLabel("PainChaingun");
-			  break;
-		  case 5:
-			  SetStateLabel("PainRocketLauncher");
-			  break;
-		  case 6:
-			  SetStateLabel("PainPlasmagun");
-			  break;
-		  case 7:
-			  SetStateLabel("PainBFG");
-			  break;
-		  default:
-			  break;
-		  }
-	  }
-      PLAY G 4;
-      PLAY G 4 A_Pain;
-      Goto Spawn;
-    PainFist:
-      PLA1 G 4;
-      PLA1 G 4 A_Pain;
-      Goto Spawn;
-    PainChainsaw:
-      PLA0 G 4;
-      PLA0 G 4 A_Pain;
-      Goto Spawn;
-    PainPistol:
-      PLA2 G 4;
-      PLA2 G 4 A_Pain;
-      Goto Spawn;
-    PainShotgun:
-      PLA3 G 4;
-      PLA3 G 4 A_Pain;
-      Goto Spawn;
-    PainSSG:
-      PLA9 G 4;
-      PLA9 G 4 A_Pain;
-      Goto Spawn;
-    PainChaingun:
-      PLA4 G 4;
-      PLA4 G 4 A_Pain;
-      Goto Spawn;
-    PainRocketLauncher:
-      PLA5 G 4;
-      PLA5 G 4 A_Pain;
-      Goto Spawn;
-    PainPlasmagun:
-      PLA6 G 4;
-      PLA6 G 4 A_Pain;
-      Goto Spawn;
-    PainBFG:
-      PLA7 G 4;
-      PLA7 G 4 A_Pain;
-      Goto Spawn;
-    Death:
-	  PLAY H 0 {
-		  bool found;
-		  int slot;
-		  int index;
-		  [found, slot, index] = Player.Weapons.LocateWeapon(Player.ReadyWeapon.GetClass());
-		  switch (slot) {
-		  case 1:
-			  if (index == 0) SetStateLabel("DeathFist");
-			  else SetStateLabel("DeathChainsaw");
-			  break;
-		  case 2:
-			  SetStateLabel("DeathPistol");
-			  break;
-		  case 3:
-			  if (index == 0) SetStateLabel("DeathShotgun");
-			  else SetStateLabel("DeathSSG");
-			  break;
-		  case 4:
-			  SetStateLabel("DeathChaingun");
-			  break;
-		  case 5:
-			  SetStateLabel("DeathRocketLauncher");
-			  break;
-		  case 6:
-			  SetStateLabel("DeathPlasmagun");
-			  break;
-		  case 7:
-			  SetStateLabel("DeathBFG");
-			  break;
-		  default:
-			  break;
-		  }
-	  }
-      PLAY H 10;
-      PLAY I 10 A_PlayerScream;
-      PLAY J 10 A_NoBlocking;
-      PLAY KLM 10;
-      PLAY N -1;
-      Stop;
-    DeathFist:
-      PLA1 H 10;
-      PLA1 I 10 A_PlayerScream;
-      PLA1 J 10 A_NoBlocking;
-      PLA1 KLM 10;
-      PLA1 N -1;
-      Stop;
-    DeathChainsaw:
-      PLA0 H 10;
-      PLA0 I 10 A_PlayerScream;
-      PLA0 J 10 A_NoBlocking;
-      PLA0 KLM 10;
-      PLA0 N -1;
-      Stop;
-    DeathPistol:
-      PLA2 H 10;
-      PLA2 I 10 A_PlayerScream;
-      PLA2 J 10 A_NoBlocking;
-      PLA2 KLM 10;
-      PLA2 N -1;
-      Stop;
-    DeathShotgun:
-      PLA3 H 10;
-      PLA3 I 10 A_PlayerScream;
-      PLA3 J 10 A_NoBlocking;
-      PLA3 KLM 10;
-      PLA3 N -1;
-      Stop;
-    DeathSSG:
-      PLA9 H 10;
-      PLA9 I 10 A_PlayerScream;
-      PLA9 J 10 A_NoBlocking;
-      PLA9 KLM 10;
-      PLA9 N -1;
-      Stop;
-    DeathChaingun:
-      PLA4 H 10;
-      PLA4 I 10 A_PlayerScream;
-      PLA4 J 10 A_NoBlocking;
-      PLA4 KLM 10;
-      PLA4 N -1;
-      Stop;
-    DeathRocketLauncher:
-      PLA5 H 10;
-      PLA5 I 10 A_PlayerScream;
-      PLA5 J 10 A_NoBlocking;
-      PLA5 KLM 10;
-      PLA5 N -1;
-      Stop;
-    DeathPlasmagun:
-      PLA6 H 10;
-      PLA6 I 10 A_PlayerScream;
-      PLA6 J 10 A_NoBlocking;
-      PLA6 KLM 10;
-      PLA6 N -1;
-      Stop;
-    DeathBFG:
-      PLA7 H 10;
-      PLA7 I 10 A_PlayerScream;
-      PLA7 J 10 A_NoBlocking;
-      PLA7 KLM 10;
-      PLA7 N -1;
-      Stop;
-    XDeath:
-	  PLAY O 0 {
-		  bool found;
-		  int slot;
-		  int index;
-		  [found, slot, index] = Player.Weapons.LocateWeapon(Player.ReadyWeapon.GetClass());
-		  switch (slot) {
-		  case 1:
-			  if (index == 0) SetStateLabel("XDeathFist");
-			  else SetStateLabel("XDeathChainsaw");
-			  break;
-		  case 2:
-			  SetStateLabel("XDeathPistol");
-			  break;
-		  case 3:
-			  if (index == 0) SetStateLabel("XDeathShotgun");
-			  else SetStateLabel("XDeathSSG");
-			  break;
-		  case 4:
-			  SetStateLabel("XDeathChaingun");
-			  break;
-		  case 5:
-			  SetStateLabel("XDeathRocketLauncher");
-			  break;
-		  case 6:
-			  SetStateLabel("XDeathPlasmagun");
-			  break;
-		  case 7:
-			  SetStateLabel("XDeathBFG");
-			  break;
-		  default:
-			  break;
-		  }
-	  }
-      PLAY O 5;
-      PLAY P 5 A_XScream;
-      PLAY Q 5 A_NoBlocking;
-      PLAY RSTUV 5;
-      PLAY W -1;
-      Stop;
-    XDeathFist:
-      PLA1 O 5;
-      PLA1 P 5 A_XScream;
-      PLA1 Q 5 A_NoBlocking;
-      PLA1 RSTUV 5;
-      PLA1 W -1;
-      Stop;
-    XDeathChainsaw:
-      PLA0 O 5;
-      PLA0 P 5 A_XScream;
-      PLA0 Q 5 A_NoBlocking;
-      PLA0 RSTUV 5;
-      PLA0 W -1;
-      Stop;
-    XDeathPistol:
-      PLA2 O 5;
-      PLA2 P 5 A_XScream;
-      PLA2 Q 5 A_NoBlocking;
-      PLA2 RSTUV 5;
-      PLA2 W -1;
-      Stop;
-    XDeathShotgun:
-      PLA3 O 5;
-      PLA3 P 5 A_XScream;
-      PLA3 Q 5 A_NoBlocking;
-      PLA3 RSTUV 5;
-      PLA3 W -1;
-      Stop;
-    XDeathSSG:
-      PLA9 O 5;
-      PLA9 P 5 A_XScream;
-      PLA9 Q 5 A_NoBlocking;
-      PLA9 RSTUV 5;
-      PLA9 W -1;
-      Stop;
-    XDeathChaingun:
-      PLA4 O 5;
-      PLA4 P 5 A_XScream;
-      PLA4 Q 5 A_NoBlocking;
-      PLA4 RSTUV 5;
-      PLA4 W -1;
-      Stop;
-    XDeathRocketLauncher:
-      PLA5 O 5;
-      PLA5 P 5 A_XScream;
-      PLA5 Q 5 A_NoBlocking;
-      PLA5 RSTUV 5;
-      PLA5 W -1;
-      Stop;
-    XDeathPlasmagun:
-      PLA6 O 5;
-      PLA6 P 5 A_XScream;
-      PLA6 Q 5 A_NoBlocking;
-      PLA6 RSTUV 5;
-      PLA6 W -1;
-      Stop;
-    XDeathBFG:
-      PLA7 O 5;
-      PLA7 P 5 A_XScream;
-      PLA7 Q 5 A_NoBlocking;
-      PLA7 RSTUV 5;
-      PLA7 W -1;
-      Stop;
-    }
+	Override void Tick()
+	{
+		Super.Tick();
+		
+		Let Player = Self.Player;
+		Let Weap = Player.Readyweapon;
+		if(Player == Null || Weap == Null) { return; }
+		
+		Int slotid, indx, Number;
+		Bool found;
+		[found, slotid, indx] = Player.Weapons.LocateWeapon(Weap.GetClass());
+		if (found) Number = slotid + 7 * indx; // This should probably be unrolled into switch cases
+		else Number = 11;
+		if (Number == 10) Number = 9; // Super Shotgun
+		if(Number < 10) // Feel free to add more sprites for more weapons and increase this
+		{
+			// Don't forget to precache these sprites (see SpriteLoader class below)
+			if(Player.CrouchFactor != 1)
+			{
+				CrouchSprite = GetSpriteIndex(String.Format("PL%dC", Number));
+				Self.Sprite = CrouchSprite;
+			}
+			else
+			{
+				Self.Sprite = GetSpriteIndex(String.Format("PLA%d", Number));
+			}
+		}
+		else // Use built-in default doomguy sprites
+		{
+			if(Player.CrouchFactor != 1)
+			{
+				CrouchSprite = GetSpriteIndex("PLYC");
+				Self.Sprite = CrouchSprite;
+			}
+			else
+			{
+				Self.Sprite = GetSpriteIndex("PLAY");
+			}
+		}
+	}
+}
+
+//If you do not place the sprites in a dummy actor the engines does not load them on boot
+//and crashes when trying to draw them on screen
+Class SpriteLoader : Actor
+{
+	States
+	{
+	Spawn:
+		PLA1 ABCDEFGHIJKLMNOPQRSTUVW 0;
+		PLA2 ABCDEFGHIJKLMNOPQRSTUVW 0;
+		PLA3 ABCDEFGHIJKLMNOPQRSTUVW 0;
+		PLA4 ABCDEFGHIJKLMNOPQRSTUVW 0;
+		PLA5 ABCDEFGHIJKLMNOPQRSTUVW 0;
+		PLA6 ABCDEFGHIJKLMNOPQRSTUVW 0;
+		PLA7 ABCDEFGHIJKLMNOPQRSTUVW 0;
+		PLA8 ABCDEFGHIJKLMNOPQRSTUVW 0;
+		PLA9 ABCDEFGHIJKLMNOPQRSTUVW 0;
+		
+		PL1C ABCDEFGHIJKLMNOPQRSTUVW 0;
+		PL2C ABCDEFGHIJKLMNOPQRSTUVW 0;
+		PL3C ABCDEFGHIJKLMNOPQRSTUVW 0;
+		PL4C ABCDEFGHIJKLMNOPQRSTUVW 0;
+		PL5C ABCDEFGHIJKLMNOPQRSTUVW 0;
+		PL6C ABCDEFGHIJKLMNOPQRSTUVW 0;
+		PL7C ABCDEFGHIJKLMNOPQRSTUVW 0;
+		PL8C ABCDEFGHIJKLMNOPQRSTUVW 0;
+		PL9C ABCDEFGHIJKLMNOPQRSTUVW 0;
+		Stop;
+	}
 }
 
 class Swi : TechLamp

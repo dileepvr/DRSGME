@@ -1,2550 +1,4830 @@
-Sprite PLA3U0, 57, 33
+Sprite PL1CC2C8, 33, 32
 {
-	Patch "sprites/PLA3U0.png", 0, 0
-	offset 24, 29
+	Patch "sprites/1 - Berserk/PL1CC2C8.png", 0, 0
+	offset 16, 28
 }
-Sprite PLA3G4G6, 43, 52
+Sprite PL1CH0, 36, 39
 {
-	Patch "sprites/PLA3G4G6.png", 0, 0
-	offset 20, 50
+	Patch "sprites/1 - Berserk/PL1CH0.png", 0, 0
+	offset 22, 35
 }
-Sprite PLA0F1, 26, 56
+Sprite PL1CO0, 38, 36
 {
-	Patch "sprites/PLA0F1.png", 0, 0
-	offset 12, 51
+	Patch "sprites/1 - Berserk/PL1CO0.png", 0, 0
+	offset 20, 32
 }
 Sprite PLA1B3, 27, 54
 {
-	Patch "sprites/PLA1B3.png", 0, 0
-	offset 10, 52
+	Patch "sprites/1 - Berserk/PLA1B3.png", 0, 0
+	offset 14, 52
 }
 Sprite PLA1C7, 39, 54
 {
-	Patch "sprites/PLA1C7.png", 0, 0
-	offset 18, 51
+	Patch "sprites/1 - Berserk/PLA1C7.png", 0, 0
+	offset 19, 51
 }
-Sprite PLA7G4G6, 50, 52
+Sprite PL1CD5, 25, 32
 {
-	Patch "sprites/PLA7G4G6.png", 0, 0
-	offset 27, 50
-}
-Sprite PLA9C4C6, 41, 55
-{
-	Patch "sprites/PLA9C4C6.png", 0, 0
-	offset 22, 51
-}
-Sprite PLA2R0, 57, 52
-{
-	Patch "sprites/PLA2R0.png", 0, 0
-	offset 28, 49
-}
-Sprite PLA6H0, 44, 50
-{
-	Patch "sprites/PLA6H0.png", 0, 0
-	offset 16, 47
-}
-Sprite PLA7U0, 57, 33
-{
-	Patch "sprites/PLA7U0.png", 0, 0
-	offset 24, 29
-}
-Sprite PLA2D4, 28, 54
-{
-	Patch "sprites/PLA2D4.png", 0, 0
-	offset 11, 52
-}
-Sprite PLA7A2A8, 39, 54
-{
-	Patch "sprites/PLA7A2A8.png", 0, 0
-	offset 21, 50
+	Patch "sprites/1 - Berserk/PL1CD5.png", 0, 0
+	offset 11, 28
 }
 Sprite PLA1C5, 31, 50
 {
-	Patch "sprites/PLA1C5.png", 0, 0
-	offset 16, 49
+	Patch "sprites/1 - Berserk/PLA1C5.png", 0, 0
+	offset 15, 47
 }
-Sprite PLA9C2C8, 37, 55
+Sprite PL1CB5, 25, 32
 {
-	Patch "sprites/PLA9C2C8.png", 0, 0
-	offset 17, 51
+	Patch "sprites/1 - Berserk/PL1CB5.png", 0, 0
+	offset 11, 28
+}
+Sprite PL1CE5, 24, 32
+{
+	Patch "sprites/1 - Berserk/PL1CE5.png", 0, 0
+	offset 12, 28
 }
 Sprite PLA1E2, 45, 55
 {
-	Patch "sprites/PLA1E2.png", 0, 0
-	offset 17, 51
+	Patch "sprites/1 - Berserk/PLA1E2.png", 0, 0
+	offset 25, 50
 }
 Sprite PLA1F6, 61, 52
 {
-	Patch "sprites/PLA1F6.png", 0, 0
-	offset 20, 48
-}
-Sprite PLA5D3D7, 34, 54
-{
-	Patch "sprites/PLA5D3D7.png", 0, 0
-	offset 21, 52
-}
-Sprite PLA7G3G7, 55, 55
-{
-	Patch "sprites/PLA7G3G7.png", 0, 0
-	offset 33, 52
+	Patch "sprites/1 - Berserk/PLA1F6.png", 0, 0
+	offset 20, 50
 }
 Sprite PLA1A7, 41, 53
 {
-	Patch "sprites/PLA1A7.png", 0, 0
-	offset 21, 50
-}
-Sprite PLA4N0, 55, 14
-{
-	Patch "sprites/PLA4N0.png", 0, 0
-	offset 31, 9
-}
-Sprite PLA5G1, 39, 55
-{
-	Patch "sprites/PLA5G1.png", 0, 0
-	offset 20, 52
-}
-Sprite PLA3B4B6, 41, 54
-{
-	Patch "sprites/PLA3B4B6.png", 0, 0
-	offset 21, 52
-}
-Sprite PLA2C1, 31, 56
-{
-	Patch "sprites/PLA2C1.png", 0, 0
-	offset 17, 51
-}
-Sprite PLA4F3F7, 52, 53
-{
-	Patch "sprites/PLA4F3F7.png", 0, 0
-	offset 27, 50
-}
-Sprite PLA6K0, 41, 38
-{
-	Patch "sprites/PLA6K0.png", 0, 0
-	offset 17, 34
-}
-Sprite PLA3Q0, 48, 57
-{
-	Patch "sprites/PLA3Q0.png", 0, 0
-	offset 21, 54
-}
-Sprite PLA9M0, 51, 14
-{
-	Patch "sprites/PLA9M0.png", 0, 0
-	offset 27, 9
-}
-Sprite PLA5G3G7, 46, 55
-{
-	Patch "sprites/PLA5G3G7.png", 0, 0
-	offset 24, 52
-}
-Sprite PLA0G1, 35, 55
-{
-	Patch "sprites/PLA0G1.png", 0, 0
-	offset 16, 52
-}
-Sprite PLA6B3B7, 36, 55
-{
-	Patch "sprites/PLA6B3B7.png", 0, 0
-	offset 18, 52
-}
-Sprite PLA9E3E7, 51, 53
-{
-	Patch "sprites/PLA9E3E7.png", 0, 0
-	offset 26, 50
-}
-Sprite PLA6D3D7, 34, 54
-{
-	Patch "sprites/PLA6D3D7.png", 0, 0
-	offset 21, 52
-}
-Sprite PLA5F5, 23, 51
-{
-	Patch "sprites/PLA5F5.png", 0, 0
-	offset 11, 46
-}
-Sprite PLA2G1, 43, 55
-{
-	Patch "sprites/PLA2G1.png", 0, 0
-	offset 24, 52
-}
-Sprite PLA3B3B7, 36, 55
-{
-	Patch "sprites/PLA3B3B7.png", 0, 0
-	offset 18, 52
+	Patch "sprites/1 - Berserk/PLA1A7.png", 0, 0
+	offset 20, 50
 }
 Sprite PLA1E7, 51, 53
 {
-	Patch "sprites/PLA1E7.png", 0, 0
-	offset 26, 50
+	Patch "sprites/1 - Berserk/PLA1E7.png", 0, 0
+	offset 20, 50
 }
-Sprite PLA5Q0, 48, 57
+Sprite PL1CA5, 25, 32
 {
-	Patch "sprites/PLA5Q0.png", 0, 0
-	offset 21, 54
+	Patch "sprites/1 - Berserk/PL1CA5.png", 0, 0
+	offset 11, 28
 }
 Sprite PLA1G4G6, 38, 52
 {
-	Patch "sprites/PLA1G4G6.png", 0, 0
+	Patch "sprites/1 - Berserk/PLA1G4G6.png", 0, 0
 	offset 15, 50
-}
-Sprite PLA0A6, 41, 55
-{
-	Patch "sprites/PLA0A6.png", 0, 0
-	offset 15, 51
-}
-Sprite PLA0C4, 41, 55
-{
-	Patch "sprites/PLA0C4.png", 0, 0
-	offset 22, 51
 }
 Sprite PLA1D1, 38, 56
 {
-	Patch "sprites/PLA1D1.png", 0, 0
-	offset 18, 52
-}
-Sprite PLA2L0, 55, 14
-{
-	Patch "sprites/PLA2L0.png", 0, 0
-	offset 31, 9
-}
-Sprite PLA2H0, 50, 50
-{
-	Patch "sprites/PLA2H0.png", 0, 0
-	offset 22, 47
-}
-Sprite PLA3G2G8, 36, 56
-{
-	Patch "sprites/PLA3G2G8.png", 0, 0
-	offset 16, 52
-}
-Sprite PLA7Q0, 48, 57
-{
-	Patch "sprites/PLA7Q0.png", 0, 0
-	offset 21, 54
-}
-Sprite PLA3E1, 26, 56
-{
-	Patch "sprites/PLA3E1.png", 0, 0
-	offset 12, 51
-}
-Sprite PLA9E1, 26, 56
-{
-	Patch "sprites/PLA9E1.png", 0, 0
-	offset 12, 51
+	Patch "sprites/1 - Berserk/PLA1D1.png", 0, 0
+	offset 19, 53
 }
 Sprite PLA1D8, 27, 55
 {
-	Patch "sprites/PLA1D8.png", 0, 0
+	Patch "sprites/1 - Berserk/PLA1D8.png", 0, 0
 	offset 17, 52
-}
-Sprite PLA3A5, 36, 50
-{
-	Patch "sprites/PLA3A5.png", 0, 0
-	offset 21, 47
-}
-Sprite PLA0A3, 42, 53
-{
-	Patch "sprites/PLA0A3.png", 0, 0
-	offset 21, 50
-}
-Sprite PLA6S0, 55, 47
-{
-	Patch "sprites/PLA6S0.png", 0, 0
-	offset 23, 43
 }
 Sprite PLA1W0, 57, 22
 {
-	Patch "sprites/PLA1W0.png", 0, 0
+	Patch "sprites/1 - Berserk/PLA1W0.png", 0, 0
 	offset 24, 18
 }
-Sprite PLA3C1, 38, 56
+Sprite PL1CF5, 24, 32
 {
-	Patch "sprites/PLA3C1.png", 0, 0
-	offset 17, 51
-}
-Sprite PLA2O0, 48, 56
-{
-	Patch "sprites/PLA2O0.png", 0, 0
-	offset 26, 53
-}
-Sprite PLA3B5, 35, 54
-{
-	Patch "sprites/PLA3B5.png", 0, 0
-	offset 18, 51
-}
-Sprite PLA4C1, 38, 56
-{
-	Patch "sprites/PLA4C1.png", 0, 0
-	offset 21, 51
-}
-Sprite PLA9A4A6, 45, 51
-{
-	Patch "sprites/PLA9A4A6.png", 0, 0
-	offset 21, 49
-}
-Sprite PLA5J0, 36, 46
-{
-	Patch "sprites/PLA5J0.png", 0, 0
-	offset 12, 43
+	Patch "sprites/1 - Berserk/PL1CF5.png", 0, 0
+	offset 12, 28
 }
 Sprite PLA1D4, 30, 54
 {
-	Patch "sprites/PLA1D4.png", 0, 0
-	offset 11, 52
-}
-Sprite PLA5E4E6, 38, 52
-{
-	Patch "sprites/PLA5E4E6.png", 0, 0
-	offset 18, 48
+	Patch "sprites/1 - Berserk/PLA1D4.png", 0, 0
+	offset 10, 52
 }
 Sprite PLA1J0, 36, 46
 {
-	Patch "sprites/PLA1J0.png", 0, 0
+	Patch "sprites/1 - Berserk/PLA1J0.png", 0, 0
 	offset 12, 43
-}
-Sprite PLA7E5, 26, 51
-{
-	Patch "sprites/PLA7E5.png", 0, 0
-	offset 12, 46
-}
-Sprite PLA6E2E8, 47, 55
-{
-	Patch "sprites/PLA6E2E8.png", 0, 0
-	offset 25, 51
-}
-Sprite PLA7E3E7, 57, 53
-{
-	Patch "sprites/PLA7E3E7.png", 0, 0
-	offset 32, 50
-}
-Sprite PLA2A7, 47, 53
-{
-	Patch "sprites/PLA2A7.png", 0, 0
-	offset 21, 51
 }
 Sprite PLA1F7, 51, 53
 {
-	Patch "sprites/PLA1F7.png", 0, 0
-	offset 27, 50
+	Patch "sprites/1 - Berserk/PLA1F7.png", 0, 0
+	offset 20, 50
 }
 Sprite PLA1C6, 34, 55
 {
-	Patch "sprites/PLA1C6.png", 0, 0
-	offset 26, 51
-}
-Sprite PLA0C8, 30, 54
-{
-	Patch "sprites/PLA0C8.png", 0, 0
-	offset 17, 51
-}
-Sprite PLA6P0, 44, 61
-{
-	Patch "sprites/PLA6P0.png", 0, 0
-	offset 18, 56
-}
-Sprite PLA2F1, 27, 56
-{
-	Patch "sprites/PLA2F1.png", 0, 0
-	offset 15, 51
-}
-Sprite PLA4F2F8, 45, 55
-{
-	Patch "sprites/PLA4F2F8.png", 0, 0
-	offset 23, 51
-}
-Sprite PLA4A3A7, 45, 53
-{
-	Patch "sprites/PLA4A3A7.png", 0, 0
-	offset 24, 50
-}
-Sprite PLA0B4, 41, 54
-{
-	Patch "sprites/PLA0B4.png", 0, 0
-	offset 21, 52
-}
-Sprite PLA2A1, 30, 56
-{
-	Patch "sprites/PLA2A1.png", 0, 0
-	offset 18, 51
-}
-Sprite PLA6B2B8, 37, 55
-{
-	Patch "sprites/PLA6B2B8.png", 0, 0
-	offset 20, 52
-}
-Sprite PLA4C3C7, 42, 55
-{
-	Patch "sprites/PLA4C3C7.png", 0, 0
+	Patch "sprites/1 - Berserk/PLA1C6.png", 0, 0
 	offset 22, 51
-}
-Sprite PLA6W0, 57, 22
-{
-	Patch "sprites/PLA6W0.png", 0, 0
-	offset 24, 18
 }
 Sprite PLA1D6, 33, 54
 {
-	Patch "sprites/PLA1D6.png", 0, 0
-	offset 26, 52
+	Patch "sprites/1 - Berserk/PLA1D6.png", 0, 0
+	offset 21, 52
 }
-Sprite PLA5B4B6, 44, 54
+Sprite PL1CA3A7, 42, 31
 {
-	Patch "sprites/PLA5B4B6.png", 0, 0
-	offset 24, 52
-}
-Sprite PLA2C8, 28, 54
-{
-	Patch "sprites/PLA2C8.png", 0, 0
-	offset 17, 51
+	Patch "sprites/1 - Berserk/PL1CA3A7.png", 0, 0
+	offset 21, 27
 }
 Sprite PLA1E4, 29, 55
 {
-	Patch "sprites/PLA1E4.png", 0, 0
-	offset 15, 48
+	Patch "sprites/1 - Berserk/PLA1E4.png", 0, 0
+	offset 15, 49
 }
-Sprite PLA5C5, 36, 54
+Sprite PL1CB1, 29, 31
 {
-	Patch "sprites/PLA5C5.png", 0, 0
-	offset 19, 50
+	Patch "sprites/1 - Berserk/PL1CB1.png", 0, 0
+	offset 14, 27
 }
-Sprite PLA4E2E8, 43, 55
+Sprite PL1CE1, 29, 31
 {
-	Patch "sprites/PLA4E2E8.png", 0, 0
-	offset 21, 51
+	Patch "sprites/1 - Berserk/PL1CE1.png", 0, 0
+	offset 14, 27
 }
-Sprite PLA5C4C6, 43, 55
+Sprite PL1CU0, 57, 30
 {
-	Patch "sprites/PLA5C4C6.png", 0, 0
-	offset 24, 51
+	Patch "sprites/1 - Berserk/PL1CU0.png", 0, 0
+	offset 30, 26
 }
-Sprite PLA2B1, 32, 56
+Sprite PL1CC3C7, 43, 31
 {
-	Patch "sprites/PLA2B1.png", 0, 0
-	offset 19, 53
-}
-Sprite PLA9G3G7, 43, 55
-{
-	Patch "sprites/PLA9G3G7.png", 0, 0
-	offset 21, 52
-}
-Sprite PLA2C7, 44, 53
-{
-	Patch "sprites/PLA2C7.png", 0, 0
-	offset 21, 51
-}
-Sprite PLA3I0, 35, 43
-{
-	Patch "sprites/PLA3I0.png", 0, 0
-	offset 11, 39
-}
-Sprite PLA6R0, 53, 52
-{
-	Patch "sprites/PLA6R0.png", 0, 0
-	offset 24, 49
-}
-Sprite PLA9A5, 39, 54
-{
-	Patch "sprites/PLA9A5.png", 0, 0
-	offset 20, 51
-}
-Sprite PLA9F5, 24, 51
-{
-	Patch "sprites/PLA9F5.png", 0, 0
-	offset 11, 46
-}
-Sprite PLA7A1, 30, 56
-{
-	Patch "sprites/PLA7A1.png", 0, 0
-	offset 18, 51
-}
-Sprite PLA3B2B8, 35, 55
-{
-	Patch "sprites/PLA3B2B8.png", 0, 0
-	offset 18, 52
-}
-Sprite PLA6E1, 26, 56
-{
-	Patch "sprites/PLA6E1.png", 0, 0
-	offset 12, 51
-}
-Sprite PLA5I0, 36, 43
-{
-	Patch "sprites/PLA5I0.png", 0, 0
-	offset 12, 39
-}
-Sprite PLA3D4D6, 40, 54
-{
-	Patch "sprites/PLA3D4D6.png", 0, 0
-	offset 23, 52
-}
-Sprite PLA7B4B6, 48, 54
-{
-	Patch "sprites/PLA7B4B6.png", 0, 0
-	offset 28, 52
-}
-Sprite PLA2F4, 35, 55
-{
-	Patch "sprites/PLA2F4.png", 0, 0
-	offset 21, 49
-}
-Sprite PLA7F3F7, 64, 53
-{
-	Patch "sprites/PLA7F3F7.png", 0, 0
-	offset 39, 50
-}
-Sprite PLA9P0, 44, 59
-{
-	Patch "sprites/PLA9P0.png", 0, 0
-	offset 18, 56
-}
-Sprite PLA5A2A8, 38, 54
-{
-	Patch "sprites/PLA5A2A8.png", 0, 0
-	offset 19, 50
-}
-Sprite PLA7C5, 29, 54
-{
-	Patch "sprites/PLA7C5.png", 0, 0
-	offset 14, 50
-}
-Sprite PLA4G1, 43, 55
-{
-	Patch "sprites/PLA4G1.png", 0, 0
-	offset 24, 52
-}
-Sprite PLA6A4A6, 48, 51
-{
-	Patch "sprites/PLA6A4A6.png", 0, 0
-	offset 24, 49
-}
-Sprite PLA2G4G6, 43, 52
-{
-	Patch "sprites/PLA2G4G6.png", 0, 0
-	offset 20, 50
-}
-Sprite PLA4A4A6, 45, 51
-{
-	Patch "sprites/PLA4A4A6.png", 0, 0
-	offset 21, 49
-}
-Sprite PLA3P0, 44, 59
-{
-	Patch "sprites/PLA3P0.png", 0, 0
-	offset 18, 56
-}
-Sprite PLA0G5, 31, 54
-{
-	Patch "sprites/PLA0G5.png", 0, 0
-	offset 17, 50
-}
-Sprite PLA6E3E7, 56, 53
-{
-	Patch "sprites/PLA6E3E7.png", 0, 0
-	offset 31, 50
-}
-Sprite PLA0B5, 37, 54
-{
-	Patch "sprites/PLA0B5.png", 0, 0
-	offset 20, 51
-}
-Sprite PLA6A1, 41, 56
-{
-	Patch "sprites/PLA6A1.png", 0, 0
-	offset 18, 51
-}
-Sprite PLA4C5, 34, 54
-{
-	Patch "sprites/PLA4C5.png", 0, 0
-	offset 17, 50
-}
-Sprite PLA2F7, 58, 53
-{
-	Patch "sprites/PLA2F7.png", 0, 0
-	offset 27, 50
+	Patch "sprites/1 - Berserk/PL1CC3C7.png", 0, 0
+	offset 21, 27
 }
 Sprite PLA1B6, 30, 54
 {
-	Patch "sprites/PLA1B6.png", 0, 0
-	offset 21, 52
+	Patch "sprites/1 - Berserk/PLA1B6.png", 0, 0
+	offset 19, 52
 }
-Sprite PLA7F4F6, 45, 52
+Sprite PL1CD3D7, 43, 31
 {
-	Patch "sprites/PLA7F4F6.png", 0, 0
-	offset 24, 48
+	Patch "sprites/1 - Berserk/PL1CD3D7.png", 0, 0
+	offset 21, 27
 }
-Sprite aim_hair, 13, 13
+Sprite PL1CL0, 47, 16
 {
-	Patch "sprites/aim_hair.png", 0, 0
-	offset 0, 0
-}
-Sprite PLA2B5, 29, 54
-{
-	Patch "sprites/PLA2B5.png", 0, 0
-	offset 12, 51
-}
-Sprite PLA3M0, 51, 14
-{
-	Patch "sprites/PLA3M0.png", 0, 0
-	offset 27, 9
-}
-Sprite PLA9F1, 26, 56
-{
-	Patch "sprites/PLA9F1.png", 0, 0
-	offset 12, 51
-}
-Sprite PLA5U0, 57, 33
-{
-	Patch "sprites/PLA5U0.png", 0, 0
-	offset 24, 29
-}
-Sprite PLA0D4, 40, 54
-{
-	Patch "sprites/PLA0D4.png", 0, 0
-	offset 23, 52
-}
-Sprite PLA4L0, 55, 14
-{
-	Patch "sprites/PLA4L0.png", 0, 0
-	offset 31, 9
-}
-Sprite PLA0B2, 28, 55
-{
-	Patch "sprites/PLA0B2.png", 0, 0
-	offset 12, 52
-}
-Sprite PLA4F5, 29, 51
-{
-	Patch "sprites/PLA4F5.png", 0, 0
-	offset 11, 46
-}
-Sprite PLA2C5, 31, 54
-{
-	Patch "sprites/PLA2C5.png", 0, 0
-	offset 14, 50
-}
-Sprite PLA7E2E8, 47, 55
-{
-	Patch "sprites/PLA7E2E8.png", 0, 0
-	offset 25, 51
-}
-Sprite PLA9B5, 39, 54
-{
-	Patch "sprites/PLA9B5.png", 0, 0
-	offset 19, 51
-}
-Sprite PLA4J0, 55, 46
-{
-	Patch "sprites/PLA4J0.png", 0, 0
-	offset 31, 43
-}
-Sprite PLA5F4F6, 43, 52
-{
-	Patch "sprites/PLA5F4F6.png", 0, 0
-	offset 22, 48
+	Patch "sprites/1 - Berserk/PL1CL0.png", 0, 0
+	offset 23, 12
 }
 Sprite PLA1P0, 44, 59
 {
-	Patch "sprites/PLA1P0.png", 0, 0
+	Patch "sprites/1 - Berserk/PLA1P0.png", 0, 0
 	offset 18, 56
 }
-Sprite PLA7I0, 35, 43
+Sprite PL1CC4C6, 40, 31
 {
-	Patch "sprites/PLA7I0.png", 0, 0
-	offset 11, 39
+	Patch "sprites/1 - Berserk/PL1CC4C6.png", 0, 0
+	offset 20, 27
 }
-Sprite PLA0F5, 26, 51
+Sprite PL1CB2B8, 33, 32
 {
-	Patch "sprites/PLA0F5.png", 0, 0
-	offset 12, 46
+	Patch "sprites/1 - Berserk/PL1CB2B8.png", 0, 0
+	offset 16, 28
 }
-Sprite PLA6F4F6, 41, 52
+Sprite PL1CD2D8, 33, 32
 {
-	Patch "sprites/PLA6F4F6.png", 0, 0
-	offset 20, 48
+	Patch "sprites/1 - Berserk/PL1CD2D8.png", 0, 0
+	offset 16, 28
 }
-Sprite PLA6F2F8, 49, 55
+Sprite PL1CA4A6, 39, 31
 {
-	Patch "sprites/PLA6F2F8.png", 0, 0
-	offset 27, 51
+	Patch "sprites/1 - Berserk/PL1CA4A6.png", 0, 0
+	offset 19, 27
 }
-Sprite PLA6A2A8, 38, 54
+Sprite PL1CE3E7, 53, 31
 {
-	Patch "sprites/PLA6A2A8.png", 0, 0
-	offset 19, 50
-}
-Sprite PLA5B3B7, 36, 55
-{
-	Patch "sprites/PLA5B3B7.png", 0, 0
-	offset 18, 52
-}
-Sprite PLA0D7, 36, 55
-{
-	Patch "sprites/PLA0D7.png", 0, 0
-	offset 22, 52
-}
-Sprite PLA6I0, 35, 44
-{
-	Patch "sprites/PLA6I0.png", 0, 0
-	offset 11, 39
-}
-Sprite PLA5A3A7, 42, 53
-{
-	Patch "sprites/PLA5A3A7.png", 0, 0
-	offset 21, 50
+	Patch "sprites/1 - Berserk/PL1CE3E7.png", 0, 0
+	offset 29, 27
 }
 Sprite PLA1E6, 61, 52
 {
-	Patch "sprites/PLA1E6.png", 0, 0
-	offset 18, 48
-}
-Sprite PLA6M0, 51, 14
-{
-	Patch "sprites/PLA6M0.png", 0, 0
-	offset 27, 9
-}
-Sprite PLA3F3F7, 52, 53
-{
-	Patch "sprites/PLA3F3F7.png", 0, 0
-	offset 27, 50
-}
-Sprite PLA5N0, 51, 14
-{
-	Patch "sprites/PLA5N0.png", 0, 0
-	offset 27, 9
-}
-Sprite PLA7C1, 30, 56
-{
-	Patch "sprites/PLA7C1.png", 0, 0
-	offset 17, 51
+	Patch "sprites/1 - Berserk/PLA1E6.png", 0, 0
+	offset 20, 50
 }
 Sprite PLA1F8, 32, 55
 {
-	Patch "sprites/PLA1F8.png", 0, 0
-	offset 23, 51
+	Patch "sprites/1 - Berserk/PLA1F8.png", 0, 0
+	offset 12, 52
 }
-Sprite PLA7E4E6, 40, 52
+Sprite PL1CN0, 47, 16
 {
-	Patch "sprites/PLA7E4E6.png", 0, 0
-	offset 20, 48
+	Patch "sprites/1 - Berserk/PL1CN0.png", 0, 0
+	offset 23, 12
 }
 Sprite PLA1D2, 36, 55
 {
-	Patch "sprites/PLA1D2.png", 0, 0
-	offset 16, 52
+	Patch "sprites/1 - Berserk/PLA1D2.png", 0, 0
+	offset 17, 52
 }
-Sprite PLA4I0, 55, 43
+Sprite PL1CE4E6, 42, 31
 {
-	Patch "sprites/PLA4I0.png", 0, 0
-	offset 31, 39
+	Patch "sprites/1 - Berserk/PL1CE4E6.png", 0, 0
+	offset 21, 27
 }
-Sprite PLA4D1, 40, 55
+Sprite PL1CG2G8, 30, 32
 {
-	Patch "sprites/PLA4D1.png", 0, 0
-	offset 20, 52
+	Patch "sprites/1 - Berserk/PL1CG2G8.png", 0, 0
+	offset 15, 28
 }
-Sprite PLA2D3, 38, 54
+Sprite PL1CF3F7, 53, 31
 {
-	Patch "sprites/PLA2D3.png", 0, 0
-	offset 25, 52
-}
-Sprite PLA9F4F6, 41, 52
-{
-	Patch "sprites/PLA9F4F6.png", 0, 0
-	offset 20, 48
-}
-Sprite PLA7D5, 28, 54
-{
-	Patch "sprites/PLA7D5.png", 0, 0
-	offset 12, 51
-}
-Sprite PLA7T0, 57, 40
-{
-	Patch "sprites/PLA7T0.png", 0, 0
-	offset 24, 36
-}
-Sprite PLA0C7, 42, 53
-{
-	Patch "sprites/PLA0C7.png", 0, 0
-	offset 21, 50
-}
-Sprite PLA5E1, 26, 56
-{
-	Patch "sprites/PLA5E1.png", 0, 0
-	offset 12, 51
-}
-Sprite PLA5B2B8, 37, 55
-{
-	Patch "sprites/PLA5B2B8.png", 0, 0
-	offset 20, 52
-}
-Sprite PLA3G5, 34, 54
-{
-	Patch "sprites/PLA3G5.png", 0, 0
-	offset 17, 50
-}
-Sprite PLA2M0, 55, 14
-{
-	Patch "sprites/PLA2M0.png", 0, 0
-	offset 31, 9
-}
-Sprite PLA0P0, 44, 59
-{
-	Patch "sprites/PLA0P0.png", 0, 0
-	offset 18, 56
-}
-Sprite PLA3V0, 57, 23
-{
-	Patch "sprites/PLA3V0.png", 0, 0
-	offset 24, 19
-}
-Sprite PLA4B5, 40, 54
-{
-	Patch "sprites/PLA4B5.png", 0, 0
-	offset 18, 51
-}
-Sprite PLA5B5, 37, 54
-{
-	Patch "sprites/PLA5B5.png", 0, 0
-	offset 20, 51
-}
-Sprite PLA2I0, 55, 43
-{
-	Patch "sprites/PLA2I0.png", 0, 0
-	offset 31, 39
-}
-Sprite PLA0R0, 53, 52
-{
-	Patch "sprites/PLA0R0.png", 0, 0
-	offset 24, 49
-}
-Sprite PLA0E1, 26, 56
-{
-	Patch "sprites/PLA0E1.png", 0, 0
-	offset 12, 51
-}
-Sprite PLA5G4G6, 44, 52
-{
-	Patch "sprites/PLA5G4G6.png", 0, 0
-	offset 21, 50
+	Patch "sprites/1 - Berserk/PL1CF3F7.png", 0, 0
+	offset 29, 27
 }
 Sprite PLA1K0, 41, 38
 {
-	Patch "sprites/PLA1K0.png", 0, 0
+	Patch "sprites/1 - Berserk/PLA1K0.png", 0, 0
 	offset 17, 34
 }
-Sprite PLA2C3, 42, 54
+Sprite PL1CW0, 57, 22
 {
-	Patch "sprites/PLA2C3.png", 0, 0
-	offset 22, 51
-}
-Sprite PLA3F2F8, 45, 55
-{
-	Patch "sprites/PLA3F2F8.png", 0, 0
-	offset 23, 51
-}
-Sprite PLA7A4A6, 51, 51
-{
-	Patch "sprites/PLA7A4A6.png", 0, 0
-	offset 27, 49
-}
-Sprite PLA6G4G6, 44, 52
-{
-	Patch "sprites/PLA6G4G6.png", 0, 0
-	offset 21, 50
-}
-Sprite PLA9B3B7, 36, 55
-{
-	Patch "sprites/PLA9B3B7.png", 0, 0
-	offset 18, 52
-}
-Sprite PLA7D1, 31, 55
-{
-	Patch "sprites/PLA7D1.png", 0, 0
-	offset 16, 52
-}
-Sprite PLA7G1, 29, 55
-{
-	Patch "sprites/PLA7G1.png", 0, 0
-	offset 10, 52
-}
-Sprite PLA0D3, 34, 54
-{
-	Patch "sprites/PLA0D3.png", 0, 0
-	offset 21, 52
-}
-Sprite PLA0G4G6, 40, 52
-{
-	Patch "sprites/PLA0G4G6.png", 0, 0
-	offset 17, 50
-}
-Sprite PLA0D2, 29, 55
-{
-	Patch "sprites/PLA0D2.png", 0, 0
-	offset 12, 52
-}
-Sprite PLA7D2D8, 37, 55
-{
-	Patch "sprites/PLA7D2D8.png", 0, 0
-	offset 20, 52
-}
-Sprite PLA4K0, 55, 38
-{
-	Patch "sprites/PLA4K0.png", 0, 0
-	offset 31, 34
-}
-Sprite PLA6F3F7, 56, 53
-{
-	Patch "sprites/PLA6F3F7.png", 0, 0
-	offset 30, 50
-}
-Sprite PLA2E8, 40, 55
-{
-	Patch "sprites/PLA2E8.png", 0, 0
-	offset 21, 51
+	Patch "sprites/1 - Berserk/PL1CW0.png", 0, 0
+	offset 30, 18
 }
 Sprite PLA1G2G8, 30, 56
 {
-	Patch "sprites/PLA1G2G8.png", 0, 0
+	Patch "sprites/1 - Berserk/PLA1G2G8.png", 0, 0
 	offset 10, 52
 }
-Sprite PLA4E5, 29, 51
+Sprite PL1CK0, 41, 19
 {
-	Patch "sprites/PLA4E5.png", 0, 0
-	offset 12, 46
+	Patch "sprites/1 - Berserk/PL1CK0.png", 0, 0
+	offset 20, 16
 }
-Sprite PLA0I0, 35, 43
+Sprite PL1CV0, 57, 23
 {
-	Patch "sprites/PLA0I0.png", 0, 0
-	offset 11, 39
+	Patch "sprites/1 - Berserk/PL1CV0.png", 0, 0
+	offset 30, 19
 }
-Sprite PLA2Q0, 55, 57
+Sprite PL1CF1, 29, 31
 {
-	Patch "sprites/PLA2Q0.png", 0, 0
-	offset 28, 54
-}
-Sprite PLA9K0, 41, 38
-{
-	Patch "sprites/PLA9K0.png", 0, 0
-	offset 17, 34
-}
-Sprite PLA4Q0, 55, 57
-{
-	Patch "sprites/PLA4Q0.png", 0, 0
-	offset 28, 54
-}
-Sprite PLA7F2F8, 52, 55
-{
-	Patch "sprites/PLA7F2F8.png", 0, 0
-	offset 30, 51
-}
-Sprite PLA5C1, 38, 56
-{
-	Patch "sprites/PLA5C1.png", 0, 0
-	offset 17, 51
-}
-Sprite PLA0B1, 40, 56
-{
-	Patch "sprites/PLA0B1.png", 0, 0
-	offset 19, 53
-}
-Sprite PLA5K0, 41, 38
-{
-	Patch "sprites/PLA5K0.png", 0, 0
-	offset 17, 34
-}
-Sprite PLA0G2G8, 31, 56
-{
-	Patch "sprites/PLA0G2G8.png", 0, 0
-	offset 11, 52
-}
-Sprite PLA0E3E7, 55, 53
-{
-	Patch "sprites/PLA0E3E7.png", 0, 0
-	offset 30, 50
-}
-Sprite PLA4P0, 54, 59
-{
-	Patch "sprites/PLA4P0.png", 0, 0
-	offset 29, 56
-}
-Sprite PLA3L0, 51, 14
-{
-	Patch "sprites/PLA3L0.png", 0, 0
-	offset 27, 9
-}
-Sprite PLA2C4, 31, 55
-{
-	Patch "sprites/PLA2C4.png", 0, 0
-	offset 12, 51
+	Patch "sprites/1 - Berserk/PL1CF1.png", 0, 0
+	offset 14, 27
 }
 Sprite PLA1C2, 39, 54
 {
-	Patch "sprites/PLA1C2.png", 0, 0
-	offset 16, 51
-}
-Sprite PLA9I0, 38, 43
-{
-	Patch "sprites/PLA9I0.png", 0, 0
-	offset 11, 39
-}
-Sprite PLA6A5, 36, 50
-{
-	Patch "sprites/PLA6A5.png", 0, 0
-	offset 21, 47
-}
-Sprite PLA7A3A7, 56, 53
-{
-	Patch "sprites/PLA7A3A7.png", 0, 0
-	offset 35, 50
-}
-Sprite PLA6F1, 26, 56
-{
-	Patch "sprites/PLA6F1.png", 0, 0
-	offset 12, 51
-}
-Sprite PLA0L0, 51, 14
-{
-	Patch "sprites/PLA0L0.png", 0, 0
-	offset 27, 9
-}
-Sprite PLA3E3E7, 51, 53
-{
-	Patch "sprites/PLA3E3E7.png", 0, 0
-	offset 26, 50
-}
-Sprite PLA2P0, 54, 59
-{
-	Patch "sprites/PLA2P0.png", 0, 0
-	offset 28, 56
-}
-Sprite PLA6Q0, 48, 57
-{
-	Patch "sprites/PLA6Q0.png", 0, 0
-	offset 21, 54
+	Patch "sprites/1 - Berserk/PLA1C2.png", 0, 0
+	offset 18, 50
 }
 Sprite PLA1A3, 39, 54
 {
-	Patch "sprites/PLA1A3.png", 0, 0
-	offset 21, 51
+	Patch "sprites/1 - Berserk/PLA1A3.png", 0, 0
+	offset 19, 51
 }
-Sprite PLA0E5, 26, 51
+Sprite PL1CJ0, 33, 25
 {
-	Patch "sprites/PLA0E5.png", 0, 0
-	offset 12, 46
-}
-Sprite PLA4B1, 37, 56
-{
-	Patch "sprites/PLA4B1.png", 0, 0
-	offset 23, 53
-}
-Sprite PLA2E5, 26, 51
-{
-	Patch "sprites/PLA2E5.png", 0, 0
-	offset 14, 46
-}
-Sprite PLA4F4F6, 41, 52
-{
-	Patch "sprites/PLA4F4F6.png", 0, 0
-	offset 20, 48
-}
-Sprite PLA5P0, 44, 59
-{
-	Patch "sprites/PLA5P0.png", 0, 0
-	offset 18, 56
-}
-Sprite PLA5T0, 57, 40
-{
-	Patch "sprites/PLA5T0.png", 0, 0
-	offset 24, 36
-}
-Sprite PLA2D2, 34, 55
-{
-	Patch "sprites/PLA2D2.png", 0, 0
-	offset 17, 52
-}
-Sprite PLA5G5, 34, 54
-{
-	Patch "sprites/PLA5G5.png", 0, 0
-	offset 17, 50
-}
-Sprite PLA2D6, 30, 54
-{
-	Patch "sprites/PLA2D6.png", 0, 0
-	offset 23, 52
-}
-Sprite PLA7E1, 26, 56
-{
-	Patch "sprites/PLA7E1.png", 0, 0
-	offset 12, 51
+	Patch "sprites/1 - Berserk/PL1CJ0.png", 0, 0
+	offset 16, 21
 }
 Sprite PLA1I0, 35, 43
 {
-	Patch "sprites/PLA1I0.png", 0, 0
+	Patch "sprites/1 - Berserk/PLA1I0.png", 0, 0
 	offset 11, 39
 }
-Sprite PLA5B1, 37, 56
+Sprite PL1CB3B7, 43, 31
 {
-	Patch "sprites/PLA5B1.png", 0, 0
-	offset 19, 53
-}
-Sprite PLA2C2, 35, 55
-{
-	Patch "sprites/PLA2C2.png", 0, 0
-	offset 15, 51
-}
-Sprite PLA6V0, 57, 23
-{
-	Patch "sprites/PLA6V0.png", 0, 0
-	offset 24, 19
-}
-Sprite PLA3D3D7, 34, 54
-{
-	Patch "sprites/PLA3D3D7.png", 0, 0
-	offset 21, 52
-}
-Sprite PLA3H0, 44, 50
-{
-	Patch "sprites/PLA3H0.png", 0, 0
-	offset 16, 47
-}
-Sprite PLA3K0, 41, 38
-{
-	Patch "sprites/PLA3K0.png", 0, 0
-	offset 17, 34
+	Patch "sprites/1 - Berserk/PL1CB3B7.png", 0, 0
+	offset 21, 27
 }
 Sprite PLA1A6, 32, 51
 {
-	Patch "sprites/PLA1A6.png", 0, 0
-	offset 21, 49
-}
-Sprite PLA9O0, 39, 56
-{
-	Patch "sprites/PLA9O0.png", 0, 0
-	offset 16, 53
-}
-Sprite PLA2E3, 53, 54
-{
-	Patch "sprites/PLA2E3.png", 0, 0
-	offset 29, 50
-}
-Sprite PLA0F3F7, 55, 53
-{
-	Patch "sprites/PLA0F3F7.png", 0, 0
-	offset 29, 50
-}
-Sprite PLA9F2F8, 51, 55
-{
-	Patch "sprites/PLA9F2F8.png", 0, 0
-	offset 29, 51
+	Patch "sprites/1 - Berserk/PLA1A6.png", 0, 0
+	offset 23, 49
 }
 Sprite PLA1V0, 57, 23
 {
-	Patch "sprites/PLA1V0.png", 0, 0
+	Patch "sprites/1 - Berserk/PLA1V0.png", 0, 0
 	offset 24, 19
-}
-Sprite PLA0M0, 51, 14
-{
-	Patch "sprites/PLA0M0.png", 0, 0
-	offset 27, 9
-}
-Sprite PLA9D4D6, 40, 54
-{
-	Patch "sprites/PLA9D4D6.png", 0, 0
-	offset 23, 52
-}
-Sprite PLA3A4A6, 45, 51
-{
-	Patch "sprites/PLA3A4A6.png", 0, 0
-	offset 21, 49
-}
-Sprite PLA4V0, 61, 23
-{
-	Patch "sprites/PLA4V0.png", 0, 0
-	offset 28, 19
 }
 Sprite PLA1E1, 27, 56
 {
-	Patch "sprites/PLA1E1.png", 0, 0
+	Patch "sprites/1 - Berserk/PLA1E1.png", 0, 0
 	offset 15, 51
-}
-Sprite PLA7C2C8, 39, 55
-{
-	Patch "sprites/PLA7C2C8.png", 0, 0
-	offset 19, 51
-}
-Sprite dir_hair, 11, 11
-{
-	Patch "sprites/dir_hair.png", 0, 0
-	offset 0, 0
-}
-Sprite PLA2D8, 25, 55
-{
-	Patch "sprites/PLA2D8.png", 0, 0
-	offset 13, 52
-}
-Sprite PLA9G2G8, 36, 56
-{
-	Patch "sprites/PLA9G2G8.png", 0, 0
-	offset 16, 52
 }
 Sprite PLA1E8, 32, 55
 {
-	Patch "sprites/PLA1E8.png", 0, 0
-	offset 21, 51
+	Patch "sprites/1 - Berserk/PLA1E8.png", 0, 0
+	offset 12, 52
 }
 Sprite PLA1A2, 27, 55
 {
-	Patch "sprites/PLA1A2.png", 0, 0
-	offset 10, 51
+	Patch "sprites/1 - Berserk/PLA1A2.png", 0, 0
+	offset 7, 51
 }
-Sprite PLA3D1, 40, 55
+Sprite PL1CI0, 34, 31
 {
-	Patch "sprites/PLA3D1.png", 0, 0
-	offset 16, 52
+	Patch "sprites/1 - Berserk/PL1CI0.png", 0, 0
+	offset 18, 27
 }
-Sprite PLA3E5, 26, 51
+Sprite PL1CC1, 29, 31
 {
-	Patch "sprites/PLA3E5.png", 0, 0
-	offset 12, 46
+	Patch "sprites/1 - Berserk/PL1CC1.png", 0, 0
+	offset 14, 27
 }
-Sprite PLA7W0, 57, 22
+Sprite PL1CG3G7, 40, 31
 {
-	Patch "sprites/PLA7W0.png", 0, 0
-	offset 24, 18
-}
-Sprite PLA3C3C7, 38, 54
-{
-	Patch "sprites/PLA3C3C7.png", 0, 0
-	offset 18, 51
-}
-Sprite PLA9C1, 43, 56
-{
-	Patch "sprites/PLA9C1.png", 0, 0
-	offset 22, 51
-}
-Sprite PLA2B2, 27, 54
-{
-	Patch "sprites/PLA2B2.png", 0, 0
-	offset 12, 51
-}
-Sprite PLA0A7, 38, 54
-{
-	Patch "sprites/PLA0A7.png", 0, 0
-	offset 18, 51
-}
-Sprite PLA0K0, 41, 38
-{
-	Patch "sprites/PLA0K0.png", 0, 0
-	offset 17, 34
-}
-Sprite PLA3F5, 24, 51
-{
-	Patch "sprites/PLA3F5.png", 0, 0
-	offset 11, 46
-}
-Sprite PLA4A5, 40, 54
-{
-	Patch "sprites/PLA4A5.png", 0, 0
-	offset 18, 49
-}
-Sprite PLA0A1, 41, 56
-{
-	Patch "sprites/PLA0A1.png", 0, 0
-	offset 18, 51
-}
-Sprite PLA5V0, 57, 23
-{
-	Patch "sprites/PLA5V0.png", 0, 0
-	offset 24, 19
-}
-Sprite PLA7P0, 44, 59
-{
-	Patch "sprites/PLA7P0.png", 0, 0
-	offset 18, 56
-}
-Sprite PLA2A8, 37, 54
-{
-	Patch "sprites/PLA2A8.png", 0, 0
-	offset 24, 50
+	Patch "sprites/1 - Berserk/PL1CG3G7.png", 0, 0
+	offset 20, 27
 }
 Sprite PLA1A8, 39, 54
 {
-	Patch "sprites/PLA1A8.png", 0, 0
+	Patch "sprites/1 - Berserk/PLA1A8.png", 0, 0
 	offset 20, 50
-}
-Sprite PLA2N0, 55, 14
-{
-	Patch "sprites/PLA2N0.png", 0, 0
-	offset 31, 9
-}
-Sprite PLA2E1, 27, 56
-{
-	Patch "sprites/PLA2E1.png", 0, 0
-	offset 15, 51
-}
-Sprite PLA0E2E8, 45, 55
-{
-	Patch "sprites/PLA0E2E8.png", 0, 0
-	offset 23, 51
-}
-Sprite PLA4W0, 61, 22
-{
-	Patch "sprites/PLA4W0.png", 0, 0
-	offset 28, 18
-}
-Sprite PLA4S0, 60, 47
-{
-	Patch "sprites/PLA4S0.png", 0, 0
-	offset 28, 43
 }
 Sprite PLA1R0, 53, 52
 {
-	Patch "sprites/PLA1R0.png", 0, 0
-	offset 24, 49
-}
-Sprite PLA9U0, 57, 33
-{
-	Patch "sprites/PLA9U0.png", 0, 0
-	offset 24, 29
-}
-Sprite PLA5R0, 53, 52
-{
-	Patch "sprites/PLA5R0.png", 0, 0
-	offset 24, 49
-}
-Sprite PLA2B8, 30, 55
-{
-	Patch "sprites/PLA2B8.png", 0, 0
-	offset 18, 52
-}
-Sprite PLA5D5, 36, 54
-{
-	Patch "sprites/PLA5D5.png", 0, 0
-	offset 20, 51
-}
-Sprite PLA4H0, 50, 50
-{
-	Patch "sprites/PLA4H0.png", 0, 0
-	offset 22, 47
-}
-Sprite PLA3E4E6, 38, 52
-{
-	Patch "sprites/PLA3E4E6.png", 0, 0
-	offset 18, 48
-}
-Sprite PLA3C2C8, 37, 55
-{
-	Patch "sprites/PLA3C2C8.png", 0, 0
-	offset 17, 51
-}
-Sprite PLA9R0, 53, 52
-{
-	Patch "sprites/PLA9R0.png", 0, 0
+	Patch "sprites/1 - Berserk/PLA1R0.png", 0, 0
 	offset 24, 49
 }
 Sprite PLA1L0, 51, 14
 {
-	Patch "sprites/PLA1L0.png", 0, 0
+	Patch "sprites/1 - Berserk/PLA1L0.png", 0, 0
 	offset 27, 9
-}
-Sprite PLA3C5, 34, 54
-{
-	Patch "sprites/PLA3C5.png", 0, 0
-	offset 17, 50
-}
-Sprite PLA0C5, 35, 54
-{
-	Patch "sprites/PLA0C5.png", 0, 0
-	offset 18, 50
-}
-Sprite PLA5A1, 41, 56
-{
-	Patch "sprites/PLA5A1.png", 0, 0
-	offset 18, 51
-}
-Sprite PLA5E5, 26, 51
-{
-	Patch "sprites/PLA5E5.png", 0, 0
-	offset 12, 46
 }
 Sprite PLA1Q0, 48, 57
 {
-	Patch "sprites/PLA1Q0.png", 0, 0
+	Patch "sprites/1 - Berserk/PLA1Q0.png", 0, 0
 	offset 21, 54
-}
-Sprite PLA9S0, 55, 47
-{
-	Patch "sprites/PLA9S0.png", 0, 0
-	offset 23, 43
-}
-Sprite PLA6D5, 35, 54
-{
-	Patch "sprites/PLA6D5.png", 0, 0
-	offset 19, 51
-}
-Sprite PLA6T0, 57, 40
-{
-	Patch "sprites/PLA6T0.png", 0, 0
-	offset 24, 36
-}
-Sprite PLA4M0, 55, 14
-{
-	Patch "sprites/PLA4M0.png", 0, 0
-	offset 31, 9
-}
-Sprite PLA7N0, 51, 14
-{
-	Patch "sprites/PLA7N0.png", 0, 0
-	offset 27, 9
-}
-Sprite PLA9V0, 57, 23
-{
-	Patch "sprites/PLA9V0.png", 0, 0
-	offset 24, 19
-}
-Sprite PLA7M0, 51, 14
-{
-	Patch "sprites/PLA7M0.png", 0, 0
-	offset 27, 9
 }
 Sprite PLA1D3, 28, 55
 {
-	Patch "sprites/PLA1D3.png", 0, 0
-	offset 13, 52
-}
-Sprite PLA2V0, 61, 23
-{
-	Patch "sprites/PLA2V0.png", 0, 0
-	offset 28, 19
-}
-Sprite PLA0F2F8, 45, 55
-{
-	Patch "sprites/PLA0F2F8.png", 0, 0
-	offset 23, 51
-}
-Sprite PLA0H0, 40, 50
-{
-	Patch "sprites/PLA0H0.png", 0, 0
-	offset 12, 47
-}
-Sprite PLA6G3G7, 46, 55
-{
-	Patch "sprites/PLA6G3G7.png", 0, 0
-	offset 24, 52
+	Patch "sprites/1 - Berserk/PLA1D3.png", 0, 0
+	offset 10, 52
 }
 Sprite PLA1G3G7, 40, 55
 {
-	Patch "sprites/PLA1G3G7.png", 0, 0
+	Patch "sprites/1 - Berserk/PLA1G3G7.png", 0, 0
 	offset 18, 52
 }
-Sprite PLA5S0, 55, 47
+Sprite PL1CD1, 29, 31
 {
-	Patch "sprites/PLA5S0.png", 0, 0
-	offset 23, 43
+	Patch "sprites/1 - Berserk/PL1CD1.png", 0, 0
+	offset 14, 27
 }
-Sprite PLA5O0, 39, 56
+Sprite PL1CG5, 24, 31
 {
-	Patch "sprites/PLA5O0.png", 0, 0
-	offset 16, 53
-}
-Sprite PLA4R0, 57, 52
-{
-	Patch "sprites/PLA4R0.png", 0, 0
-	offset 28, 49
-}
-Sprite PLA7O0, 36, 56
-{
-	Patch "sprites/PLA7O0.png", 0, 0
-	offset 14, 53
-}
-Sprite PLA2E7, 55, 53
-{
-	Patch "sprites/PLA2E7.png", 0, 0
-	offset 26, 50
-}
-Sprite PLA7D3D7, 48, 54
-{
-	Patch "sprites/PLA7D3D7.png", 0, 0
-	offset 35, 52
-}
-Sprite PLA9B1, 43, 56
-{
-	Patch "sprites/PLA9B1.png", 0, 0
-	offset 24, 53
-}
-Sprite PLA6C5, 34, 54
-{
-	Patch "sprites/PLA6C5.png", 0, 0
-	offset 17, 50
-}
-Sprite PLA0C6, 44, 51
-{
-	Patch "sprites/PLA0C6.png", 0, 0
-	offset 28, 50
-}
-Sprite PLA0S0, 55, 47
-{
-	Patch "sprites/PLA0S0.png", 0, 0
-	offset 23, 43
-}
-Sprite PLA6C1, 38, 56
-{
-	Patch "sprites/PLA6C1.png", 0, 0
-	offset 17, 51
-}
-Sprite PLA5C2C8, 39, 55
-{
-	Patch "sprites/PLA5C2C8.png", 0, 0
-	offset 19, 51
+	Patch "sprites/1 - Berserk/PL1CG5.png", 0, 0
+	offset 11, 27
 }
 Sprite PLA1E3, 45, 54
 {
-	Patch "sprites/PLA1E3.png", 0, 0
-	offset 21, 50
+	Patch "sprites/1 - Berserk/PLA1E3.png", 0, 0
+	offset 31, 50
 }
-Sprite PLA7S0, 55, 47
+Sprite PL1CG1, 29, 31
 {
-	Patch "sprites/PLA7S0.png", 0, 0
-	offset 23, 43
+	Patch "sprites/1 - Berserk/PL1CG1.png", 0, 0
+	offset 14, 27
 }
-Sprite PLA9L0, 51, 14
+Sprite PL1CR0, 52, 40
 {
-	Patch "sprites/PLA9L0.png", 0, 0
-	offset 27, 9
-}
-Sprite PLA4F1, 26, 56
-{
-	Patch "sprites/PLA4F1.png", 0, 0
-	offset 12, 51
-}
-Sprite PLA5E2E8, 47, 55
-{
-	Patch "sprites/PLA5E2E8.png", 0, 0
-	offset 25, 51
-}
-Sprite PLA4D3D7, 38, 54
-{
-	Patch "sprites/PLA4D3D7.png", 0, 0
-	offset 25, 52
-}
-Sprite PLA5G2G8, 36, 56
-{
-	Patch "sprites/PLA5G2G8.png", 0, 0
-	offset 16, 52
-}
-Sprite PLA0D8, 28, 55
-{
-	Patch "sprites/PLA0D8.png", 0, 0
-	offset 15, 52
-}
-Sprite PLA4B2B8, 35, 55
-{
-	Patch "sprites/PLA4B2B8.png", 0, 0
-	offset 18, 52
-}
-Sprite PLA0C2, 29, 55
-{
-	Patch "sprites/PLA0C2.png", 0, 0
-	offset 9, 51
-}
-Sprite PLA7L0, 51, 14
-{
-	Patch "sprites/PLA7L0.png", 0, 0
-	offset 27, 9
-}
-Sprite PLA2E2, 52, 55
-{
-	Patch "sprites/PLA2E2.png", 0, 0
-	offset 24, 51
-}
-Sprite PLA4G5, 39, 54
-{
-	Patch "sprites/PLA4G5.png", 0, 0
-	offset 17, 50
-}
-Sprite PLA9A1, 43, 56
-{
-	Patch "sprites/PLA9A1.png", 0, 0
-	offset 23, 51
-}
-Sprite PLA6D1, 40, 55
-{
-	Patch "sprites/PLA6D1.png", 0, 0
-	offset 16, 52
-}
-Sprite PLA5A4A6, 48, 51
-{
-	Patch "sprites/PLA5A4A6.png", 0, 0
-	offset 24, 49
-}
-Sprite PLA4D4D6, 40, 54
-{
-	Patch "sprites/PLA4D4D6.png", 0, 0
-	offset 23, 52
-}
-Sprite PLA3T0, 57, 40
-{
-	Patch "sprites/PLA3T0.png", 0, 0
-	offset 24, 36
-}
-Sprite PLA9G5, 34, 54
-{
-	Patch "sprites/PLA9G5.png", 0, 0
-	offset 17, 50
-}
-Sprite PLA4G2G8, 38, 56
-{
-	Patch "sprites/PLA4G2G8.png", 0, 0
-	offset 18, 52
+	Patch "sprites/1 - Berserk/PL1CR0.png", 0, 0
+	offset 28, 36
 }
 Sprite PLA1O0, 38, 56
 {
-	Patch "sprites/PLA1O0.png", 0, 0
+	Patch "sprites/1 - Berserk/PLA1O0.png", 0, 0
 	offset 16, 53
 }
 Sprite PLA1A4, 34, 55
 {
-	Patch "sprites/PLA1A4.png", 0, 0
-	offset 12, 51
-}
-Sprite PLA7J0, 37, 45
-{
-	Patch "sprites/PLA7J0.png", 0, 0
-	offset 13, 42
+	Patch "sprites/1 - Berserk/PLA1A4.png", 0, 0
+	offset 11, 51
 }
 Sprite PLA1F2, 45, 55
 {
-	Patch "sprites/PLA1F2.png", 0, 0
-	offset 16, 51
+	Patch "sprites/1 - Berserk/PLA1F2.png", 0, 0
+	offset 25, 50
 }
 Sprite PLA1M0, 51, 14
 {
-	Patch "sprites/PLA1M0.png", 0, 0
+	Patch "sprites/1 - Berserk/PLA1M0.png", 0, 0
 	offset 27, 9
-}
-Sprite PLA3R0, 53, 52
-{
-	Patch "sprites/PLA3R0.png", 0, 0
-	offset 24, 49
-}
-Sprite PLA6G2G8, 36, 56
-{
-	Patch "sprites/PLA6G2G8.png", 0, 0
-	offset 16, 52
-}
-Sprite PLA0O0, 38, 56
-{
-	Patch "sprites/PLA0O0.png", 0, 0
-	offset 16, 53
-}
-Sprite PLA9E5, 26, 51
-{
-	Patch "sprites/PLA9E5.png", 0, 0
-	offset 12, 46
-}
-Sprite PLA6U0, 57, 33
-{
-	Patch "sprites/PLA6U0.png", 0, 0
-	offset 24, 29
-}
-Sprite PLA7F1, 25, 56
-{
-	Patch "sprites/PLA7F1.png", 0, 0
-	offset 11, 51
 }
 Sprite PLA1B2, 27, 55
 {
-	Patch "sprites/PLA1B2.png", 0, 0
+	Patch "sprites/1 - Berserk/PLA1B2.png", 0, 0
 	offset 9, 52
-}
-Sprite PLA9D1, 43, 55
-{
-	Patch "sprites/PLA9D1.png", 0, 0
-	offset 23, 52
-}
-Sprite PLA2T0, 61, 40
-{
-	Patch "sprites/PLA2T0.png", 0, 0
-	offset 28, 36
 }
 Sprite PLA1G1, 35, 55
 {
-	Patch "sprites/PLA1G1.png", 0, 0
+	Patch "sprites/1 - Berserk/PLA1G1.png", 0, 0
 	offset 16, 52
-}
-Sprite PLA0F4F6, 38, 52
-{
-	Patch "sprites/PLA0F4F6.png", 0, 0
-	offset 18, 48
-}
-Sprite PLA9T0, 57, 40
-{
-	Patch "sprites/PLA9T0.png", 0, 0
-	offset 24, 36
-}
-Sprite PLA4C2C8, 37, 55
-{
-	Patch "sprites/PLA4C2C8.png", 0, 0
-	offset 17, 51
-}
-Sprite PLA5M0, 51, 14
-{
-	Patch "sprites/PLA5M0.png", 0, 0
-	offset 27, 9
-}
-Sprite PLA5C3C7, 40, 54
-{
-	Patch "sprites/PLA5C3C7.png", 0, 0
-	offset 20, 51
-}
-Sprite PLA2G5, 40, 56
-{
-	Patch "sprites/PLA2G5.png", 0, 0
-	offset 17, 50
-}
-Sprite PLA3D2D8, 35, 55
-{
-	Patch "sprites/PLA3D2D8.png", 0, 0
-	offset 17, 52
-}
-Sprite PLA0N0, 51, 14
-{
-	Patch "sprites/PLA0N0.png", 0, 0
-	offset 27, 9
 }
 Sprite PLA1D7, 27, 54
 {
-	Patch "sprites/PLA1D7.png", 0, 0
-	offset 21, 52
-}
-Sprite PLA9H0, 44, 50
-{
-	Patch "sprites/PLA9H0.png", 0, 0
-	offset 16, 47
-}
-Sprite PLA5L0, 51, 14
-{
-	Patch "sprites/PLA5L0.png", 0, 0
-	offset 27, 9
-}
-Sprite PLA7K0, 41, 40
-{
-	Patch "sprites/PLA7K0.png", 0, 0
-	offset 17, 37
+	Patch "sprites/1 - Berserk/PLA1D7.png", 0, 0
+	offset 12, 52
 }
 Sprite PLA1A1, 32, 56
 {
-	Patch "sprites/PLA1A1.png", 0, 0
-	offset 18, 51
-}
-Sprite PLA6G5, 34, 54
-{
-	Patch "sprites/PLA6G5.png", 0, 0
-	offset 17, 50
+	Patch "sprites/1 - Berserk/PLA1A1.png", 0, 0
+	offset 16, 52
 }
 Sprite PLA1N0, 51, 14
 {
-	Patch "sprites/PLA1N0.png", 0, 0
+	Patch "sprites/1 - Berserk/PLA1N0.png", 0, 0
 	offset 27, 9
 }
-Sprite PLA3N0, 51, 14
+Sprite PL1CQ0, 46, 43
 {
-	Patch "sprites/PLA3N0.png", 0, 0
-	offset 27, 9
+	Patch "sprites/1 - Berserk/PL1CQ0.png", 0, 0
+	offset 25, 39
 }
-Sprite PLA6E4E6, 38, 52
+Sprite PL1CE2E8, 31, 32
 {
-	Patch "sprites/PLA6E4E6.png", 0, 0
-	offset 18, 48
-}
-Sprite PLA7G5, 31, 54
-{
-	Patch "sprites/PLA7G5.png", 0, 0
-	offset 17, 50
-}
-Sprite PLA3F4F6, 41, 52
-{
-	Patch "sprites/PLA3F4F6.png", 0, 0
-	offset 20, 48
-}
-Sprite PLA2S0, 60, 47
-{
-	Patch "sprites/PLA2S0.png", 0, 0
-	offset 28, 43
-}
-Sprite PLA5E3E7, 58, 53
-{
-	Patch "sprites/PLA5E3E7.png", 0, 0
-	offset 32, 50
-}
-Sprite PLA6B4B6, 44, 54
-{
-	Patch "sprites/PLA6B4B6.png", 0, 0
-	offset 24, 52
-}
-Sprite PLA2F6, 48, 52
-{
-	Patch "sprites/PLA2F6.png", 0, 0
-	offset 20, 48
-}
-Sprite PLA4T0, 61, 40
-{
-	Patch "sprites/PLA4T0.png", 0, 0
-	offset 28, 36
-}
-Sprite tar_hair, 30, 30
-{
-	Patch "sprites/tar_hair.png", 0, 0
-	offset 0, 0
-}
-Sprite PLA9C5, 39, 54
-{
-	Patch "sprites/PLA9C5.png", 0, 0
-	offset 17, 50
+	Patch "sprites/1 - Berserk/PL1CE2E8.png", 0, 0
+	offset 15, 28
 }
 Sprite PLA1T0, 57, 40
 {
-	Patch "sprites/PLA1T0.png", 0, 0
+	Patch "sprites/1 - Berserk/PLA1T0.png", 0, 0
 	offset 24, 36
 }
 Sprite PLA1S0, 55, 47
 {
-	Patch "sprites/PLA1S0.png", 0, 0
+	Patch "sprites/1 - Berserk/PLA1S0.png", 0, 0
 	offset 23, 43
-}
-Sprite PLA0D6, 41, 54
-{
-	Patch "sprites/PLA0D6.png", 0, 0
-	offset 25, 52
-}
-Sprite PLA3E2E8, 43, 55
-{
-	Patch "sprites/PLA3E2E8.png", 0, 0
-	offset 21, 51
-}
-Sprite PLA9A2A8, 34, 54
-{
-	Patch "sprites/PLA9A2A8.png", 0, 0
-	offset 16, 50
-}
-Sprite PLA4D2D8, 40, 55
-{
-	Patch "sprites/PLA4D2D8.png", 0, 0
-	offset 22, 52
-}
-Sprite PLA2F8, 40, 55
-{
-	Patch "sprites/PLA2F8.png", 0, 0
-	offset 23, 51
-}
-Sprite PLA7B1, 31, 56
-{
-	Patch "sprites/PLA7B1.png", 0, 0
-	offset 19, 53
-}
-Sprite PLA7B2B8, 36, 55
-{
-	Patch "sprites/PLA7B2B8.png", 0, 0
-	offset 21, 52
-}
-Sprite PLA9E2E8, 43, 55
-{
-	Patch "sprites/PLA9E2E8.png", 0, 0
-	offset 21, 51
-}
-Sprite PLA5W0, 57, 22
-{
-	Patch "sprites/PLA5W0.png", 0, 0
-	offset 24, 18
-}
-Sprite PLA2A5, 27, 50
-{
-	Patch "sprites/PLA2A5.png", 0, 0
-	offset 12, 47
 }
 Sprite PLA1F4, 29, 55
 {
-	Patch "sprites/PLA1F4.png", 0, 0
+	Patch "sprites/1 - Berserk/PLA1F4.png", 0, 0
 	offset 15, 49
 }
 Sprite PLA1A5, 31, 54
 {
-	Patch "sprites/PLA1A5.png", 0, 0
-	offset 13, 50
+	Patch "sprites/1 - Berserk/PLA1A5.png", 0, 0
+	offset 14, 50
 }
 Sprite PLA1D5, 35, 54
 {
-	Patch "sprites/PLA1D5.png", 0, 0
-	offset 16, 51
-}
-Sprite PLA6D4D6, 40, 54
-{
-	Patch "sprites/PLA6D4D6.png", 0, 0
-	offset 23, 52
-}
-Sprite PLA3A2A8, 35, 54
-{
-	Patch "sprites/PLA3A2A8.png", 0, 0
-	offset 17, 50
-}
-Sprite PLA0E4E6, 38, 52
-{
-	Patch "sprites/PLA0E4E6.png", 0, 0
-	offset 18, 48
+	Patch "sprites/1 - Berserk/PLA1D5.png", 0, 0
+	offset 15, 51
 }
 Sprite PLA1U0, 57, 33
 {
-	Patch "sprites/PLA1U0.png", 0, 0
+	Patch "sprites/1 - Berserk/PLA1U0.png", 0, 0
 	offset 24, 29
-}
-Sprite PLA2F5, 26, 51
-{
-	Patch "sprites/PLA2F5.png", 0, 0
-	offset 13, 46
 }
 Sprite PLA1B1, 38, 55
 {
-	Patch "sprites/PLA1B1.png", 0, 0
-	offset 22, 53
+	Patch "sprites/1 - Berserk/PLA1B1.png", 0, 0
+	offset 19, 51
 }
-Sprite PLA9Q0, 48, 57
+Sprite PL1CF2F8, 31, 32
 {
-	Patch "sprites/PLA9Q0.png", 0, 0
-	offset 21, 54
-}
-Sprite PLA9D3D7, 34, 54
-{
-	Patch "sprites/PLA9D3D7.png", 0, 0
-	offset 21, 52
-}
-Sprite PLA7B3B7, 52, 55
-{
-	Patch "sprites/PLA7B3B7.png", 0, 0
-	offset 34, 52
-}
-Sprite PLA0D1, 40, 55
-{
-	Patch "sprites/PLA0D1.png", 0, 0
-	offset 16, 52
-}
-Sprite PLA2G3G7, 43, 55
-{
-	Patch "sprites/PLA2G3G7.png", 0, 0
-	offset 21, 52
+	Patch "sprites/1 - Berserk/PL1CF2F8.png", 0, 0
+	offset 15, 28
 }
 Sprite PLA1C8, 27, 55
 {
-	Patch "sprites/PLA1C8.png", 0, 0
-	offset 17, 51
+	Patch "sprites/1 - Berserk/PLA1C8.png", 0, 0
+	offset 20, 51
 }
-Sprite PLA0Q0, 48, 57
+Sprite PL1CA1, 29, 31
 {
-	Patch "sprites/PLA0Q0.png", 0, 0
-	offset 21, 54
+	Patch "sprites/1 - Berserk/PL1CA1.png", 0, 0
+	offset 14, 27
 }
-Sprite PLA5F3F7, 58, 53
+Sprite PL1CA2A8, 32, 32
 {
-	Patch "sprites/PLA5F3F7.png", 0, 0
-	offset 33, 50
-}
-Sprite PLA7G2G8, 39, 56
-{
-	Patch "sprites/PLA7G2G8.png", 0, 0
-	offset 19, 52
-}
-Sprite PLA4E1, 26, 56
-{
-	Patch "sprites/PLA4E1.png", 0, 0
-	offset 12, 51
-}
-Sprite PLA9C3C7, 38, 54
-{
-	Patch "sprites/PLA9C3C7.png", 0, 0
-	offset 18, 51
+	Patch "sprites/1 - Berserk/PL1CA2A8.png", 0, 0
+	offset 16, 28
 }
 Sprite PLA1C4, 32, 51
 {
-	Patch "sprites/PLA1C4.png", 0, 0
-	offset 7, 50
-}
-Sprite PLA0B7, 34, 54
-{
-	Patch "sprites/PLA0B7.png", 0, 0
-	offset 16, 52
-}
-Sprite PLA2W0, 61, 22
-{
-	Patch "sprites/PLA2W0.png", 0, 0
-	offset 28, 18
-}
-Sprite PLA0A2, 30, 54
-{
-	Patch "sprites/PLA0A2.png", 0, 0
-	offset 12, 50
-}
-Sprite PLA4D5, 37, 54
-{
-	Patch "sprites/PLA4D5.png", 0, 0
-	offset 19, 51
-}
-Sprite PLA6C3C7, 39, 54
-{
-	Patch "sprites/PLA6C3C7.png", 0, 0
-	offset 19, 51
-}
-Sprite PLA0A8, 29, 55
-{
-	Patch "sprites/PLA0A8.png", 0, 0
-	offset 17, 51
-}
-Sprite PLA4U0, 61, 33
-{
-	Patch "sprites/PLA4U0.png", 0, 0
-	offset 28, 29
-}
-Sprite PLA3F1, 26, 56
-{
-	Patch "sprites/PLA3F1.png", 0, 0
-	offset 12, 51
-}
-Sprite PLA0B8, 29, 55
-{
-	Patch "sprites/PLA0B8.png", 0, 0
-	offset 17, 52
-}
-Sprite PLA3C4C6, 41, 55
-{
-	Patch "sprites/PLA3C4C6.png", 0, 0
-	offset 22, 51
-}
-Sprite PLA6E5, 26, 51
-{
-	Patch "sprites/PLA6E5.png", 0, 0
-	offset 12, 46
-}
-Sprite PLA3G1, 39, 55
-{
-	Patch "sprites/PLA3G1.png", 0, 0
-	offset 20, 52
-}
-Sprite PLA6D2D8, 37, 55
-{
-	Patch "sprites/PLA6D2D8.png", 0, 0
-	offset 19, 52
-}
-Sprite PLA5D2D8, 37, 55
-{
-	Patch "sprites/PLA5D2D8.png", 0, 0
-	offset 19, 52
-}
-Sprite PLA5D4D6, 41, 54
-{
-	Patch "sprites/PLA5D4D6.png", 0, 0
-	offset 24, 52
-}
-Sprite PLA9E4E6, 38, 52
-{
-	Patch "sprites/PLA9E4E6.png", 0, 0
-	offset 18, 48
-}
-Sprite PLA6B1, 37, 56
-{
-	Patch "sprites/PLA6B1.png", 0, 0
-	offset 19, 53
+	Patch "sprites/1 - Berserk/PLA1C4.png", 0, 0
+	offset 8, 49
 }
 Sprite PLA1C3, 41, 53
 {
-	Patch "sprites/PLA1C3.png", 0, 0
-	offset 17, 51
-}
-Sprite PLA4E3E7, 51, 53
-{
-	Patch "sprites/PLA4E3E7.png", 0, 0
-	offset 26, 50
-}
-Sprite PLA6G1, 39, 55
-{
-	Patch "sprites/PLA6G1.png", 0, 0
-	offset 20, 52
-}
-Sprite PLA9A3A7, 42, 53
-{
-	Patch "sprites/PLA9A3A7.png", 0, 0
-	offset 21, 50
-}
-Sprite PLA2A3, 45, 53
-{
-	Patch "sprites/PLA2A3.png", 0, 0
-	offset 24, 50
-}
-Sprite PLA7V0, 57, 22
-{
-	Patch "sprites/PLA7V0.png", 0, 0
-	offset 24, 18
-}
-Sprite PLA2A6, 30, 53
-{
-	Patch "sprites/PLA2A6.png", 0, 0
-	offset 15, 50
-}
-Sprite PLA7H0, 40, 50
-{
-	Patch "sprites/PLA7H0.png", 0, 0
-	offset 12, 47
-}
-Sprite PLA7D4D6, 46, 54
-{
-	Patch "sprites/PLA7D4D6.png", 0, 0
-	offset 29, 52
-}
-Sprite PLA7B5, 29, 54
-{
-	Patch "sprites/PLA7B5.png", 0, 0
-	offset 12, 51
-}
-Sprite PLA2B6, 27, 54
-{
-	Patch "sprites/PLA2B6.png", 0, 0
-	offset 17, 52
-}
-Sprite PLA4G4G6, 48, 52
-{
-	Patch "sprites/PLA4G4G6.png", 0, 0
+	Patch "sprites/1 - Berserk/PLA1C3.png", 0, 0
 	offset 20, 50
 }
-Sprite PLA2B7, 37, 54
+Sprite PL1CS0, 55, 39
 {
-	Patch "sprites/PLA2B7.png", 0, 0
-	offset 16, 52
+	Patch "sprites/1 - Berserk/PL1CS0.png", 0, 0
+	offset 29, 35
 }
-Sprite PLA2K0, 55, 38
+Sprite PL1CF4F6, 42, 31
 {
-	Patch "sprites/PLA2K0.png", 0, 0
-	offset 31, 34
+	Patch "sprites/1 - Berserk/PL1CF4F6.png", 0, 0
+	offset 21, 27
 }
-Sprite PLA9G4G6, 43, 52
+Sprite PL1CG4G6, 36, 31
 {
-	Patch "sprites/PLA9G4G6.png", 0, 0
-	offset 20, 50
+	Patch "sprites/1 - Berserk/PL1CG4G6.png", 0, 0
+	offset 18, 27
 }
-Sprite PLA4O0, 48, 56
+Sprite PL1CM0, 47, 16
 {
-	Patch "sprites/PLA4O0.png", 0, 0
-	offset 26, 53
+	Patch "sprites/1 - Berserk/PL1CM0.png", 0, 0
+	offset 23, 12
 }
-Sprite PLA0C3, 38, 54
+Sprite PL1CD4D6, 41, 31
 {
-	Patch "sprites/PLA0C3.png", 0, 0
-	offset 18, 51
-}
-Sprite PLA3W0, 57, 22
-{
-	Patch "sprites/PLA3W0.png", 0, 0
-	offset 24, 18
-}
-Sprite PLA6B5, 35, 54
-{
-	Patch "sprites/PLA6B5.png", 0, 0
-	offset 18, 51
-}
-Sprite PLA3A1, 41, 56
-{
-	Patch "sprites/PLA3A1.png", 0, 0
-	offset 18, 51
-}
-Sprite PLA9D5, 39, 54
-{
-	Patch "sprites/PLA9D5.png", 0, 0
-	offset 20, 51
-}
-Sprite PLA6L0, 51, 14
-{
-	Patch "sprites/PLA6L0.png", 0, 0
-	offset 27, 9
-}
-Sprite PLA2D5, 30, 54
-{
-	Patch "sprites/PLA2D5.png", 0, 0
-	offset 14, 51
-}
-Sprite PLA9J0, 36, 46
-{
-	Patch "sprites/PLA9J0.png", 0, 0
-	offset 12, 43
-}
-Sprite PLA0T0, 57, 40
-{
-	Patch "sprites/PLA0T0.png", 0, 0
-	offset 24, 36
-}
-Sprite PLA2F3, 55, 54
-{
-	Patch "sprites/PLA2F3.png", 0, 0
-	offset 30, 50
-}
-Sprite PLA3O0, 38, 56
-{
-	Patch "sprites/PLA3O0.png", 0, 0
-	offset 16, 53
-}
-Sprite PLA9W0, 57, 22
-{
-	Patch "sprites/PLA9W0.png", 0, 0
-	offset 24, 18
-}
-Sprite PLA7C4C6, 50, 55
-{
-	Patch "sprites/PLA7C4C6.png", 0, 0
-	offset 31, 51
+	Patch "sprites/1 - Berserk/PL1CD4D6.png", 0, 0
+	offset 20, 27
 }
 Sprite PLA1B8, 36, 55
 {
-	Patch "sprites/PLA1B8.png", 0, 0
-	offset 20, 52
-}
-Sprite PLA0W0, 57, 22
-{
-	Patch "sprites/PLA0W0.png", 0, 0
-	offset 24, 18
+	Patch "sprites/1 - Berserk/PLA1B8.png", 0, 0
+	offset 19, 52
 }
 Sprite PLA1F5, 26, 51
 {
-	Patch "sprites/PLA1F5.png", 0, 0
-	offset 13, 46
+	Patch "sprites/1 - Berserk/PLA1F5.png", 0, 0
+	offset 13, 48
 }
-Sprite PLA3S0, 55, 47
+Sprite PL1CP0, 42, 40
 {
-	Patch "sprites/PLA3S0.png", 0, 0
-	offset 23, 43
-}
-Sprite PLA0U0, 57, 33
-{
-	Patch "sprites/PLA0U0.png", 0, 0
-	offset 24, 29
-}
-Sprite PLA2A2, 31, 54
-{
-	Patch "sprites/PLA2A2.png", 0, 0
-	offset 12, 50
-}
-Sprite PLA5D1, 40, 55
-{
-	Patch "sprites/PLA5D1.png", 0, 0
-	offset 16, 52
+	Patch "sprites/1 - Berserk/PL1CP0.png", 0, 0
+	offset 22, 34
 }
 Sprite PLA1F3, 45, 54
 {
-	Patch "sprites/PLA1F3.png", 0, 0
-	offset 20, 50
+	Patch "sprites/1 - Berserk/PLA1F3.png", 0, 0
+	offset 31, 50
 }
-Sprite PLA0G3G7, 44, 55
+Sprite PL1CB4B6, 41, 31
 {
-	Patch "sprites/PLA0G3G7.png", 0, 0
-	offset 22, 52
+	Patch "sprites/1 - Berserk/PL1CB4B6.png", 0, 0
+	offset 20, 27
 }
-Sprite PLA0J0, 36, 46
+Sprite PL1CT0, 57, 33
 {
-	Patch "sprites/PLA0J0.png", 0, 0
-	offset 12, 43
-}
-Sprite PLA9B2B8, 32, 55
-{
-	Patch "sprites/PLA9B2B8.png", 0, 0
-	offset 17, 52
-}
-Sprite PLA7C3C7, 55, 54
-{
-	Patch "sprites/PLA7C3C7.png", 0, 0
-	offset 35, 51
-}
-Sprite PLA3B1, 37, 56
-{
-	Patch "sprites/PLA3B1.png", 0, 0
-	offset 19, 53
-}
-Sprite PLA0C1, 39, 56
-{
-	Patch "sprites/PLA0C1.png", 0, 0
-	offset 17, 51
-}
-Sprite PLA6N0, 51, 14
-{
-	Patch "sprites/PLA6N0.png", 0, 0
-	offset 27, 9
-}
-Sprite PLA5A5, 36, 50
-{
-	Patch "sprites/PLA5A5.png", 0, 0
-	offset 21, 47
+	Patch "sprites/1 - Berserk/PL1CT0.png", 0, 0
+	offset 30, 29
 }
 Sprite PLA1B4, 33, 54
 {
-	Patch "sprites/PLA1B4.png", 0, 0
-	offset 11, 52
-}
-Sprite PLA0D5, 36, 54
-{
-	Patch "sprites/PLA0D5.png", 0, 0
-	offset 20, 51
-}
-Sprite PLA6C2C8, 39, 55
-{
-	Patch "sprites/PLA6C2C8.png", 0, 0
-	offset 19, 51
-}
-Sprite PLA2B3, 39, 55
-{
-	Patch "sprites/PLA2B3.png", 0, 0
-	offset 21, 52
-}
-Sprite PLA2B4, 32, 54
-{
-	Patch "sprites/PLA2B4.png", 0, 0
+	Patch "sprites/1 - Berserk/PLA1B4.png", 0, 0
 	offset 12, 52
 }
 Sprite PLA1B5, 35, 54
 {
-	Patch "sprites/PLA1B5.png", 0, 0
-	offset 15, 51
+	Patch "sprites/1 - Berserk/PLA1B5.png", 0, 0
+	offset 16, 51
 }
 Sprite PLA1C1, 32, 56
 {
-	Patch "sprites/PLA1C1.png", 0, 0
+	Patch "sprites/1 - Berserk/PLA1C1.png", 0, 0
+	offset 17, 51
+}
+Sprite PLA1B7, 28, 55
+{
+	Patch "sprites/1 - Berserk/PLA1B7.png", 0, 0
+	offset 17, 52
+}
+Sprite PLA1F1, 27, 56
+{
+	Patch "sprites/1 - Berserk/PLA1F1.png", 0, 0
+	offset 15, 51
+}
+Sprite PLA1G5, 34, 54
+{
+	Patch "sprites/1 - Berserk/PLA1G5.png", 0, 0
+	offset 17, 50
+}
+Sprite PLA1H0, 40, 50
+{
+	Patch "sprites/1 - Berserk/PLA1H0.png", 0, 0
+	offset 12, 47
+}
+Sprite PL1CC5, 25, 31
+{
+	Patch "sprites/1 - Berserk/PL1CC5.png", 0, 0
+	offset 11, 27
+}
+Sprite PLA1E5, 26, 51
+{
+	Patch "sprites/1 - Berserk/PLA1E5.png", 0, 0
+	offset 13, 48
+}
+Sprite PLA2R0, 57, 52
+{
+	Patch "sprites/2 - Pistol/PLA2R0.png", 0, 0
+	offset 28, 49
+}
+Sprite PL2CE5, 25, 32
+{
+	Patch "sprites/2 - Pistol/PL2CE5.png", 0, 0
+	offset 11, 28
+}
+Sprite PLA2D4, 28, 54
+{
+	Patch "sprites/2 - Pistol/PLA2D4.png", 0, 0
+	offset 10, 52
+}
+Sprite PL2CC1, 29, 31
+{
+	Patch "sprites/2 - Pistol/PL2CC1.png", 0, 0
+	offset 14, 27
+}
+Sprite PL2CC2C8, 44, 32
+{
+	Patch "sprites/2 - Pistol/PL2CC2C8.png", 0, 0
+	offset 20, 28
+}
+Sprite PLA2C1, 31, 56
+{
+	Patch "sprites/2 - Pistol/PLA2C1.png", 0, 0
+	offset 17, 51
+}
+Sprite PL2CG5, 24, 31
+{
+	Patch "sprites/2 - Pistol/PL2CG5.png", 0, 0
+	offset 11, 27
+}
+Sprite PL2CE1, 29, 31
+{
+	Patch "sprites/2 - Pistol/PL2CE1.png", 0, 0
+	offset 14, 27
+}
+Sprite PLA2G1, 43, 55
+{
+	Patch "sprites/2 - Pistol/PLA2G1.png", 0, 0
+	offset 24, 52
+}
+Sprite PLA2L0, 55, 14
+{
+	Patch "sprites/2 - Pistol/PLA2L0.png", 0, 0
+	offset 31, 9
+}
+Sprite PLA2H0, 50, 50
+{
+	Patch "sprites/2 - Pistol/PLA2H0.png", 0, 0
+	offset 22, 47
+}
+Sprite PLA2O0, 48, 56
+{
+	Patch "sprites/2 - Pistol/PLA2O0.png", 0, 0
+	offset 26, 53
+}
+Sprite PLA2A7, 47, 53
+{
+	Patch "sprites/2 - Pistol/PLA2A7.png", 0, 0
+	offset 26, 50
+}
+Sprite PLA2F1, 27, 56
+{
+	Patch "sprites/2 - Pistol/PLA2F1.png", 0, 0
+	offset 15, 51
+}
+Sprite PL2CB1, 29, 31
+{
+	Patch "sprites/2 - Pistol/PL2CB1.png", 0, 0
+	offset 14, 27
+}
+Sprite PLA2A1, 30, 56
+{
+	Patch "sprites/2 - Pistol/PLA2A1.png", 0, 0
 	offset 18, 51
 }
-Sprite PLA0B3, 36, 55
+Sprite PLA2C8, 28, 54
 {
-	Patch "sprites/PLA0B3.png", 0, 0
+	Patch "sprites/2 - Pistol/PLA2C8.png", 0, 0
+	offset 17, 51
+}
+Sprite PL2CB5, 25, 32
+{
+	Patch "sprites/2 - Pistol/PL2CB5.png", 0, 0
+	offset 11, 28
+}
+Sprite PLA2B1, 32, 56
+{
+	Patch "sprites/2 - Pistol/PLA2B1.png", 0, 0
+	offset 19, 53
+}
+Sprite PLA2C7, 44, 53
+{
+	Patch "sprites/2 - Pistol/PLA2C7.png", 0, 0
+	offset 25, 50
+}
+Sprite PL2CI0, 34, 31
+{
+	Patch "sprites/2 - Pistol/PL2CI0.png", 0, 0
+	offset 18, 27
+}
+Sprite PLA2F4, 35, 55
+{
+	Patch "sprites/2 - Pistol/PLA2F4.png", 0, 0
+	offset 22, 49
+}
+Sprite PL2CB3B7, 58, 31
+{
+	Patch "sprites/2 - Pistol/PL2CB3B7.png", 0, 0
+	offset 27, 27
+}
+Sprite PL2CK0, 41, 19
+{
+	Patch "sprites/2 - Pistol/PL2CK0.png", 0, 0
+	offset 20, 16
+}
+Sprite PLA2G4G6, 43, 52
+{
+	Patch "sprites/2 - Pistol/PLA2G4G6.png", 0, 0
+	offset 19, 50
+}
+Sprite PL2CU0, 57, 30
+{
+	Patch "sprites/2 - Pistol/PL2CU0.png", 0, 0
+	offset 30, 26
+}
+Sprite PLA2F7, 58, 53
+{
+	Patch "sprites/2 - Pistol/PLA2F7.png", 0, 0
+	offset 18, 50
+}
+Sprite PL2CS0, 55, 39
+{
+	Patch "sprites/2 - Pistol/PL2CS0.png", 0, 0
+	offset 29, 35
+}
+Sprite PLA2B5, 29, 54
+{
+	Patch "sprites/2 - Pistol/PLA2B5.png", 0, 0
+	offset 10, 51
+}
+Sprite PL2CN0, 47, 16
+{
+	Patch "sprites/2 - Pistol/PL2CN0.png", 0, 0
+	offset 23, 12
+}
+Sprite PLA2C5, 31, 54
+{
+	Patch "sprites/2 - Pistol/PLA2C5.png", 0, 0
+	offset 12, 50
+}
+Sprite PL2CF4F6, 47, 31
+{
+	Patch "sprites/2 - Pistol/PL2CF4F6.png", 0, 0
+	offset 28, 27
+}
+Sprite PL2CC3C7, 58, 31
+{
+	Patch "sprites/2 - Pistol/PL2CC3C7.png", 0, 0
+	offset 27, 27
+}
+Sprite PL2CG4G6, 38, 31
+{
+	Patch "sprites/2 - Pistol/PL2CG4G6.png", 0, 0
+	offset 17, 27
+}
+Sprite PL2CB2B8, 44, 32
+{
+	Patch "sprites/2 - Pistol/PL2CB2B8.png", 0, 0
+	offset 20, 28
+}
+Sprite PLA2D3, 38, 54
+{
+	Patch "sprites/2 - Pistol/PLA2D3.png", 0, 0
+	offset 25, 52
+}
+Sprite PL2CD5, 25, 32
+{
+	Patch "sprites/2 - Pistol/PL2CD5.png", 0, 0
+	offset 11, 28
+}
+Sprite PL2CE2E8, 41, 32
+{
+	Patch "sprites/2 - Pistol/PL2CE2E8.png", 0, 0
+	offset 19, 28
+}
+Sprite PLA2M0, 55, 14
+{
+	Patch "sprites/2 - Pistol/PLA2M0.png", 0, 0
+	offset 31, 9
+}
+Sprite PLA2I0, 55, 43
+{
+	Patch "sprites/2 - Pistol/PLA2I0.png", 0, 0
+	offset 31, 39
+}
+Sprite PL2CM0, 47, 16
+{
+	Patch "sprites/2 - Pistol/PL2CM0.png", 0, 0
+	offset 23, 12
+}
+Sprite PLA2C3, 42, 54
+{
+	Patch "sprites/2 - Pistol/PLA2C3.png", 0, 0
+	offset 20, 51
+}
+Sprite PL2CG3G7, 56, 31
+{
+	Patch "sprites/2 - Pistol/PL2CG3G7.png", 0, 0
+	offset 29, 27
+}
+Sprite PL2CG1, 29, 31
+{
+	Patch "sprites/2 - Pistol/PL2CG1.png", 0, 0
+	offset 14, 27
+}
+Sprite PL2CW0, 57, 22
+{
+	Patch "sprites/2 - Pistol/PL2CW0.png", 0, 0
+	offset 30, 18
+}
+Sprite PLA2E8, 40, 55
+{
+	Patch "sprites/2 - Pistol/PLA2E8.png", 0, 0
+	offset 12, 51
+}
+Sprite PL2CT0, 57, 33
+{
+	Patch "sprites/2 - Pistol/PL2CT0.png", 0, 0
+	offset 30, 29
+}
+Sprite PLA2Q0, 55, 57
+{
+	Patch "sprites/2 - Pistol/PLA2Q0.png", 0, 0
+	offset 29, 54
+}
+Sprite PL2CF3F7, 62, 31
+{
+	Patch "sprites/2 - Pistol/PL2CF3F7.png", 0, 0
+	offset 32, 27
+}
+Sprite PLA2C4, 31, 55
+{
+	Patch "sprites/2 - Pistol/PLA2C4.png", 0, 0
+	offset 10, 51
+}
+Sprite PL2CH0, 42, 39
+{
+	Patch "sprites/2 - Pistol/PL2CH0.png", 0, 0
+	offset 27, 35
+}
+Sprite PLA2P0, 54, 59
+{
+	Patch "sprites/2 - Pistol/PLA2P0.png", 0, 0
+	offset 28, 56
+}
+Sprite PLA2E5, 26, 51
+{
+	Patch "sprites/2 - Pistol/PLA2E5.png", 0, 0
+	offset 13, 47
+}
+Sprite PLA2D2, 34, 55
+{
+	Patch "sprites/2 - Pistol/PLA2D2.png", 0, 0
+	offset 15, 52
+}
+Sprite PLA2D6, 30, 54
+{
+	Patch "sprites/2 - Pistol/PLA2D6.png", 0, 0
 	offset 18, 52
 }
-Sprite PLA0A4, 45, 51
+Sprite PL2CL0, 47, 16
 {
-	Patch "sprites/PLA0A4.png", 0, 0
+	Patch "sprites/2 - Pistol/PL2CL0.png", 0, 0
+	offset 23, 12
+}
+Sprite PLA2C2, 35, 55
+{
+	Patch "sprites/2 - Pistol/PLA2C2.png", 0, 0
+	offset 13, 51
+}
+Sprite PLA2E3, 53, 54
+{
+	Patch "sprites/2 - Pistol/PLA2E3.png", 0, 0
+	offset 35, 50
+}
+Sprite PL2CO0, 45, 36
+{
+	Patch "sprites/2 - Pistol/PL2CO0.png", 0, 0
+	offset 27, 32
+}
+Sprite PLA2D8, 25, 55
+{
+	Patch "sprites/2 - Pistol/PLA2D8.png", 0, 0
+	offset 12, 52
+}
+Sprite PLA2B2, 27, 54
+{
+	Patch "sprites/2 - Pistol/PLA2B2.png", 0, 0
+	offset 10, 51
+}
+Sprite PL2CC5, 25, 31
+{
+	Patch "sprites/2 - Pistol/PL2CC5.png", 0, 0
+	offset 11, 27
+}
+Sprite PLA2A8, 37, 54
+{
+	Patch "sprites/2 - Pistol/PLA2A8.png", 0, 0
+	offset 20, 50
+}
+Sprite PLA2N0, 55, 14
+{
+	Patch "sprites/2 - Pistol/PLA2N0.png", 0, 0
+	offset 31, 9
+}
+Sprite PLA2E1, 27, 56
+{
+	Patch "sprites/2 - Pistol/PLA2E1.png", 0, 0
+	offset 15, 51
+}
+Sprite PL2CD2D8, 44, 32
+{
+	Patch "sprites/2 - Pistol/PL2CD2D8.png", 0, 0
+	offset 20, 28
+}
+Sprite PLA2B8, 30, 55
+{
+	Patch "sprites/2 - Pistol/PLA2B8.png", 0, 0
+	offset 15, 51
+}
+Sprite PL2CC4C6, 45, 31
+{
+	Patch "sprites/2 - Pistol/PL2CC4C6.png", 0, 0
+	offset 24, 27
+}
+Sprite PLA2V0, 61, 23
+{
+	Patch "sprites/2 - Pistol/PLA2V0.png", 0, 0
+	offset 28, 19
+}
+Sprite PLA2E7, 55, 53
+{
+	Patch "sprites/2 - Pistol/PLA2E7.png", 0, 0
+	offset 18, 50
+}
+Sprite PL2CF2F8, 46, 32
+{
+	Patch "sprites/2 - Pistol/PL2CF2F8.png", 0, 0
+	offset 23, 28
+}
+Sprite PL2CE4E6, 41, 31
+{
+	Patch "sprites/2 - Pistol/PL2CE4E6.png", 0, 0
+	offset 22, 27
+}
+Sprite PL2CG2G8, 41, 32
+{
+	Patch "sprites/2 - Pistol/PL2CG2G8.png", 0, 0
+	offset 20, 28
+}
+Sprite PLA2E2, 52, 55
+{
+	Patch "sprites/2 - Pistol/PLA2E2.png", 0, 0
+	offset 33, 50
+}
+Sprite PL2CF1, 29, 31
+{
+	Patch "sprites/2 - Pistol/PL2CF1.png", 0, 0
+	offset 14, 27
+}
+Sprite PLA2T0, 61, 40
+{
+	Patch "sprites/2 - Pistol/PLA2T0.png", 0, 0
+	offset 28, 36
+}
+Sprite PL2CA3A7, 58, 31
+{
+	Patch "sprites/2 - Pistol/PL2CA3A7.png", 0, 0
+	offset 27, 27
+}
+Sprite PLA2G5, 40, 56
+{
+	Patch "sprites/2 - Pistol/PLA2G5.png", 0, 0
+	offset 17, 50
+}
+Sprite PL2CJ0, 33, 25
+{
+	Patch "sprites/2 - Pistol/PL2CJ0.png", 0, 0
+	offset 16, 21
+}
+Sprite PL2CE3E7, 56, 31
+{
+	Patch "sprites/2 - Pistol/PL2CE3E7.png", 0, 0
+	offset 26, 27
+}
+Sprite PL2CR0, 52, 40
+{
+	Patch "sprites/2 - Pistol/PL2CR0.png", 0, 0
+	offset 28, 36
+}
+Sprite PLA2S0, 60, 47
+{
+	Patch "sprites/2 - Pistol/PLA2S0.png", 0, 0
+	offset 28, 43
+}
+Sprite PLA2F6, 48, 52
+{
+	Patch "sprites/2 - Pistol/PLA2F6.png", 0, 0
+	offset 18, 48
+}
+Sprite PLA2F8, 40, 55
+{
+	Patch "sprites/2 - Pistol/PLA2F8.png", 0, 0
+	offset 12, 51
+}
+Sprite PLA2A5, 27, 50
+{
+	Patch "sprites/2 - Pistol/PLA2A5.png", 0, 0
+	offset 12, 47
+}
+Sprite PLA2F5, 26, 51
+{
+	Patch "sprites/2 - Pistol/PLA2F5.png", 0, 0
+	offset 13, 47
+}
+Sprite PL2CB4B6, 46, 31
+{
+	Patch "sprites/2 - Pistol/PL2CB4B6.png", 0, 0
+	offset 24, 27
+}
+Sprite PLA2G3G7, 43, 55
+{
+	Patch "sprites/2 - Pistol/PLA2G3G7.png", 0, 0
+	offset 18, 52
+}
+Sprite PLA2W0, 61, 22
+{
+	Patch "sprites/2 - Pistol/PLA2W0.png", 0, 0
+	offset 28, 18
+}
+Sprite PL2CA5, 25, 32
+{
+	Patch "sprites/2 - Pistol/PL2CA5.png", 0, 0
+	offset 11, 28
+}
+Sprite PL2CV0, 57, 23
+{
+	Patch "sprites/2 - Pistol/PL2CV0.png", 0, 0
+	offset 30, 19
+}
+Sprite PLA2A3, 45, 53
+{
+	Patch "sprites/2 - Pistol/PLA2A3.png", 0, 0
+	offset 24, 50
+}
+Sprite PL2CD3D7, 58, 31
+{
+	Patch "sprites/2 - Pistol/PL2CD3D7.png", 0, 0
+	offset 27, 27
+}
+Sprite PLA2A6, 30, 53
+{
+	Patch "sprites/2 - Pistol/PLA2A6.png", 0, 0
 	offset 21, 49
+}
+Sprite PLA2B6, 27, 54
+{
+	Patch "sprites/2 - Pistol/PLA2B6.png", 0, 0
+	offset 13, 52
+}
+Sprite PLA2B7, 37, 54
+{
+	Patch "sprites/2 - Pistol/PLA2B7.png", 0, 0
+	offset 16, 51
+}
+Sprite PLA2K0, 55, 38
+{
+	Patch "sprites/2 - Pistol/PLA2K0.png", 0, 0
+	offset 31, 34
+}
+Sprite PLA2D5, 30, 54
+{
+	Patch "sprites/2 - Pistol/PLA2D5.png", 0, 0
+	offset 13, 51
+}
+Sprite PL2CP0, 42, 40
+{
+	Patch "sprites/2 - Pistol/PL2CP0.png", 0, 0
+	offset 22, 34
+}
+Sprite PLA2F3, 55, 54
+{
+	Patch "sprites/2 - Pistol/PLA2F3.png", 0, 0
+	offset 37, 50
+}
+Sprite PL2CA1, 29, 31
+{
+	Patch "sprites/2 - Pistol/PL2CA1.png", 0, 0
+	offset 14, 27
+}
+Sprite PL2CD1, 29, 31
+{
+	Patch "sprites/2 - Pistol/PL2CD1.png", 0, 0
+	offset 14, 27
+}
+Sprite PLA2A2, 31, 54
+{
+	Patch "sprites/2 - Pistol/PLA2A2.png", 0, 0
+	offset 10, 50
+}
+Sprite PL2CA2A8, 43, 32
+{
+	Patch "sprites/2 - Pistol/PL2CA2A8.png", 0, 0
+	offset 19, 28
+}
+Sprite PL2CF5, 25, 32
+{
+	Patch "sprites/2 - Pistol/PL2CF5.png", 0, 0
+	offset 11, 28
+}
+Sprite PLA2B3, 39, 55
+{
+	Patch "sprites/2 - Pistol/PLA2B3.png", 0, 0
+	offset 21, 52
+}
+Sprite PLA2B4, 32, 54
+{
+	Patch "sprites/2 - Pistol/PLA2B4.png", 0, 0
+	offset 16, 52
+}
+Sprite PL2CA4A6, 44, 31
+{
+	Patch "sprites/2 - Pistol/PL2CA4A6.png", 0, 0
+	offset 23, 27
+}
+Sprite PLA2G2G8, 38, 56
+{
+	Patch "sprites/2 - Pistol/PLA2G2G8.png", 0, 0
+	offset 18, 52
+}
+Sprite PLA2A4, 38, 51
+{
+	Patch "sprites/2 - Pistol/PLA2A4.png", 0, 0
+	offset 11, 49
+}
+Sprite PLA2F2, 53, 55
+{
+	Patch "sprites/2 - Pistol/PLA2F2.png", 0, 0
+	offset 34, 50
+}
+Sprite PLA2U0, 61, 33
+{
+	Patch "sprites/2 - Pistol/PLA2U0.png", 0, 0
+	offset 28, 29
+}
+Sprite PL2CQ0, 46, 43
+{
+	Patch "sprites/2 - Pistol/PL2CQ0.png", 0, 0
+	offset 25, 39
+}
+Sprite PLA2D7, 39, 55
+{
+	Patch "sprites/2 - Pistol/PLA2D7.png", 0, 0
+	offset 14, 52
+}
+Sprite PLA2C6, 39, 53
+{
+	Patch "sprites/2 - Pistol/PLA2C6.png", 0, 0
+	offset 27, 51
+}
+Sprite PLA2E6, 46, 52
+{
+	Patch "sprites/2 - Pistol/PLA2E6.png", 0, 0
+	offset 18, 48
+}
+Sprite PL2CD4D6, 46, 31
+{
+	Patch "sprites/2 - Pistol/PL2CD4D6.png", 0, 0
+	offset 24, 27
+}
+Sprite PLA2E4, 33, 55
+{
+	Patch "sprites/2 - Pistol/PLA2E4.png", 0, 0
+	offset 20, 49
+}
+Sprite PLA2D1, 32, 55
+{
+	Patch "sprites/2 - Pistol/PLA2D1.png", 0, 0
+	offset 16, 52
+}
+Sprite PLA2J0, 55, 46
+{
+	Patch "sprites/2 - Pistol/PLA2J0.png", 0, 0
+	offset 31, 43
+}
+Sprite PLA3U0, 57, 33
+{
+	Patch "sprites/3 - Shotgun/PLA3U0.png", 0, 0
+	offset 24, 29
+}
+Sprite PLA3G4G6, 43, 52
+{
+	Patch "sprites/3 - Shotgun/PLA3G4G6.png", 0, 0
+	offset 19, 50
+}
+Sprite PL3CP0, 42, 40
+{
+	Patch "sprites/3 - Shotgun/PL3CP0.png", 0, 0
+	offset 22, 34
+}
+Sprite PL3CG1, 29, 31
+{
+	Patch "sprites/3 - Shotgun/PL3CG1.png", 0, 0
+	offset 14, 27
+}
+Sprite PL3CB4B6, 43, 31
+{
+	Patch "sprites/3 - Shotgun/PL3CB4B6.png", 0, 0
+	offset 21, 27
+}
+Sprite PLA3B4B6, 41, 54
+{
+	Patch "sprites/3 - Shotgun/PLA3B4B6.png", 0, 0
+	offset 18, 52
+}
+Sprite PLA3Q0, 48, 57
+{
+	Patch "sprites/3 - Shotgun/PLA3Q0.png", 0, 0
+	offset 21, 54
+}
+Sprite PL3CA5, 25, 32
+{
+	Patch "sprites/3 - Shotgun/PL3CA5.png", 0, 0
+	offset 11, 28
+}
+Sprite PL3CV0, 57, 23
+{
+	Patch "sprites/3 - Shotgun/PL3CV0.png", 0, 0
+	offset 30, 19
+}
+Sprite PLA3B3B7, 36, 55
+{
+	Patch "sprites/3 - Shotgun/PLA3B3B7.png", 0, 0
+	offset 18, 52
+}
+Sprite PL3CG5, 24, 31
+{
+	Patch "sprites/3 - Shotgun/PL3CG5.png", 0, 0
+	offset 11, 27
+}
+Sprite PLA3G2G8, 36, 56
+{
+	Patch "sprites/3 - Shotgun/PLA3G2G8.png", 0, 0
+	offset 16, 52
+}
+Sprite PLA3E1, 26, 56
+{
+	Patch "sprites/3 - Shotgun/PLA3E1.png", 0, 0
+	offset 12, 51
+}
+Sprite PLA3A5, 36, 50
+{
+	Patch "sprites/3 - Shotgun/PLA3A5.png", 0, 0
+	offset 21, 47
+}
+Sprite PL3CA3A7, 58, 31
+{
+	Patch "sprites/3 - Shotgun/PL3CA3A7.png", 0, 0
+	offset 27, 27
+}
+Sprite PLA3C1, 38, 56
+{
+	Patch "sprites/3 - Shotgun/PLA3C1.png", 0, 0
+	offset 17, 51
+}
+Sprite PLA3B5, 35, 54
+{
+	Patch "sprites/3 - Shotgun/PLA3B5.png", 0, 0
+	offset 16, 51
+}
+Sprite PL3CD2D8, 48, 32
+{
+	Patch "sprites/3 - Shotgun/PL3CD2D8.png", 0, 0
+	offset 24, 28
+}
+Sprite PLA3I0, 35, 43
+{
+	Patch "sprites/3 - Shotgun/PLA3I0.png", 0, 0
+	offset 11, 39
+}
+Sprite PL3CF2F8, 55, 32
+{
+	Patch "sprites/3 - Shotgun/PL3CF2F8.png", 0, 0
+	offset 33, 28
+}
+Sprite PLA3B2B8, 35, 55
+{
+	Patch "sprites/3 - Shotgun/PLA3B2B8.png", 0, 0
+	offset 16, 52
+}
+Sprite PLA3D4D6, 40, 54
+{
+	Patch "sprites/3 - Shotgun/PLA3D4D6.png", 0, 0
+	offset 22, 52
+}
+Sprite PLA3P0, 44, 59
+{
+	Patch "sprites/3 - Shotgun/PLA3P0.png", 0, 0
+	offset 18, 56
+}
+Sprite PL3CW0, 57, 22
+{
+	Patch "sprites/3 - Shotgun/PL3CW0.png", 0, 0
+	offset 30, 18
+}
+Sprite PLA3M0, 51, 14
+{
+	Patch "sprites/3 - Shotgun/PLA3M0.png", 0, 0
+	offset 27, 9
+}
+Sprite PL3CE4E6, 38, 31
+{
+	Patch "sprites/3 - Shotgun/PL3CE4E6.png", 0, 0
+	offset 17, 27
+}
+Sprite PL3CR0, 52, 40
+{
+	Patch "sprites/3 - Shotgun/PL3CR0.png", 0, 0
+	offset 28, 36
+}
+Sprite PL3CM0, 47, 16
+{
+	Patch "sprites/3 - Shotgun/PL3CM0.png", 0, 0
+	offset 23, 12
+}
+Sprite PL3CG3G7, 56, 31
+{
+	Patch "sprites/3 - Shotgun/PL3CG3G7.png", 0, 0
+	offset 29, 27
+}
+Sprite PLA3F3F7, 52, 53
+{
+	Patch "sprites/3 - Shotgun/PLA3F3F7.png", 0, 0
+	offset 27, 50
+}
+Sprite PL3CA1, 29, 31
+{
+	Patch "sprites/3 - Shotgun/PL3CA1.png", 0, 0
+	offset 14, 27
+}
+Sprite PL3CH0, 35, 39
+{
+	Patch "sprites/3 - Shotgun/PL3CH0.png", 0, 0
+	offset 17, 35
+}
+Sprite PL3CF1, 29, 31
+{
+	Patch "sprites/3 - Shotgun/PL3CF1.png", 0, 0
+	offset 15, 27
+}
+Sprite PL3CG2G8, 45, 32
+{
+	Patch "sprites/3 - Shotgun/PL3CG2G8.png", 0, 0
+	offset 24, 28
+}
+Sprite PLA3G5, 34, 54
+{
+	Patch "sprites/3 - Shotgun/PLA3G5.png", 0, 0
+	offset 17, 50
+}
+Sprite PLA3V0, 57, 23
+{
+	Patch "sprites/3 - Shotgun/PLA3V0.png", 0, 0
+	offset 24, 19
+}
+Sprite PLA3F2F8, 45, 55
+{
+	Patch "sprites/3 - Shotgun/PLA3F2F8.png", 0, 0
+	offset 23, 51
+}
+Sprite PL3CT0, 57, 33
+{
+	Patch "sprites/3 - Shotgun/PL3CT0.png", 0, 0
+	offset 30, 29
+}
+Sprite PL3CQ0, 46, 43
+{
+	Patch "sprites/3 - Shotgun/PL3CQ0.png", 0, 0
+	offset 25, 39
+}
+Sprite PL3CI0, 34, 31
+{
+	Patch "sprites/3 - Shotgun/PL3CI0.png", 0, 0
+	offset 18, 27
+}
+Sprite PLA3L0, 51, 14
+{
+	Patch "sprites/3 - Shotgun/PLA3L0.png", 0, 0
+	offset 27, 9
+}
+Sprite PL3CU0, 57, 30
+{
+	Patch "sprites/3 - Shotgun/PL3CU0.png", 0, 0
+	offset 30, 26
+}
+Sprite PLA3E3E7, 51, 53
+{
+	Patch "sprites/3 - Shotgun/PLA3E3E7.png", 0, 0
+	offset 26, 50
+}
+Sprite PLA3D3D7, 34, 54
+{
+	Patch "sprites/3 - Shotgun/PLA3D3D7.png", 0, 0
+	offset 21, 52
+}
+Sprite PLA3H0, 44, 50
+{
+	Patch "sprites/3 - Shotgun/PLA3H0.png", 0, 0
+	offset 16, 47
+}
+Sprite PLA3K0, 41, 38
+{
+	Patch "sprites/3 - Shotgun/PLA3K0.png", 0, 0
+	offset 17, 34
+}
+Sprite PL3CB2B8, 48, 32
+{
+	Patch "sprites/3 - Shotgun/PL3CB2B8.png", 0, 0
+	offset 24, 28
+}
+Sprite PLA3A4A6, 45, 51
+{
+	Patch "sprites/3 - Shotgun/PLA3A4A6.png", 0, 0
+	offset 18, 49
+}
+Sprite PLA3D1, 40, 55
+{
+	Patch "sprites/3 - Shotgun/PLA3D1.png", 0, 0
+	offset 16, 52
+}
+Sprite PLA3E5, 26, 51
+{
+	Patch "sprites/3 - Shotgun/PLA3E5.png", 0, 0
+	offset 12, 46
+}
+Sprite PL3CA4A6, 41, 31
+{
+	Patch "sprites/3 - Shotgun/PL3CA4A6.png", 0, 0
+	offset 20, 27
+}
+Sprite PLA3C3C7, 38, 54
+{
+	Patch "sprites/3 - Shotgun/PLA3C3C7.png", 0, 0
+	offset 18, 51
+}
+Sprite PL3CC3C7, 58, 31
+{
+	Patch "sprites/3 - Shotgun/PL3CC3C7.png", 0, 0
+	offset 27, 27
+}
+Sprite PL3CS0, 55, 39
+{
+	Patch "sprites/3 - Shotgun/PL3CS0.png", 0, 0
+	offset 29, 35
+}
+Sprite PL3CE5, 25, 32
+{
+	Patch "sprites/3 - Shotgun/PL3CE5.png", 0, 0
+	offset 11, 28
+}
+Sprite PLA3F5, 24, 51
+{
+	Patch "sprites/3 - Shotgun/PLA3F5.png", 0, 0
+	offset 11, 46
+}
+Sprite PL3CB3B7, 58, 31
+{
+	Patch "sprites/3 - Shotgun/PL3CB3B7.png", 0, 0
+	offset 27, 27
+}
+Sprite PLA3E4E6, 38, 52
+{
+	Patch "sprites/3 - Shotgun/PLA3E4E6.png", 0, 0
+	offset 18, 48
+}
+Sprite PL3CE1, 29, 31
+{
+	Patch "sprites/3 - Shotgun/PL3CE1.png", 0, 0
+	offset 14, 27
+}
+Sprite PLA3C2C8, 37, 55
+{
+	Patch "sprites/3 - Shotgun/PLA3C2C8.png", 0, 0
+	offset 15, 51
+}
+Sprite PL3CF4F6, 44, 31
+{
+	Patch "sprites/3 - Shotgun/PL3CF4F6.png", 0, 0
+	offset 23, 27
+}
+Sprite PLA3C5, 34, 54
+{
+	Patch "sprites/3 - Shotgun/PLA3C5.png", 0, 0
+	offset 15, 50
+}
+Sprite PL3CF5, 25, 32
+{
+	Patch "sprites/3 - Shotgun/PL3CF5.png", 0, 0
+	offset 11, 28
+}
+Sprite PL3CB1, 29, 31
+{
+	Patch "sprites/3 - Shotgun/PL3CB1.png", 0, 0
+	offset 14, 27
+}
+Sprite PLA3T0, 57, 40
+{
+	Patch "sprites/3 - Shotgun/PLA3T0.png", 0, 0
+	offset 24, 36
+}
+Sprite PLA3R0, 53, 52
+{
+	Patch "sprites/3 - Shotgun/PLA3R0.png", 0, 0
+	offset 24, 49
+}
+Sprite PL3CE3E7, 56, 31
+{
+	Patch "sprites/3 - Shotgun/PL3CE3E7.png", 0, 0
+	offset 29, 27
+}
+Sprite PLA3D2D8, 35, 55
+{
+	Patch "sprites/3 - Shotgun/PLA3D2D8.png", 0, 0
+	offset 15, 52
+}
+Sprite PL3CK0, 41, 19
+{
+	Patch "sprites/3 - Shotgun/PL3CK0.png", 0, 0
+	offset 20, 16
+}
+Sprite PL3CD1, 29, 31
+{
+	Patch "sprites/3 - Shotgun/PL3CD1.png", 0, 0
+	offset 14, 27
+}
+Sprite PLA3N0, 51, 14
+{
+	Patch "sprites/3 - Shotgun/PLA3N0.png", 0, 0
+	offset 27, 9
+}
+Sprite PL3CL0, 47, 16
+{
+	Patch "sprites/3 - Shotgun/PL3CL0.png", 0, 0
+	offset 23, 12
+}
+Sprite PLA3F4F6, 41, 52
+{
+	Patch "sprites/3 - Shotgun/PLA3F4F6.png", 0, 0
+	offset 20, 48
+}
+Sprite PL3CC4C6, 42, 31
+{
+	Patch "sprites/3 - Shotgun/PL3CC4C6.png", 0, 0
+	offset 21, 27
+}
+Sprite PLA3E2E8, 43, 55
+{
+	Patch "sprites/3 - Shotgun/PLA3E2E8.png", 0, 0
+	offset 21, 51
+}
+Sprite PL3CB5, 25, 32
+{
+	Patch "sprites/3 - Shotgun/PL3CB5.png", 0, 0
+	offset 11, 28
+}
+Sprite PLA3A2A8, 35, 54
+{
+	Patch "sprites/3 - Shotgun/PLA3A2A8.png", 0, 0
+	offset 15, 50
+}
+Sprite PL3CC2C8, 48, 32
+{
+	Patch "sprites/3 - Shotgun/PL3CC2C8.png", 0, 0
+	offset 24, 28
+}
+Sprite PL3CG4G6, 38, 31
+{
+	Patch "sprites/3 - Shotgun/PL3CG4G6.png", 0, 0
+	offset 17, 27
+}
+Sprite PLA3F1, 26, 56
+{
+	Patch "sprites/3 - Shotgun/PLA3F1.png", 0, 0
+	offset 12, 51
+}
+Sprite PLA3C4C6, 41, 55
+{
+	Patch "sprites/3 - Shotgun/PLA3C4C6.png", 0, 0
+	offset 20, 51
+}
+Sprite PLA3G1, 39, 55
+{
+	Patch "sprites/3 - Shotgun/PLA3G1.png", 0, 0
+	offset 20, 52
+}
+Sprite PL3CC1, 29, 31
+{
+	Patch "sprites/3 - Shotgun/PL3CC1.png", 0, 0
+	offset 14, 27
+}
+Sprite PL3CJ0, 33, 25
+{
+	Patch "sprites/3 - Shotgun/PL3CJ0.png", 0, 0
+	offset 16, 21
+}
+Sprite PL3CE2E8, 45, 32
+{
+	Patch "sprites/3 - Shotgun/PL3CE2E8.png", 0, 0
+	offset 23, 28
+}
+Sprite PL3CD5, 25, 32
+{
+	Patch "sprites/3 - Shotgun/PL3CD5.png", 0, 0
+	offset 11, 28
+}
+Sprite PL3CD3D7, 58, 31
+{
+	Patch "sprites/3 - Shotgun/PL3CD3D7.png", 0, 0
+	offset 27, 27
+}
+Sprite PL3CD4D6, 43, 31
+{
+	Patch "sprites/3 - Shotgun/PL3CD4D6.png", 0, 0
+	offset 21, 27
+}
+Sprite PLA3W0, 57, 22
+{
+	Patch "sprites/3 - Shotgun/PLA3W0.png", 0, 0
+	offset 24, 18
+}
+Sprite PLA3A1, 41, 56
+{
+	Patch "sprites/3 - Shotgun/PLA3A1.png", 0, 0
+	offset 18, 51
+}
+Sprite PL3CF3F7, 67, 31
+{
+	Patch "sprites/3 - Shotgun/PL3CF3F7.png", 0, 0
+	offset 40, 27
+}
+Sprite PLA3O0, 38, 56
+{
+	Patch "sprites/3 - Shotgun/PLA3O0.png", 0, 0
+	offset 16, 53
+}
+Sprite PLA3S0, 55, 47
+{
+	Patch "sprites/3 - Shotgun/PLA3S0.png", 0, 0
+	offset 23, 43
+}
+Sprite PL3CC5, 25, 31
+{
+	Patch "sprites/3 - Shotgun/PL3CC5.png", 0, 0
+	offset 11, 27
+}
+Sprite PL3CN0, 47, 16
+{
+	Patch "sprites/3 - Shotgun/PL3CN0.png", 0, 0
+	offset 23, 12
+}
+Sprite PLA3B1, 37, 56
+{
+	Patch "sprites/3 - Shotgun/PLA3B1.png", 0, 0
+	offset 19, 53
+}
+Sprite PLA3A3A7, 42, 53
+{
+	Patch "sprites/3 - Shotgun/PLA3A3A7.png", 0, 0
+	offset 21, 50
+}
+Sprite PLA3J0, 36, 46
+{
+	Patch "sprites/3 - Shotgun/PLA3J0.png", 0, 0
+	offset 12, 43
+}
+Sprite PLA3G3G7, 43, 55
+{
+	Patch "sprites/3 - Shotgun/PLA3G3G7.png", 0, 0
+	offset 18, 52
+}
+Sprite PL3CA2A8, 47, 32
+{
+	Patch "sprites/3 - Shotgun/PL3CA2A8.png", 0, 0
+	offset 23, 28
+}
+Sprite PLA3D5, 35, 54
+{
+	Patch "sprites/3 - Shotgun/PLA3D5.png", 0, 0
+	offset 18, 51
+}
+Sprite PL3CO0, 38, 36
+{
+	Patch "sprites/3 - Shotgun/PL3CO0.png", 0, 0
+	offset 19, 32
+}
+Sprite PL4CB1, 29, 31
+{
+	Patch "sprites/4 - Chaingun/PL4CB1.png", 0, 0
+	offset 14, 27
+}
+Sprite PL4CE4E6, 38, 31
+{
+	Patch "sprites/4 - Chaingun/PL4CE4E6.png", 0, 0
+	offset 17, 27
+}
+Sprite PLA4N0, 55, 14
+{
+	Patch "sprites/4 - Chaingun/PLA4N0.png", 0, 0
+	offset 26, 9
+}
+Sprite PLA4F3F7, 52, 53
+{
+	Patch "sprites/4 - Chaingun/PLA4F3F7.png", 0, 0
+	offset 25, 48
+}
+Sprite PL4CB4B6, 43, 31
+{
+	Patch "sprites/4 - Chaingun/PL4CB4B6.png", 0, 0
+	offset 21, 27
+}
+Sprite PL4CV0, 57, 23
+{
+	Patch "sprites/4 - Chaingun/PL4CV0.png", 0, 0
+	offset 30, 19
+}
+Sprite PL4CA1, 29, 31
+{
+	Patch "sprites/4 - Chaingun/PL4CA1.png", 0, 0
+	offset 14, 27
+}
+Sprite PL4CB5, 25, 32
+{
+	Patch "sprites/4 - Chaingun/PL4CB5.png", 0, 0
+	offset 11, 28
+}
+Sprite PL4CO0, 38, 36
+{
+	Patch "sprites/4 - Chaingun/PL4CO0.png", 0, 0
+	offset 20, 32
+}
+Sprite PLA4C1, 38, 56
+{
+	Patch "sprites/4 - Chaingun/PLA4C1.png", 0, 0
+	offset 21, 51
+}
+Sprite PL4CC2C8, 48, 32
+{
+	Patch "sprites/4 - Chaingun/PL4CC2C8.png", 0, 0
+	offset 24, 28
+}
+Sprite PLA4F2F8, 45, 55
+{
+	Patch "sprites/4 - Chaingun/PLA4F2F8.png", 0, 0
+	offset 21, 50
+}
+Sprite PLA4A3A7, 45, 53
+{
+	Patch "sprites/4 - Chaingun/PLA4A3A7.png", 0, 0
+	offset 24, 50
+}
+Sprite PL4CA5, 25, 32
+{
+	Patch "sprites/4 - Chaingun/PL4CA5.png", 0, 0
+	offset 11, 28
+}
+Sprite PLA4C3C7, 42, 55
+{
+	Patch "sprites/4 - Chaingun/PLA4C3C7.png", 0, 0
+	offset 22, 51
+}
+Sprite PLA4E2E8, 43, 55
+{
+	Patch "sprites/4 - Chaingun/PLA4E2E8.png", 0, 0
+	offset 20, 50
+}
+Sprite PL4CD1, 29, 31
+{
+	Patch "sprites/4 - Chaingun/PL4CD1.png", 0, 0
+	offset 14, 27
+}
+Sprite PLA4G1, 43, 55
+{
+	Patch "sprites/4 - Chaingun/PLA4G1.png", 0, 0
+	offset 24, 52
+}
+Sprite PLA4A4A6, 45, 51
+{
+	Patch "sprites/4 - Chaingun/PLA4A4A6.png", 0, 0
+	offset 18, 49
+}
+Sprite PL4CT0, 57, 33
+{
+	Patch "sprites/4 - Chaingun/PL4CT0.png", 0, 0
+	offset 30, 29
+}
+Sprite PL4CG4G6, 38, 31
+{
+	Patch "sprites/4 - Chaingun/PL4CG4G6.png", 0, 0
+	offset 17, 27
+}
+Sprite PLA4C5, 34, 54
+{
+	Patch "sprites/4 - Chaingun/PLA4C5.png", 0, 0
+	offset 15, 50
+}
+Sprite PL4CD4D6, 43, 31
+{
+	Patch "sprites/4 - Chaingun/PL4CD4D6.png", 0, 0
+	offset 21, 27
+}
+Sprite PLA4L0, 55, 14
+{
+	Patch "sprites/4 - Chaingun/PLA4L0.png", 0, 0
+	offset 26, 9
+}
+Sprite PLA4F5, 29, 51
+{
+	Patch "sprites/4 - Chaingun/PLA4F5.png", 0, 0
+	offset 13, 46
+}
+Sprite PL4CG1, 29, 31
+{
+	Patch "sprites/4 - Chaingun/PL4CG1.png", 0, 0
+	offset 14, 27
+}
+Sprite PLA4J0, 55, 46
+{
+	Patch "sprites/4 - Chaingun/PLA4J0.png", 0, 0
+	offset 26, 41
+}
+Sprite PL4CK0, 41, 19
+{
+	Patch "sprites/4 - Chaingun/PL4CK0.png", 0, 0
+	offset 20, 16
+}
+Sprite PL4CU0, 57, 30
+{
+	Patch "sprites/4 - Chaingun/PL4CU0.png", 0, 0
+	offset 30, 26
+}
+Sprite PL4CL0, 47, 16
+{
+	Patch "sprites/4 - Chaingun/PL4CL0.png", 0, 0
+	offset 23, 12
+}
+Sprite PLA4I0, 55, 43
+{
+	Patch "sprites/4 - Chaingun/PLA4I0.png", 0, 0
+	offset 26, 38
+}
+Sprite PLA4D1, 40, 55
+{
+	Patch "sprites/4 - Chaingun/PLA4D1.png", 0, 0
+	offset 20, 52
+}
+Sprite PL4CC1, 29, 31
+{
+	Patch "sprites/4 - Chaingun/PL4CC1.png", 0, 0
+	offset 14, 27
+}
+Sprite PLA4B5, 40, 54
+{
+	Patch "sprites/4 - Chaingun/PLA4B5.png", 0, 0
+	offset 16, 51
+}
+Sprite PL4CC4C6, 42, 31
+{
+	Patch "sprites/4 - Chaingun/PL4CC4C6.png", 0, 0
+	offset 21, 27
+}
+Sprite PL4CB3B7, 58, 31
+{
+	Patch "sprites/4 - Chaingun/PL4CB3B7.png", 0, 0
+	offset 27, 27
+}
+Sprite PL4CH0, 36, 39
+{
+	Patch "sprites/4 - Chaingun/PL4CH0.png", 0, 0
+	offset 22, 35
+}
+Sprite PLA4K0, 55, 38
+{
+	Patch "sprites/4 - Chaingun/PLA4K0.png", 0, 0
+	offset 26, 33
+}
+Sprite PL4CI0, 34, 31
+{
+	Patch "sprites/4 - Chaingun/PL4CI0.png", 0, 0
+	offset 18, 27
+}
+Sprite PLA4E5, 29, 51
+{
+	Patch "sprites/4 - Chaingun/PLA4E5.png", 0, 0
+	offset 13, 46
+}
+Sprite PLA4Q0, 55, 57
+{
+	Patch "sprites/4 - Chaingun/PLA4Q0.png", 0, 0
+	offset 26, 52
+}
+Sprite PL4CS0, 55, 39
+{
+	Patch "sprites/4 - Chaingun/PL4CS0.png", 0, 0
+	offset 29, 35
+}
+Sprite PLA4P0, 54, 59
+{
+	Patch "sprites/4 - Chaingun/PLA4P0.png", 0, 0
+	offset 26, 54
+}
+Sprite PL4CB2B8, 48, 32
+{
+	Patch "sprites/4 - Chaingun/PL4CB2B8.png", 0, 0
+	offset 24, 28
+}
+Sprite PLA4B1, 37, 56
+{
+	Patch "sprites/4 - Chaingun/PLA4B1.png", 0, 0
+	offset 23, 53
+}
+Sprite PLA4F4F6, 41, 52
+{
+	Patch "sprites/4 - Chaingun/PLA4F4F6.png", 0, 0
+	offset 19, 47
+}
+Sprite PL4CC5, 25, 31
+{
+	Patch "sprites/4 - Chaingun/PL4CC5.png", 0, 0
+	offset 11, 27
+}
+Sprite PL4CD2D8, 48, 32
+{
+	Patch "sprites/4 - Chaingun/PL4CD2D8.png", 0, 0
+	offset 24, 28
+}
+Sprite PLA4V0, 61, 23
+{
+	Patch "sprites/4 - Chaingun/PLA4V0.png", 0, 0
+	offset 29, 18
+}
+Sprite PL4CF1, 29, 31
+{
+	Patch "sprites/4 - Chaingun/PL4CF1.png", 0, 0
+	offset 15, 27
+}
+Sprite PL4CD5, 25, 32
+{
+	Patch "sprites/4 - Chaingun/PL4CD5.png", 0, 0
+	offset 11, 28
+}
+Sprite PLA4A5, 40, 54
+{
+	Patch "sprites/4 - Chaingun/PLA4A5.png", 0, 0
+	offset 19, 49
+}
+Sprite PLA4W0, 61, 22
+{
+	Patch "sprites/4 - Chaingun/PLA4W0.png", 0, 0
+	offset 29, 17
+}
+Sprite PLA4S0, 60, 47
+{
+	Patch "sprites/4 - Chaingun/PLA4S0.png", 0, 0
+	offset 29, 42
+}
+Sprite PLA4H0, 50, 50
+{
+	Patch "sprites/4 - Chaingun/PLA4H0.png", 0, 0
+	offset 24, 45
+}
+Sprite PLA4M0, 55, 14
+{
+	Patch "sprites/4 - Chaingun/PLA4M0.png", 0, 0
+	offset 26, 9
+}
+Sprite PL4CE5, 25, 32
+{
+	Patch "sprites/4 - Chaingun/PL4CE5.png", 0, 0
+	offset 11, 28
+}
+Sprite PLA4R0, 57, 52
+{
+	Patch "sprites/4 - Chaingun/PLA4R0.png", 0, 0
+	offset 27, 47
+}
+Sprite PL4CQ0, 46, 43
+{
+	Patch "sprites/4 - Chaingun/PL4CQ0.png", 0, 0
+	offset 25, 39
+}
+Sprite PL4CA3A7, 58, 31
+{
+	Patch "sprites/4 - Chaingun/PL4CA3A7.png", 0, 0
+	offset 27, 27
+}
+Sprite PLA4F1, 26, 56
+{
+	Patch "sprites/4 - Chaingun/PLA4F1.png", 0, 0
+	offset 12, 51
+}
+Sprite PLA4D3D7, 38, 54
+{
+	Patch "sprites/4 - Chaingun/PLA4D3D7.png", 0, 0
+	offset 25, 52
+}
+Sprite PLA4B2B8, 35, 55
+{
+	Patch "sprites/4 - Chaingun/PLA4B2B8.png", 0, 0
+	offset 16, 52
+}
+Sprite PLA4G5, 39, 54
+{
+	Patch "sprites/4 - Chaingun/PLA4G5.png", 0, 0
+	offset 17, 50
+}
+Sprite PL4CF3F7, 62, 31
+{
+	Patch "sprites/4 - Chaingun/PL4CF3F7.png", 0, 0
+	offset 35, 27
+}
+Sprite PLA4D4D6, 40, 54
+{
+	Patch "sprites/4 - Chaingun/PLA4D4D6.png", 0, 0
+	offset 22, 52
+}
+Sprite PLA4G2G8, 38, 56
+{
+	Patch "sprites/4 - Chaingun/PLA4G2G8.png", 0, 0
+	offset 18, 52
+}
+Sprite PLA4C2C8, 37, 55
+{
+	Patch "sprites/4 - Chaingun/PLA4C2C8.png", 0, 0
+	offset 15, 51
+}
+Sprite PL4CF5, 25, 32
+{
+	Patch "sprites/4 - Chaingun/PL4CF5.png", 0, 0
+	offset 11, 28
+}
+Sprite PL4CA4A6, 41, 31
+{
+	Patch "sprites/4 - Chaingun/PL4CA4A6.png", 0, 0
+	offset 20, 27
+}
+Sprite PL4CG3G7, 56, 31
+{
+	Patch "sprites/4 - Chaingun/PL4CG3G7.png", 0, 0
+	offset 29, 27
+}
+Sprite PLA4T0, 61, 40
+{
+	Patch "sprites/4 - Chaingun/PLA4T0.png", 0, 0
+	offset 29, 35
+}
+Sprite PL4CR0, 52, 40
+{
+	Patch "sprites/4 - Chaingun/PL4CR0.png", 0, 0
+	offset 28, 36
+}
+Sprite PLA4D2D8, 40, 55
+{
+	Patch "sprites/4 - Chaingun/PLA4D2D8.png", 0, 0
+	offset 20, 52
+}
+Sprite PL4CE1, 29, 31
+{
+	Patch "sprites/4 - Chaingun/PL4CE1.png", 0, 0
+	offset 15, 27
+}
+Sprite PL4CF2F8, 49, 32
+{
+	Patch "sprites/4 - Chaingun/PL4CF2F8.png", 0, 0
+	offset 27, 28
+}
+Sprite PL4CN0, 47, 16
+{
+	Patch "sprites/4 - Chaingun/PL4CN0.png", 0, 0
+	offset 23, 12
+}
+Sprite PLA4E1, 26, 56
+{
+	Patch "sprites/4 - Chaingun/PLA4E1.png", 0, 0
+	offset 12, 51
+}
+Sprite PL4CM0, 47, 16
+{
+	Patch "sprites/4 - Chaingun/PL4CM0.png", 0, 0
+	offset 23, 12
+}
+Sprite PL4CC3C7, 58, 31
+{
+	Patch "sprites/4 - Chaingun/PL4CC3C7.png", 0, 0
+	offset 27, 27
+}
+Sprite PL4CA2A8, 47, 32
+{
+	Patch "sprites/4 - Chaingun/PL4CA2A8.png", 0, 0
+	offset 23, 28
+}
+Sprite PLA4D5, 37, 54
+{
+	Patch "sprites/4 - Chaingun/PLA4D5.png", 0, 0
+	offset 18, 51
+}
+Sprite PLA4U0, 61, 33
+{
+	Patch "sprites/4 - Chaingun/PLA4U0.png", 0, 0
+	offset 29, 28
+}
+Sprite PLA4E3E7, 51, 53
+{
+	Patch "sprites/4 - Chaingun/PLA4E3E7.png", 0, 0
+	offset 24, 48
+}
+Sprite PL4CE2E8, 45, 32
+{
+	Patch "sprites/4 - Chaingun/PL4CE2E8.png", 0, 0
+	offset 23, 28
+}
+Sprite PLA4G4G6, 48, 52
+{
+	Patch "sprites/4 - Chaingun/PLA4G4G6.png", 0, 0
+	offset 19, 50
+}
+Sprite PLA4O0, 48, 56
+{
+	Patch "sprites/4 - Chaingun/PLA4O0.png", 0, 0
+	offset 23, 51
+}
+Sprite PL4CW0, 57, 22
+{
+	Patch "sprites/4 - Chaingun/PL4CW0.png", 0, 0
+	offset 30, 18
+}
+Sprite PL4CF4F6, 44, 31
+{
+	Patch "sprites/4 - Chaingun/PL4CF4F6.png", 0, 0
+	offset 23, 27
+}
+Sprite PL4CP0, 42, 40
+{
+	Patch "sprites/4 - Chaingun/PL4CP0.png", 0, 0
+	offset 22, 34
 }
 Sprite PLA4A1, 41, 56
 {
-	Patch "sprites/PLA4A1.png", 0, 0
+	Patch "sprites/4 - Chaingun/PLA4A1.png", 0, 0
 	offset 24, 51
 }
 Sprite PLA4G3G7, 43, 55
 {
-	Patch "sprites/PLA4G3G7.png", 0, 0
-	offset 21, 52
-}
-Sprite PLA6O0, 37, 56
-{
-	Patch "sprites/PLA6O0.png", 0, 0
-	offset 13, 53
-}
-Sprite PLA2G2G8, 38, 56
-{
-	Patch "sprites/PLA2G2G8.png", 0, 0
+	Patch "sprites/4 - Chaingun/PLA4G3G7.png", 0, 0
 	offset 18, 52
 }
 Sprite PLA4B3B7, 40, 55
 {
-	Patch "sprites/PLA4B3B7.png", 0, 0
+	Patch "sprites/4 - Chaingun/PLA4B3B7.png", 0, 0
 	offset 21, 52
 }
-Sprite PLA9B4B6, 41, 54
+Sprite PL4CG2G8, 45, 32
 {
-	Patch "sprites/PLA9B4B6.png", 0, 0
-	offset 21, 52
+	Patch "sprites/4 - Chaingun/PL4CG2G8.png", 0, 0
+	offset 24, 28
 }
-Sprite PLA1B7, 28, 55
+Sprite PL4CG5, 24, 31
 {
-	Patch "sprites/PLA1B7.png", 0, 0
-	offset 18, 52
-}
-Sprite PLA6J0, 36, 46
-{
-	Patch "sprites/PLA6J0.png", 0, 0
-	offset 12, 43
-}
-Sprite PLA3A3A7, 42, 53
-{
-	Patch "sprites/PLA3A3A7.png", 0, 0
-	offset 21, 50
-}
-Sprite PLA5F1, 27, 56
-{
-	Patch "sprites/PLA5F1.png", 0, 0
-	offset 13, 51
-}
-Sprite PLA1F1, 27, 56
-{
-	Patch "sprites/PLA1F1.png", 0, 0
-	offset 15, 51
-}
-Sprite PLA7R0, 53, 52
-{
-	Patch "sprites/PLA7R0.png", 0, 0
-	offset 24, 49
-}
-Sprite PLA3J0, 36, 46
-{
-	Patch "sprites/PLA3J0.png", 0, 0
-	offset 12, 43
-}
-Sprite PLA5H0, 44, 50
-{
-	Patch "sprites/PLA5H0.png", 0, 0
-	offset 16, 47
-}
-Sprite PLA2A4, 38, 51
-{
-	Patch "sprites/PLA2A4.png", 0, 0
-	offset 14, 49
-}
-Sprite PLA6F5, 24, 51
-{
-	Patch "sprites/PLA6F5.png", 0, 0
-	offset 11, 46
-}
-Sprite PLA9N0, 51, 14
-{
-	Patch "sprites/PLA9N0.png", 0, 0
-	offset 27, 9
+	Patch "sprites/4 - Chaingun/PL4CG5.png", 0, 0
+	offset 11, 27
 }
 Sprite PLA4A2A8, 40, 54
 {
-	Patch "sprites/PLA4A2A8.png", 0, 0
-	offset 22, 50
-}
-Sprite PLA1G5, 34, 54
-{
-	Patch "sprites/PLA1G5.png", 0, 0
-	offset 17, 50
-}
-Sprite PLA7A5, 27, 50
-{
-	Patch "sprites/PLA7A5.png", 0, 0
-	offset 12, 47
-}
-Sprite PLA2F2, 53, 55
-{
-	Patch "sprites/PLA2F2.png", 0, 0
-	offset 24, 51
-}
-Sprite PLA2U0, 61, 33
-{
-	Patch "sprites/PLA2U0.png", 0, 0
-	offset 28, 29
-}
-Sprite PLA0A5, 36, 50
-{
-	Patch "sprites/PLA0A5.png", 0, 0
-	offset 21, 47
-}
-Sprite PLA2D7, 39, 55
-{
-	Patch "sprites/PLA2D7.png", 0, 0
-	offset 22, 52
-}
-Sprite PLA2C6, 39, 53
-{
-	Patch "sprites/PLA2C6.png", 0, 0
-	offset 28, 52
+	Patch "sprites/4 - Chaingun/PLA4A2A8.png", 0, 0
+	offset 20, 50
 }
 Sprite PLA4B4B6, 41, 54
 {
-	Patch "sprites/PLA4B4B6.png", 0, 0
-	offset 21, 52
+	Patch "sprites/4 - Chaingun/PLA4B4B6.png", 0, 0
+	offset 18, 52
 }
-Sprite PLA2E6, 46, 52
+Sprite PL4CD3D7, 58, 31
 {
-	Patch "sprites/PLA2E6.png", 0, 0
-	offset 18, 48
+	Patch "sprites/4 - Chaingun/PL4CD3D7.png", 0, 0
+	offset 27, 27
 }
-Sprite PLA1H0, 40, 50
+Sprite PL4CE3E7, 56, 31
 {
-	Patch "sprites/PLA1H0.png", 0, 0
-	offset 12, 47
-}
-Sprite PLA9F3F7, 55, 53
-{
-	Patch "sprites/PLA9F3F7.png", 0, 0
-	offset 30, 50
+	Patch "sprites/4 - Chaingun/PL4CE3E7.png", 0, 0
+	offset 29, 27
 }
 Sprite PLA4C4C6, 41, 55
 {
-	Patch "sprites/PLA4C4C6.png", 0, 0
-	offset 22, 51
-}
-Sprite PLA9D2D8, 35, 55
-{
-	Patch "sprites/PLA9D2D8.png", 0, 0
-	offset 17, 52
-}
-Sprite PLA5F2F8, 49, 55
-{
-	Patch "sprites/PLA5F2F8.png", 0, 0
-	offset 27, 51
+	Patch "sprites/4 - Chaingun/PLA4C4C6.png", 0, 0
+	offset 20, 51
 }
 Sprite PLA4E4E6, 38, 52
 {
-	Patch "sprites/PLA4E4E6.png", 0, 0
-	offset 18, 48
+	Patch "sprites/4 - Chaingun/PLA4E4E6.png", 0, 0
+	offset 18, 47
 }
-Sprite PLA3G3G7, 43, 55
+Sprite PL4CJ0, 33, 25
 {
-	Patch "sprites/PLA3G3G7.png", 0, 0
+	Patch "sprites/4 - Chaingun/PL4CJ0.png", 0, 0
+	offset 16, 21
+}
+Sprite PL5CC5, 25, 31
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CC5.png", 0, 0
+	offset 11, 27
+}
+Sprite PL5CV0, 57, 23
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CV0.png", 0, 0
+	offset 30, 19
+}
+Sprite PLA5D3D7, 34, 54
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5D3D7.png", 0, 0
 	offset 21, 52
 }
-Sprite PLA9G1, 46, 55
+Sprite PL5CC4C6, 42, 31
 {
-	Patch "sprites/PLA9G1.png", 0, 0
+	Patch "sprites/5 - Rocket Launcher/PL5CC4C6.png", 0, 0
+	offset 21, 27
+}
+Sprite PLA5G1, 39, 55
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5G1.png", 0, 0
 	offset 20, 52
 }
-Sprite PLA2E4, 33, 55
+Sprite PL5CB3B7, 62, 31
 {
-	Patch "sprites/PLA2E4.png", 0, 0
-	offset 19, 48
+	Patch "sprites/5 - Rocket Launcher/PL5CB3B7.png", 0, 0
+	offset 31, 27
+}
+Sprite PLA5G3G7, 46, 55
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5G3G7.png", 0, 0
+	offset 21, 52
+}
+Sprite PL5CF1, 29, 31
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CF1.png", 0, 0
+	offset 14, 27
+}
+Sprite PL5CG3G7, 54, 31
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CG3G7.png", 0, 0
+	offset 27, 27
+}
+Sprite PLA5F5, 23, 51
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5F5.png", 0, 0
+	offset 11, 46
+}
+Sprite PLA5Q0, 48, 57
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5Q0.png", 0, 0
+	offset 21, 54
+}
+Sprite PL5CN0, 47, 16
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CN0.png", 0, 0
+	offset 23, 12
+}
+Sprite PL5CH0, 36, 39
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CH0.png", 0, 0
+	offset 18, 35
+}
+Sprite PL5CJ0, 33, 25
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CJ0.png", 0, 0
+	offset 16, 21
+}
+Sprite PL5CA3A7, 62, 31
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CA3A7.png", 0, 0
+	offset 31, 27
+}
+Sprite PLA5J0, 36, 46
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5J0.png", 0, 0
+	offset 12, 43
+}
+Sprite PLA5E4E6, 38, 52
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5E4E6.png", 0, 0
+	offset 18, 48
+}
+Sprite PL5CM0, 47, 16
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CM0.png", 0, 0
+	offset 23, 12
+}
+Sprite PL5CI0, 34, 31
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CI0.png", 0, 0
+	offset 18, 27
+}
+Sprite PLA5B4B6, 44, 54
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5B4B6.png", 0, 0
+	offset 21, 52
+}
+Sprite PL5CR0, 52, 40
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CR0.png", 0, 0
+	offset 28, 36
+}
+Sprite PLA5C5, 36, 54
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5C5.png", 0, 0
+	offset 17, 50
+}
+Sprite PLA5C4C6, 43, 55
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5C4C6.png", 0, 0
+	offset 22, 51
+}
+Sprite PLA5I0, 36, 43
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5I0.png", 0, 0
+	offset 11, 39
+}
+Sprite PLA5A2A8, 38, 54
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5A2A8.png", 0, 0
+	offset 17, 50
+}
+Sprite PL5CK0, 41, 19
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CK0.png", 0, 0
+	offset 20, 16
+}
+Sprite PLA5U0, 57, 33
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5U0.png", 0, 0
+	offset 24, 29
+}
+Sprite PL5CE2E8, 45, 32
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CE2E8.png", 0, 0
+	offset 22, 28
+}
+Sprite PLA5F4F6, 43, 52
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5F4F6.png", 0, 0
+	offset 20, 48
+}
+Sprite PL5CW0, 57, 22
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CW0.png", 0, 0
+	offset 30, 18
+}
+Sprite PLA5B3B7, 36, 55
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5B3B7.png", 0, 0
+	offset 18, 52
+}
+Sprite PL5CD2D8, 48, 32
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CD2D8.png", 0, 0
+	offset 24, 28
+}
+Sprite PL5CT0, 57, 33
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CT0.png", 0, 0
+	offset 30, 29
+}
+Sprite PLA5A3A7, 42, 53
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5A3A7.png", 0, 0
+	offset 21, 50
+}
+Sprite PLA5N0, 51, 14
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5N0.png", 0, 0
+	offset 27, 9
+}
+Sprite PL5CA4A6, 41, 31
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CA4A6.png", 0, 0
+	offset 20, 27
+}
+Sprite PL5CG1, 29, 31
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CG1.png", 0, 0
+	offset 14, 27
+}
+Sprite PL5CB5, 25, 32
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CB5.png", 0, 0
+	offset 11, 28
+}
+Sprite PL5CF5, 25, 32
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CF5.png", 0, 0
+	offset 11, 28
+}
+Sprite PL5CD1, 29, 31
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CD1.png", 0, 0
+	offset 14, 27
+}
+Sprite PLA5E1, 26, 56
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5E1.png", 0, 0
+	offset 12, 51
+}
+Sprite PLA5B2B8, 37, 55
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5B2B8.png", 0, 0
+	offset 18, 52
+}
+Sprite PL5CA2A8, 47, 32
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CA2A8.png", 0, 0
+	offset 23, 28
+}
+Sprite PL5CF3F7, 67, 31
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CF3F7.png", 0, 0
+	offset 37, 27
+}
+Sprite PLA5B5, 37, 54
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5B5.png", 0, 0
+	offset 18, 51
+}
+Sprite PLA5G4G6, 44, 52
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5G4G6.png", 0, 0
+	offset 20, 50
+}
+Sprite PL5CD5, 25, 32
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CD5.png", 0, 0
+	offset 11, 28
+}
+Sprite PLA5C1, 38, 56
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5C1.png", 0, 0
+	offset 17, 51
+}
+Sprite PLA5K0, 41, 38
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5K0.png", 0, 0
+	offset 17, 34
+}
+Sprite PLA5P0, 44, 59
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5P0.png", 0, 0
+	offset 18, 56
+}
+Sprite PLA5T0, 57, 40
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5T0.png", 0, 0
+	offset 24, 36
+}
+Sprite PLA5G5, 34, 54
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5G5.png", 0, 0
+	offset 17, 50
+}
+Sprite PLA5B1, 37, 56
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5B1.png", 0, 0
+	offset 19, 53
+}
+Sprite PL5CU0, 57, 30
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CU0.png", 0, 0
+	offset 30, 26
+}
+Sprite PL5CC2C8, 48, 32
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CC2C8.png", 0, 0
+	offset 24, 28
+}
+Sprite PL5CE3E7, 60, 31
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CE3E7.png", 0, 0
+	offset 30, 27
+}
+Sprite PL5CB1, 29, 31
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CB1.png", 0, 0
+	offset 14, 27
+}
+Sprite PLA5V0, 57, 23
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5V0.png", 0, 0
+	offset 24, 19
+}
+Sprite PLA5R0, 53, 52
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5R0.png", 0, 0
+	offset 24, 49
+}
+Sprite PLA5D5, 36, 54
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5D5.png", 0, 0
+	offset 19, 51
+}
+Sprite PL5CE4E6, 38, 31
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CE4E6.png", 0, 0
+	offset 19, 27
+}
+Sprite PL5CA1, 29, 31
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CA1.png", 0, 0
+	offset 14, 27
+}
+Sprite PL5CD4D6, 43, 31
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CD4D6.png", 0, 0
+	offset 21, 27
+}
+Sprite PL5CS0, 55, 39
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CS0.png", 0, 0
+	offset 29, 35
+}
+Sprite PLA5A1, 41, 56
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5A1.png", 0, 0
+	offset 18, 51
+}
+Sprite PLA5E5, 26, 51
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5E5.png", 0, 0
+	offset 12, 46
+}
+Sprite PLA5S0, 55, 47
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5S0.png", 0, 0
+	offset 23, 43
+}
+Sprite PL5CG2G8, 41, 32
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CG2G8.png", 0, 0
+	offset 20, 28
+}
+Sprite PLA5O0, 39, 56
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5O0.png", 0, 0
+	offset 16, 53
+}
+Sprite PL5CF2F8, 52, 32
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CF2F8.png", 0, 0
+	offset 29, 28
+}
+Sprite PLA5C2C8, 39, 55
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5C2C8.png", 0, 0
+	offset 17, 51
+}
+Sprite PLA5E2E8, 47, 55
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5E2E8.png", 0, 0
+	offset 33, 51
+}
+Sprite PLA5G2G8, 36, 56
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5G2G8.png", 0, 0
+	offset 16, 52
+}
+Sprite PLA5A4A6, 48, 51
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5A4A6.png", 0, 0
+	offset 21, 49
+}
+Sprite PL5CO0, 38, 36
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CO0.png", 0, 0
+	offset 19, 32
+}
+Sprite PL5CG5, 24, 31
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CG5.png", 0, 0
+	offset 11, 27
+}
+Sprite PLA5M0, 51, 14
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5M0.png", 0, 0
+	offset 27, 9
+}
+Sprite PLA5C3C7, 40, 54
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5C3C7.png", 0, 0
+	offset 18, 51
+}
+Sprite PLA5L0, 51, 14
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5L0.png", 0, 0
+	offset 27, 9
+}
+Sprite PLA5E3E7, 58, 53
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5E3E7.png", 0, 0
+	offset 36, 50
+}
+Sprite PL5CB4B6, 43, 31
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CB4B6.png", 0, 0
+	offset 21, 27
+}
+Sprite PLA5W0, 57, 22
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5W0.png", 0, 0
+	offset 24, 18
+}
+Sprite PL5CQ0, 46, 43
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CQ0.png", 0, 0
+	offset 25, 39
+}
+Sprite PLA5F3F7, 58, 53
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5F3F7.png", 0, 0
+	offset 37, 50
+}
+Sprite PL5CE1, 29, 31
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CE1.png", 0, 0
+	offset 14, 27
+}
+Sprite PL5CD3D7, 62, 31
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CD3D7.png", 0, 0
+	offset 31, 27
+}
+Sprite PLA5D2D8, 37, 55
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5D2D8.png", 0, 0
+	offset 17, 52
+}
+Sprite PLA5D4D6, 41, 54
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5D4D6.png", 0, 0
+	offset 23, 52
+}
+Sprite PL5CE5, 25, 32
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CE5.png", 0, 0
+	offset 11, 28
+}
+Sprite PL5CB2B8, 48, 32
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CB2B8.png", 0, 0
+	offset 24, 28
+}
+Sprite PL5CA5, 25, 32
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CA5.png", 0, 0
+	offset 11, 28
+}
+Sprite PL5CP0, 42, 40
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CP0.png", 0, 0
+	offset 22, 34
+}
+Sprite PL5CC1, 29, 31
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CC1.png", 0, 0
+	offset 14, 27
+}
+Sprite PL5CC3C7, 62, 31
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CC3C7.png", 0, 0
+	offset 31, 27
+}
+Sprite PLA5D1, 40, 55
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5D1.png", 0, 0
+	offset 16, 52
+}
+Sprite PLA5A5, 36, 50
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5A5.png", 0, 0
+	offset 21, 47
+}
+Sprite PL5CF4F6, 44, 31
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CF4F6.png", 0, 0
+	offset 25, 27
+}
+Sprite PLA5F1, 27, 56
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5F1.png", 0, 0
+	offset 12, 51
+}
+Sprite PLA5H0, 44, 50
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5H0.png", 0, 0
+	offset 16, 47
+}
+Sprite PL5CL0, 47, 16
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CL0.png", 0, 0
+	offset 23, 12
+}
+Sprite PLA5F2F8, 49, 55
+{
+	Patch "sprites/5 - Rocket Launcher/PLA5F2F8.png", 0, 0
+	offset 34, 51
+}
+Sprite PL5CG4G6, 39, 31
+{
+	Patch "sprites/5 - Rocket Launcher/PL5CG4G6.png", 0, 0
+	offset 19, 27
+}
+Sprite PLA6H0, 44, 50
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6H0.png", 0, 0
+	offset 16, 47
+}
+Sprite PL6CB3B7, 59, 31
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CB3B7.png", 0, 0
+	offset 29, 27
+}
+Sprite PLA6K0, 41, 38
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6K0.png", 0, 0
+	offset 17, 34
+}
+Sprite PLA6B3B7, 36, 55
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6B3B7.png", 0, 0
+	offset 18, 52
+}
+Sprite PLA6D3D7, 34, 54
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6D3D7.png", 0, 0
+	offset 21, 52
+}
+Sprite PLA6S0, 55, 47
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6S0.png", 0, 0
+	offset 23, 43
+}
+Sprite PL6CC1, 29, 31
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CC1.png", 0, 0
+	offset 14, 27
+}
+Sprite PL6CI0, 34, 31
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CI0.png", 0, 0
+	offset 17, 27
+}
+Sprite PLA6E2E8, 47, 55
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6E2E8.png", 0, 0
+	offset 21, 51
+}
+Sprite PL6CB4B6, 42, 31
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CB4B6.png", 0, 0
+	offset 21, 27
+}
+Sprite PLA6P0, 44, 61
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6P0.png", 0, 0
+	offset 18, 56
+}
+Sprite PL6CB1, 29, 31
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CB1.png", 0, 0
+	offset 14, 27
+}
+Sprite PLA6B2B8, 37, 55
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6B2B8.png", 0, 0
+	offset 18, 52
+}
+Sprite PLA6W0, 57, 22
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6W0.png", 0, 0
+	offset 24, 18
+}
+Sprite PLA6R0, 53, 52
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6R0.png", 0, 0
+	offset 24, 49
+}
+Sprite PL6CK0, 41, 19
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CK0.png", 0, 0
+	offset 20, 16
+}
+Sprite PLA6E1, 26, 56
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6E1.png", 0, 0
+	offset 12, 51
+}
+Sprite PL6CD4D6, 42, 31
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CD4D6.png", 0, 0
+	offset 21, 27
+}
+Sprite PL6CD3D7, 59, 31
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CD3D7.png", 0, 0
+	offset 29, 27
+}
+Sprite PL6CH0, 36, 39
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CH0.png", 0, 0
+	offset 18, 35
+}
+Sprite PLA6A4A6, 48, 51
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6A4A6.png", 0, 0
+	offset 21, 49
+}
+Sprite PL6CC4C6, 41, 31
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CC4C6.png", 0, 0
+	offset 20, 27
+}
+Sprite PLA6E3E7, 56, 53
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6E3E7.png", 0, 0
+	offset 26, 50
+}
+Sprite PLA6A1, 41, 56
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6A1.png", 0, 0
+	offset 18, 51
+}
+Sprite PL6CN0, 47, 16
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CN0.png", 0, 0
+	offset 23, 12
+}
+Sprite PL6CD5, 25, 32
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CD5.png", 0, 0
+	offset 11, 28
+}
+Sprite PL6CG1, 29, 31
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CG1.png", 0, 0
+	offset 14, 27
+}
+Sprite PL6CO0, 38, 36
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CO0.png", 0, 0
+	offset 19, 32
+}
+Sprite PL6CC2C8, 47, 32
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CC2C8.png", 0, 0
+	offset 23, 28
+}
+Sprite PL6CF1, 29, 31
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CF1.png", 0, 0
+	offset 14, 27
+}
+Sprite PLA6F4F6, 41, 52
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6F4F6.png", 0, 0
+	offset 20, 48
+}
+Sprite PL6CA2A8, 46, 32
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CA2A8.png", 0, 0
+	offset 23, 28
+}
+Sprite PLA6F2F8, 49, 55
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6F2F8.png", 0, 0
+	offset 23, 51
+}
+Sprite PLA6A2A8, 38, 54
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6A2A8.png", 0, 0
+	offset 17, 50
+}
+Sprite PLA6I0, 35, 44
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6I0.png", 0, 0
+	offset 11, 39
+}
+Sprite PLA6M0, 51, 14
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6M0.png", 0, 0
+	offset 27, 9
+}
+Sprite PL6CS0, 55, 39
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CS0.png", 0, 0
+	offset 29, 35
+}
+Sprite PL6CJ0, 33, 25
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CJ0.png", 0, 0
+	offset 16, 21
+}
+Sprite PL6CE4E6, 37, 31
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CE4E6.png", 0, 0
+	offset 18, 27
+}
+Sprite PLA6G4G6, 44, 52
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6G4G6.png", 0, 0
+	offset 20, 50
+}
+Sprite PLA6F3F7, 56, 53
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6F3F7.png", 0, 0
+	offset 27, 50
+}
+Sprite PLA6A5, 36, 50
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6A5.png", 0, 0
+	offset 21, 47
+}
+Sprite PL6CG3G7, 55, 31
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CG3G7.png", 0, 0
+	offset 27, 27
+}
+Sprite PLA6F1, 26, 56
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6F1.png", 0, 0
+	offset 12, 51
+}
+Sprite PL6CE3E7, 57, 31
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CE3E7.png", 0, 0
+	offset 28, 27
+}
+Sprite PL6CL0, 47, 16
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CL0.png", 0, 0
+	offset 23, 12
+}
+Sprite PL6CA4A6, 40, 31
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CA4A6.png", 0, 0
+	offset 20, 27
+}
+Sprite PLA6Q0, 48, 57
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6Q0.png", 0, 0
+	offset 21, 54
+}
+Sprite PL6CW0, 57, 22
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CW0.png", 0, 0
+	offset 30, 18
+}
+Sprite PLA6V0, 57, 23
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6V0.png", 0, 0
+	offset 24, 19
+}
+Sprite PL6CM0, 47, 16
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CM0.png", 0, 0
+	offset 23, 12
+}
+Sprite PL6CA3A7, 59, 31
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CA3A7.png", 0, 0
+	offset 29, 27
+}
+Sprite PL6CP0, 42, 40
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CP0.png", 0, 0
+	offset 21, 36
+}
+Sprite PL6CQ0, 46, 43
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CQ0.png", 0, 0
+	offset 25, 39
+}
+Sprite PL6CR0, 52, 40
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CR0.png", 0, 0
+	offset 28, 36
+}
+Sprite PLA6D5, 35, 54
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6D5.png", 0, 0
+	offset 19, 51
+}
+Sprite PLA6T0, 57, 40
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6T0.png", 0, 0
+	offset 24, 36
+}
+Sprite PLA6G3G7, 46, 55
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6G3G7.png", 0, 0
+	offset 21, 52
+}
+Sprite PLA6C5, 34, 54
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6C5.png", 0, 0
+	offset 17, 50
+}
+Sprite PL6CF3F7, 60, 31
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CF3F7.png", 0, 0
+	offset 31, 27
+}
+Sprite PLA6C1, 38, 56
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6C1.png", 0, 0
+	offset 17, 51
+}
+Sprite PL6CU0, 57, 30
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CU0.png", 0, 0
+	offset 30, 26
+}
+Sprite PLA6D1, 40, 55
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6D1.png", 0, 0
+	offset 16, 52
+}
+Sprite PL6CE1, 29, 31
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CE1.png", 0, 0
+	offset 14, 27
+}
+Sprite PLA6G2G8, 36, 56
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6G2G8.png", 0, 0
+	offset 16, 52
+}
+Sprite PLA6U0, 57, 33
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6U0.png", 0, 0
+	offset 24, 29
+}
+Sprite PL6CG4G6, 39, 31
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CG4G6.png", 0, 0
+	offset 19, 27
+}
+Sprite PL6CA1, 29, 31
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CA1.png", 0, 0
+	offset 14, 27
+}
+Sprite PL6CE5, 25, 32
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CE5.png", 0, 0
+	offset 11, 28
+}
+Sprite PL6CB5, 25, 32
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CB5.png", 0, 0
+	offset 11, 28
+}
+Sprite PL6CV0, 57, 23
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CV0.png", 0, 0
+	offset 30, 19
+}
+Sprite PL6CF5, 25, 32
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CF5.png", 0, 0
+	offset 11, 28
+}
+Sprite PLA6G5, 34, 54
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6G5.png", 0, 0
+	offset 17, 50
+}
+Sprite PLA6E4E6, 38, 52
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6E4E6.png", 0, 0
+	offset 18, 48
+}
+Sprite PLA6B4B6, 44, 54
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6B4B6.png", 0, 0
+	offset 21, 52
+}
+Sprite PL6CF4F6, 40, 31
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CF4F6.png", 0, 0
+	offset 21, 27
+}
+Sprite PLA6D4D6, 40, 54
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6D4D6.png", 0, 0
+	offset 23, 52
+}
+Sprite PL6CT0, 57, 33
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CT0.png", 0, 0
+	offset 30, 29
+}
+Sprite PL6CE2E8, 44, 32
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CE2E8.png", 0, 0
+	offset 22, 28
+}
+Sprite PLA6C3C7, 39, 54
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6C3C7.png", 0, 0
+	offset 18, 51
+}
+Sprite PL6CD1, 29, 31
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CD1.png", 0, 0
+	offset 14, 27
+}
+Sprite PLA6E5, 26, 51
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6E5.png", 0, 0
+	offset 12, 46
+}
+Sprite PLA6D2D8, 37, 55
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6D2D8.png", 0, 0
+	offset 17, 52
+}
+Sprite PL6CC3C7, 59, 31
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CC3C7.png", 0, 0
+	offset 29, 27
+}
+Sprite PLA6B1, 37, 56
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6B1.png", 0, 0
+	offset 19, 53
+}
+Sprite PLA6G1, 39, 55
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6G1.png", 0, 0
+	offset 20, 52
+}
+Sprite PLA6B5, 35, 54
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6B5.png", 0, 0
+	offset 18, 51
+}
+Sprite PL6CF2F8, 46, 32
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CF2F8.png", 0, 0
+	offset 24, 28
+}
+Sprite PLA6L0, 51, 14
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6L0.png", 0, 0
+	offset 27, 9
+}
+Sprite PL6CA5, 25, 32
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CA5.png", 0, 0
+	offset 11, 28
+}
+Sprite PLA6N0, 51, 14
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6N0.png", 0, 0
+	offset 27, 9
+}
+Sprite PL6CC5, 25, 31
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CC5.png", 0, 0
+	offset 11, 27
+}
+Sprite PLA6C2C8, 39, 55
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6C2C8.png", 0, 0
+	offset 17, 51
+}
+Sprite PL6CG2G8, 36, 32
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CG2G8.png", 0, 0
+	offset 18, 28
+}
+Sprite PLA6O0, 37, 56
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6O0.png", 0, 0
+	offset 16, 53
+}
+Sprite PL6CG5, 24, 31
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CG5.png", 0, 0
+	offset 11, 27
+}
+Sprite PLA6J0, 36, 46
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6J0.png", 0, 0
+	offset 12, 43
+}
+Sprite PL6CD2D8, 47, 32
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CD2D8.png", 0, 0
+	offset 23, 28
+}
+Sprite PLA6F5, 24, 51
+{
+	Patch "sprites/6 - Plasma Rifle/PLA6F5.png", 0, 0
+	offset 11, 46
 }
 Sprite PLA6C4C6, 43, 55
 {
-	Patch "sprites/PLA6C4C6.png", 0, 0
-	offset 24, 51
-}
-Sprite PLA2D1, 32, 55
-{
-	Patch "sprites/PLA2D1.png", 0, 0
-	offset 16, 52
-}
-Sprite PLA0B6, 37, 54
-{
-	Patch "sprites/PLA0B6.png", 0, 0
-	offset 19, 52
-}
-Sprite PLA3D5, 35, 54
-{
-	Patch "sprites/PLA3D5.png", 0, 0
-	offset 19, 51
-}
-Sprite PLA2J0, 55, 46
-{
-	Patch "sprites/PLA2J0.png", 0, 0
-	offset 31, 43
+	Patch "sprites/6 - Plasma Rifle/PLA6C4C6.png", 0, 0
+	offset 22, 51
 }
 Sprite PLA6A3A7, 42, 53
 {
-	Patch "sprites/PLA6A3A7.png", 0, 0
+	Patch "sprites/6 - Plasma Rifle/PLA6A3A7.png", 0, 0
 	offset 21, 50
+}
+Sprite PL6CB2B8, 47, 32
+{
+	Patch "sprites/6 - Plasma Rifle/PL6CB2B8.png", 0, 0
+	offset 23, 28
+}
+Sprite PL7CQ0, 46, 43
+{
+	Patch "sprites/7 - BFG/PL7CQ0.png", 0, 0
+	offset 23, 39
+}
+Sprite PLA7G4G6, 50, 52
+{
+	Patch "sprites/7 - BFG/PLA7G4G6.png", 0, 0
+	offset 27, 50
+}
+Sprite PL7CO0, 38, 36
+{
+	Patch "sprites/7 - BFG/PL7CO0.png", 0, 0
+	offset 19, 32
+}
+Sprite PLA7U0, 57, 33
+{
+	Patch "sprites/7 - BFG/PLA7U0.png", 0, 0
+	offset 24, 29
+}
+Sprite PL7CC1, 29, 31
+{
+	Patch "sprites/7 - BFG/PL7CC1.png", 0, 0
+	offset 15, 27
+}
+Sprite PLA7A2A8, 39, 54
+{
+	Patch "sprites/7 - BFG/PLA7A2A8.png", 0, 0
+	offset 21, 50
+}
+Sprite PL7CB3B7, 65, 31
+{
+	Patch "sprites/7 - BFG/PL7CB3B7.png", 0, 0
+	offset 29, 27
+}
+Sprite PLA7G3G7, 55, 55
+{
+	Patch "sprites/7 - BFG/PLA7G3G7.png", 0, 0
+	offset 21, 52
+}
+Sprite PL7CD3D7, 65, 31
+{
+	Patch "sprites/7 - BFG/PL7CD3D7.png", 0, 0
+	offset 29, 27
+}
+Sprite PL7CW0, 57, 22
+{
+	Patch "sprites/7 - BFG/PL7CW0.png", 0, 0
+	offset 30, 18
+}
+Sprite PLA7Q0, 48, 57
+{
+	Patch "sprites/7 - BFG/PLA7Q0.png", 0, 0
+	offset 21, 54
+}
+Sprite PL7CD4D6, 54, 31
+{
+	Patch "sprites/7 - BFG/PL7CD4D6.png", 0, 0
+	offset 17, 27
+}
+Sprite PLA7E5, 26, 51
+{
+	Patch "sprites/7 - BFG/PLA7E5.png", 0, 0
+	offset 12, 46
+}
+Sprite PLA7E3E7, 57, 53
+{
+	Patch "sprites/7 - BFG/PLA7E3E7.png", 0, 0
+	offset 32, 50
+}
+Sprite PL7CM0, 47, 16
+{
+	Patch "sprites/7 - BFG/PL7CM0.png", 0, 0
+	offset 23, 12
+}
+Sprite PL7CF1, 29, 31
+{
+	Patch "sprites/7 - BFG/PL7CF1.png", 0, 0
+	offset 15, 27
+}
+Sprite PL7CF2F8, 57, 32
+{
+	Patch "sprites/7 - BFG/PL7CF2F8.png", 0, 0
+	offset 27, 28
+}
+Sprite PLA7A1, 30, 56
+{
+	Patch "sprites/7 - BFG/PLA7A1.png", 0, 0
+	offset 18, 51
+}
+Sprite PL7CA4A6, 53, 31
+{
+	Patch "sprites/7 - BFG/PL7CA4A6.png", 0, 0
+	offset 17, 27
+}
+Sprite PLA7B4B6, 48, 54
+{
+	Patch "sprites/7 - BFG/PLA7B4B6.png", 0, 0
+	offset 29, 52
+}
+Sprite PL7CF3F7, 68, 31
+{
+	Patch "sprites/7 - BFG/PL7CF3F7.png", 0, 0
+	offset 34, 27
+}
+Sprite PLA7F3F7, 64, 53
+{
+	Patch "sprites/7 - BFG/PLA7F3F7.png", 0, 0
+	offset 39, 50
+}
+Sprite PL7CP0, 42, 40
+{
+	Patch "sprites/7 - BFG/PL7CP0.png", 0, 0
+	offset 21, 36
+}
+Sprite PLA7C5, 29, 54
+{
+	Patch "sprites/7 - BFG/PLA7C5.png", 0, 0
+	offset 14, 50
+}
+Sprite PL7CD5, 25, 32
+{
+	Patch "sprites/7 - BFG/PL7CD5.png", 0, 0
+	offset 11, 28
+}
+Sprite PL7CC3C7, 65, 31
+{
+	Patch "sprites/7 - BFG/PL7CC3C7.png", 0, 0
+	offset 29, 27
+}
+Sprite PLA7F4F6, 45, 52
+{
+	Patch "sprites/7 - BFG/PLA7F4F6.png", 0, 0
+	offset 24, 48
+}
+Sprite PL7CT0, 57, 33
+{
+	Patch "sprites/7 - BFG/PL7CT0.png", 0, 0
+	offset 30, 29
+}
+Sprite PL7CE4E6, 43, 31
+{
+	Patch "sprites/7 - BFG/PL7CE4E6.png", 0, 0
+	offset 17, 27
+}
+Sprite PLA7E2E8, 47, 55
+{
+	Patch "sprites/7 - BFG/PLA7E2E8.png", 0, 0
+	offset 25, 51
+}
+Sprite PL7CA5, 25, 32
+{
+	Patch "sprites/7 - BFG/PL7CA5.png", 0, 0
+	offset 11, 28
+}
+Sprite PLA7I0, 35, 43
+{
+	Patch "sprites/7 - BFG/PLA7I0.png", 0, 0
+	offset 11, 39
+}
+Sprite PL7CB5, 25, 32
+{
+	Patch "sprites/7 - BFG/PL7CB5.png", 0, 0
+	offset 11, 28
+}
+Sprite PLA7C1, 30, 56
+{
+	Patch "sprites/7 - BFG/PLA7C1.png", 0, 0
+	offset 17, 51
+}
+Sprite PLA7E4E6, 40, 52
+{
+	Patch "sprites/7 - BFG/PLA7E4E6.png", 0, 0
+	offset 20, 48
+}
+Sprite PL7CD2D8, 47, 32
+{
+	Patch "sprites/7 - BFG/PL7CD2D8.png", 0, 0
+	offset 23, 28
+}
+Sprite PL7CA3A7, 65, 31
+{
+	Patch "sprites/7 - BFG/PL7CA3A7.png", 0, 0
+	offset 29, 27
+}
+Sprite PLA7D5, 28, 54
+{
+	Patch "sprites/7 - BFG/PLA7D5.png", 0, 0
+	offset 12, 51
+}
+Sprite PLA7T0, 57, 40
+{
+	Patch "sprites/7 - BFG/PLA7T0.png", 0, 0
+	offset 24, 36
+}
+Sprite PL7CG2G8, 47, 32
+{
+	Patch "sprites/7 - BFG/PL7CG2G8.png", 0, 0
+	offset 23, 28
+}
+Sprite PL7CA1, 29, 31
+{
+	Patch "sprites/7 - BFG/PL7CA1.png", 0, 0
+	offset 15, 27
+}
+Sprite PL7CF4F6, 46, 31
+{
+	Patch "sprites/7 - BFG/PL7CF4F6.png", 0, 0
+	offset 20, 27
+}
+Sprite PLA7A4A6, 51, 51
+{
+	Patch "sprites/7 - BFG/PLA7A4A6.png", 0, 0
+	offset 27, 49
+}
+Sprite PLA7D1, 31, 55
+{
+	Patch "sprites/7 - BFG/PLA7D1.png", 0, 0
+	offset 16, 52
+}
+Sprite PLA7G1, 29, 55
+{
+	Patch "sprites/7 - BFG/PLA7G1.png", 0, 0
+	offset 10, 52
+}
+Sprite PLA7D2D8, 37, 55
+{
+	Patch "sprites/7 - BFG/PLA7D2D8.png", 0, 0
+	offset 20, 52
+}
+Sprite PL7CG3G7, 63, 31
+{
+	Patch "sprites/7 - BFG/PL7CG3G7.png", 0, 0
+	offset 29, 27
+}
+Sprite PLA7F2F8, 52, 55
+{
+	Patch "sprites/7 - BFG/PLA7F2F8.png", 0, 0
+	offset 30, 51
+}
+Sprite PL7CA2A8, 46, 32
+{
+	Patch "sprites/7 - BFG/PL7CA2A8.png", 0, 0
+	offset 23, 28
+}
+Sprite PL7CE3E7, 63, 31
+{
+	Patch "sprites/7 - BFG/PL7CE3E7.png", 0, 0
+	offset 29, 27
+}
+Sprite PLA7A3A7, 56, 53
+{
+	Patch "sprites/7 - BFG/PLA7A3A7.png", 0, 0
+	offset 35, 50
+}
+Sprite PLA7E1, 26, 56
+{
+	Patch "sprites/7 - BFG/PLA7E1.png", 0, 0
+	offset 12, 51
+}
+Sprite PLA7C2C8, 39, 55
+{
+	Patch "sprites/7 - BFG/PLA7C2C8.png", 0, 0
+	offset 19, 51
+}
+Sprite PL7CU0, 57, 30
+{
+	Patch "sprites/7 - BFG/PL7CU0.png", 0, 0
+	offset 30, 26
+}
+Sprite PLA7W0, 57, 22
+{
+	Patch "sprites/7 - BFG/PLA7W0.png", 0, 0
+	offset 24, 18
+}
+Sprite PL7CE2E8, 53, 32
+{
+	Patch "sprites/7 - BFG/PL7CE2E8.png", 0, 0
+	offset 23, 28
+}
+Sprite PLA7P0, 44, 59
+{
+	Patch "sprites/7 - BFG/PLA7P0.png", 0, 0
+	offset 18, 56
+}
+Sprite PL7CL0, 47, 16
+{
+	Patch "sprites/7 - BFG/PL7CL0.png", 0, 0
+	offset 23, 12
+}
+Sprite PLA7N0, 51, 14
+{
+	Patch "sprites/7 - BFG/PLA7N0.png", 0, 0
+	offset 27, 9
+}
+Sprite PLA7M0, 51, 14
+{
+	Patch "sprites/7 - BFG/PLA7M0.png", 0, 0
+	offset 27, 9
+}
+Sprite PLA7O0, 36, 56
+{
+	Patch "sprites/7 - BFG/PLA7O0.png", 0, 0
+	offset 14, 53
+}
+Sprite PLA7D3D7, 48, 54
+{
+	Patch "sprites/7 - BFG/PLA7D3D7.png", 0, 0
+	offset 35, 52
+}
+Sprite PL7CG5, 24, 31
+{
+	Patch "sprites/7 - BFG/PL7CG5.png", 0, 0
+	offset 11, 27
+}
+Sprite PL7CN0, 47, 16
+{
+	Patch "sprites/7 - BFG/PL7CN0.png", 0, 0
+	offset 23, 12
+}
+Sprite PLA7S0, 55, 47
+{
+	Patch "sprites/7 - BFG/PLA7S0.png", 0, 0
+	offset 23, 43
+}
+Sprite PLA7L0, 51, 14
+{
+	Patch "sprites/7 - BFG/PLA7L0.png", 0, 0
+	offset 27, 9
+}
+Sprite PLA7J0, 37, 45
+{
+	Patch "sprites/7 - BFG/PLA7J0.png", 0, 0
+	offset 13, 42
+}
+Sprite PLA7F1, 25, 56
+{
+	Patch "sprites/7 - BFG/PLA7F1.png", 0, 0
+	offset 11, 51
+}
+Sprite PL7CV0, 57, 23
+{
+	Patch "sprites/7 - BFG/PL7CV0.png", 0, 0
+	offset 30, 19
+}
+Sprite PL7CK0, 41, 36
+{
+	Patch "sprites/7 - BFG/PL7CK0.png", 0, 0
+	offset 20, 32
+}
+Sprite PLA7K0, 41, 40
+{
+	Patch "sprites/7 - BFG/PLA7K0.png", 0, 0
+	offset 17, 37
+}
+Sprite PLA7G5, 31, 54
+{
+	Patch "sprites/7 - BFG/PLA7G5.png", 0, 0
+	offset 17, 50
+}
+Sprite PL7CR0, 52, 40
+{
+	Patch "sprites/7 - BFG/PL7CR0.png", 0, 0
+	offset 26, 36
+}
+Sprite PLA7B1, 31, 56
+{
+	Patch "sprites/7 - BFG/PLA7B1.png", 0, 0
+	offset 19, 53
+}
+Sprite PLA7B2B8, 36, 55
+{
+	Patch "sprites/7 - BFG/PLA7B2B8.png", 0, 0
+	offset 21, 52
+}
+Sprite PLA7B3B7, 52, 55
+{
+	Patch "sprites/7 - BFG/PLA7B3B7.png", 0, 0
+	offset 34, 52
+}
+Sprite PL7CC5, 25, 31
+{
+	Patch "sprites/7 - BFG/PL7CC5.png", 0, 0
+	offset 11, 27
+}
+Sprite PLA7G2G8, 39, 56
+{
+	Patch "sprites/7 - BFG/PLA7G2G8.png", 0, 0
+	offset 19, 52
+}
+Sprite PL7CF5, 25, 32
+{
+	Patch "sprites/7 - BFG/PL7CF5.png", 0, 0
+	offset 11, 28
+}
+Sprite PL7CJ0, 33, 33
+{
+	Patch "sprites/7 - BFG/PL7CJ0.png", 0, 0
+	offset 16, 29
+}
+Sprite PL7CC4C6, 54, 31
+{
+	Patch "sprites/7 - BFG/PL7CC4C6.png", 0, 0
+	offset 17, 27
+}
+Sprite PLA7V0, 57, 22
+{
+	Patch "sprites/7 - BFG/PLA7V0.png", 0, 0
+	offset 24, 18
+}
+Sprite PLA7H0, 40, 50
+{
+	Patch "sprites/7 - BFG/PLA7H0.png", 0, 0
+	offset 12, 47
+}
+Sprite PLA7D4D6, 46, 54
+{
+	Patch "sprites/7 - BFG/PLA7D4D6.png", 0, 0
+	offset 29, 52
+}
+Sprite PLA7B5, 29, 54
+{
+	Patch "sprites/7 - BFG/PLA7B5.png", 0, 0
+	offset 12, 51
+}
+Sprite PL7CE1, 29, 31
+{
+	Patch "sprites/7 - BFG/PL7CE1.png", 0, 0
+	offset 15, 27
+}
+Sprite PL7CI0, 34, 31
+{
+	Patch "sprites/7 - BFG/PL7CI0.png", 0, 0
+	offset 17, 27
+}
+Sprite PL7CB2B8, 47, 32
+{
+	Patch "sprites/7 - BFG/PL7CB2B8.png", 0, 0
+	offset 23, 28
+}
+Sprite PLA7C4C6, 50, 55
+{
+	Patch "sprites/7 - BFG/PLA7C4C6.png", 0, 0
+	offset 31, 51
+}
+Sprite PL7CG4G6, 50, 31
+{
+	Patch "sprites/7 - BFG/PL7CG4G6.png", 0, 0
+	offset 17, 27
+}
+Sprite PLA7C3C7, 55, 54
+{
+	Patch "sprites/7 - BFG/PLA7C3C7.png", 0, 0
+	offset 35, 51
+}
+Sprite PL7CB4B6, 55, 31
+{
+	Patch "sprites/7 - BFG/PL7CB4B6.png", 0, 0
+	offset 18, 27
+}
+Sprite PL7CC2C8, 47, 32
+{
+	Patch "sprites/7 - BFG/PL7CC2C8.png", 0, 0
+	offset 23, 28
+}
+Sprite PL7CS0, 55, 39
+{
+	Patch "sprites/7 - BFG/PL7CS0.png", 0, 0
+	offset 29, 35
+}
+Sprite PLA7R0, 53, 52
+{
+	Patch "sprites/7 - BFG/PLA7R0.png", 0, 0
+	offset 24, 49
+}
+Sprite PL7CB1, 29, 31
+{
+	Patch "sprites/7 - BFG/PL7CB1.png", 0, 0
+	offset 15, 27
+}
+Sprite PLA7A5, 27, 50
+{
+	Patch "sprites/7 - BFG/PLA7A5.png", 0, 0
+	offset 12, 47
+}
+Sprite PL7CG1, 29, 31
+{
+	Patch "sprites/7 - BFG/PL7CG1.png", 0, 0
+	offset 15, 27
+}
+Sprite PL7CH0, 36, 39
+{
+	Patch "sprites/7 - BFG/PL7CH0.png", 0, 0
+	offset 18, 35
+}
+Sprite PL7CE5, 25, 32
+{
+	Patch "sprites/7 - BFG/PL7CE5.png", 0, 0
+	offset 11, 28
 }
 Sprite PLA7F5, 24, 51
 {
-	Patch "sprites/PLA7F5.png", 0, 0
+	Patch "sprites/7 - BFG/PLA7F5.png", 0, 0
+	offset 10, 46
+}
+Sprite PL7CD1, 29, 31
+{
+	Patch "sprites/7 - BFG/PL7CD1.png", 0, 0
+	offset 15, 27
+}
+Sprite PL8CA5, 25, 32
+{
+	Patch "sprites/8 - Chainsaw/PL8CA5.png", 0, 0
+	offset 11, 28
+}
+Sprite PL8CA3A7, 65, 31
+{
+	Patch "sprites/8 - Chainsaw/PL8CA3A7.png", 0, 0
+	offset 34, 27
+}
+Sprite PL8CB2B8, 51, 32
+{
+	Patch "sprites/8 - Chainsaw/PL8CB2B8.png", 0, 0
+	offset 27, 28
+}
+Sprite PLA8B4, 41, 54
+{
+	Patch "sprites/8 - Chainsaw/PLA8B4.png", 0, 0
+	offset 18, 52
+}
+Sprite PL8CP0, 42, 40
+{
+	Patch "sprites/8 - Chainsaw/PL8CP0.png", 0, 0
+	offset 22, 34
+}
+Sprite PLA8A8, 29, 55
+{
+	Patch "sprites/8 - Chainsaw/PLA8A8.png", 0, 0
+	offset 19, 51
+}
+Sprite PL8CC4C6, 44, 31
+{
+	Patch "sprites/8 - Chainsaw/PL8CC4C6.png", 0, 0
+	offset 23, 27
+}
+Sprite PLA8E2E8, 45, 55
+{
+	Patch "sprites/8 - Chainsaw/PLA8E2E8.png", 0, 0
+	offset 32, 50
+}
+Sprite PL8CG4G6, 40, 31
+{
+	Patch "sprites/8 - Chainsaw/PL8CG4G6.png", 0, 0
+	offset 19, 27
+}
+Sprite PLA8C5, 35, 54
+{
+	Patch "sprites/8 - Chainsaw/PLA8C5.png", 0, 0
+	offset 16, 50
+}
+Sprite PL8CF2F8, 50, 32
+{
+	Patch "sprites/8 - Chainsaw/PL8CF2F8.png", 0, 0
+	offset 27, 28
+}
+Sprite PLA8G1, 35, 55
+{
+	Patch "sprites/8 - Chainsaw/PLA8G1.png", 0, 0
+	offset 16, 52
+}
+Sprite PL8CF1, 29, 31
+{
+	Patch "sprites/8 - Chainsaw/PL8CF1.png", 0, 0
+	offset 14, 27
+}
+Sprite PL8CD1, 29, 31
+{
+	Patch "sprites/8 - Chainsaw/PL8CD1.png", 0, 0
+	offset 14, 27
+}
+Sprite PLA8O0, 38, 56
+{
+	Patch "sprites/8 - Chainsaw/PLA8O0.png", 0, 0
+	offset 17, 52
+}
+Sprite PLA8G4G6, 40, 52
+{
+	Patch "sprites/8 - Chainsaw/PLA8G4G6.png", 0, 0
+	offset 16, 50
+}
+Sprite PLA8B8, 29, 55
+{
+	Patch "sprites/8 - Chainsaw/PLA8B8.png", 0, 0
+	offset 16, 52
+}
+Sprite PL8CE2E8, 50, 32
+{
+	Patch "sprites/8 - Chainsaw/PL8CE2E8.png", 0, 0
+	offset 27, 28
+}
+Sprite PL8CD3D7, 65, 31
+{
+	Patch "sprites/8 - Chainsaw/PL8CD3D7.png", 0, 0
+	offset 34, 27
+}
+Sprite PLA8P0, 44, 59
+{
+	Patch "sprites/8 - Chainsaw/PLA8P0.png", 0, 0
+	offset 18, 56
+}
+Sprite PLA8U0, 57, 33
+{
+	Patch "sprites/8 - Chainsaw/PLA8U0.png", 0, 0
+	offset 24, 29
+}
+Sprite PL8CA2A8, 50, 32
+{
+	Patch "sprites/8 - Chainsaw/PL8CA2A8.png", 0, 0
+	offset 26, 28
+}
+Sprite PLA8E5, 26, 51
+{
+	Patch "sprites/8 - Chainsaw/PLA8E5.png", 0, 0
+	offset 12, 46
+}
+Sprite PL8CG2G8, 50, 32
+{
+	Patch "sprites/8 - Chainsaw/PL8CG2G8.png", 0, 0
+	offset 29, 28
+}
+Sprite PLA8R0, 53, 52
+{
+	Patch "sprites/8 - Chainsaw/PLA8R0.png", 0, 0
+	offset 24, 49
+}
+Sprite PL8CW0, 57, 22
+{
+	Patch "sprites/8 - Chainsaw/PL8CW0.png", 0, 0
+	offset 30, 18
+}
+Sprite PLA8C6, 44, 51
+{
+	Patch "sprites/8 - Chainsaw/PLA8C6.png", 0, 0
+	offset 23, 49
+}
+Sprite PLA8N0, 51, 14
+{
+	Patch "sprites/8 - Chainsaw/PLA8N0.png", 0, 0
+	offset 27, 9
+}
+Sprite PLA8C3, 38, 54
+{
+	Patch "sprites/8 - Chainsaw/PLA8C3.png", 0, 0
+	offset 16, 51
+}
+Sprite PLA8M0, 51, 14
+{
+	Patch "sprites/8 - Chainsaw/PLA8M0.png", 0, 0
+	offset 27, 9
+}
+Sprite PLA8D8, 28, 55
+{
+	Patch "sprites/8 - Chainsaw/PLA8D8.png", 0, 0
+	offset 15, 52
+}
+Sprite PLA8S0, 55, 47
+{
+	Patch "sprites/8 - Chainsaw/PLA8S0.png", 0, 0
+	offset 23, 43
+}
+Sprite PLA8F1, 26, 56
+{
+	Patch "sprites/8 - Chainsaw/PLA8F1.png", 0, 0
+	offset 12, 51
+}
+Sprite PLA8D6, 41, 54
+{
+	Patch "sprites/8 - Chainsaw/PLA8D6.png", 0, 0
+	offset 19, 52
+}
+Sprite PL8CC2C8, 51, 32
+{
+	Patch "sprites/8 - Chainsaw/PL8CC2C8.png", 0, 0
+	offset 27, 28
+}
+Sprite PL8CD2D8, 51, 32
+{
+	Patch "sprites/8 - Chainsaw/PL8CD2D8.png", 0, 0
+	offset 27, 28
+}
+Sprite PLA8C1, 39, 56
+{
+	Patch "sprites/8 - Chainsaw/PLA8C1.png", 0, 0
+	offset 17, 51
+}
+Sprite PL8CT0, 57, 33
+{
+	Patch "sprites/8 - Chainsaw/PL8CT0.png", 0, 0
+	offset 30, 29
+}
+Sprite PLA8A6, 41, 55
+{
+	Patch "sprites/8 - Chainsaw/PLA8A6.png", 0, 0
+	offset 19, 51
+}
+Sprite PLA8T0, 57, 40
+{
+	Patch "sprites/8 - Chainsaw/PLA8T0.png", 0, 0
+	offset 24, 36
+}
+Sprite PL8CG5, 24, 31
+{
+	Patch "sprites/8 - Chainsaw/PL8CG5.png", 0, 0
+	offset 11, 27
+}
+Sprite PLA8E3E7, 55, 53
+{
+	Patch "sprites/8 - Chainsaw/PLA8E3E7.png", 0, 0
+	offset 37, 50
+}
+Sprite PLA8E4E6, 38, 52
+{
+	Patch "sprites/8 - Chainsaw/PLA8E4E6.png", 0, 0
+	offset 18, 48
+}
+Sprite PLA8D1, 40, 55
+{
+	Patch "sprites/8 - Chainsaw/PLA8D1.png", 0, 0
+	offset 14, 52
+}
+Sprite PLA8B2, 28, 55
+{
+	Patch "sprites/8 - Chainsaw/PLA8B2.png", 0, 0
+	offset 10, 52
+}
+Sprite PL8CE1, 29, 31
+{
+	Patch "sprites/8 - Chainsaw/PL8CE1.png", 0, 0
+	offset 14, 27
+}
+Sprite PLA8W0, 57, 22
+{
+	Patch "sprites/8 - Chainsaw/PLA8W0.png", 0, 0
+	offset 24, 18
+}
+Sprite PL8CC3C7, 65, 31
+{
+	Patch "sprites/8 - Chainsaw/PL8CC3C7.png", 0, 0
+	offset 34, 27
+}
+Sprite PL8CS0, 55, 39
+{
+	Patch "sprites/8 - Chainsaw/PL8CS0.png", 0, 0
+	offset 29, 35
+}
+Sprite PLA8H0, 40, 50
+{
+	Patch "sprites/8 - Chainsaw/PLA8H0.png", 0, 0
+	offset 12, 46
+}
+Sprite PLA8B3, 36, 55
+{
+	Patch "sprites/8 - Chainsaw/PLA8B3.png", 0, 0
+	offset 18, 52
+}
+Sprite PLA8F3F7, 55, 53
+{
+	Patch "sprites/8 - Chainsaw/PLA8F3F7.png", 0, 0
+	offset 37, 50
+}
+Sprite PLA8K0, 41, 38
+{
+	Patch "sprites/8 - Chainsaw/PLA8K0.png", 0, 0
+	offset 17, 34
+}
+Sprite PL8CC5, 25, 31
+{
+	Patch "sprites/8 - Chainsaw/PL8CC5.png", 0, 0
+	offset 11, 27
+}
+Sprite PLA8A3, 42, 53
+{
+	Patch "sprites/8 - Chainsaw/PLA8A3.png", 0, 0
+	offset 21, 50
+}
+Sprite PL8CE3E7, 65, 31
+{
+	Patch "sprites/8 - Chainsaw/PL8CE3E7.png", 0, 0
+	offset 35, 27
+}
+Sprite PL8CA4A6, 43, 31
+{
+	Patch "sprites/8 - Chainsaw/PL8CA4A6.png", 0, 0
+	offset 22, 27
+}
+Sprite PLA8C8, 30, 54
+{
+	Patch "sprites/8 - Chainsaw/PLA8C8.png", 0, 0
+	offset 17, 50
+}
+Sprite PL8CG1, 29, 31
+{
+	Patch "sprites/8 - Chainsaw/PL8CG1.png", 0, 0
+	offset 14, 27
+}
+Sprite PLA8B1, 40, 56
+{
+	Patch "sprites/8 - Chainsaw/PLA8B1.png", 0, 0
+	offset 19, 53
+}
+Sprite PLA8A5, 36, 50
+{
+	Patch "sprites/8 - Chainsaw/PLA8A5.png", 0, 0
+	offset 21, 47
+}
+Sprite PL8CN0, 47, 16
+{
+	Patch "sprites/8 - Chainsaw/PL8CN0.png", 0, 0
+	offset 23, 12
+}
+Sprite PL8CJ0, 33, 25
+{
+	Patch "sprites/8 - Chainsaw/PL8CJ0.png", 0, 0
+	offset 16, 21
+}
+Sprite PLA8G2G8, 31, 56
+{
+	Patch "sprites/8 - Chainsaw/PLA8G2G8.png", 0, 0
+	offset 11, 52
+}
+Sprite PLA8D3, 34, 54
+{
+	Patch "sprites/8 - Chainsaw/PLA8D3.png", 0, 0
+	offset 21, 52
+}
+Sprite PLA8C4, 41, 55
+{
+	Patch "sprites/8 - Chainsaw/PLA8C4.png", 0, 0
+	offset 20, 51
+}
+Sprite PLA8F2F8, 45, 55
+{
+	Patch "sprites/8 - Chainsaw/PLA8F2F8.png", 0, 0
+	offset 32, 50
+}
+Sprite PLA8D7, 36, 55
+{
+	Patch "sprites/8 - Chainsaw/PLA8D7.png", 0, 0
+	offset 18, 51
+}
+Sprite PL8CF4F6, 40, 31
+{
+	Patch "sprites/8 - Chainsaw/PL8CF4F6.png", 0, 0
+	offset 21, 27
+}
+Sprite PL8CG3G7, 65, 31
+{
+	Patch "sprites/8 - Chainsaw/PL8CG3G7.png", 0, 0
+	offset 38, 27
+}
+Sprite PLA8D4, 40, 54
+{
+	Patch "sprites/8 - Chainsaw/PLA8D4.png", 0, 0
+	offset 22, 52
+}
+Sprite PL8CB5, 25, 32
+{
+	Patch "sprites/8 - Chainsaw/PL8CB5.png", 0, 0
+	offset 11, 28
+}
+Sprite PLA8A7, 38, 54
+{
+	Patch "sprites/8 - Chainsaw/PLA8A7.png", 0, 0
+	offset 19, 50
+}
+Sprite PLA8A4, 45, 51
+{
+	Patch "sprites/8 - Chainsaw/PLA8A4.png", 0, 0
+	offset 18, 49
+}
+Sprite PL8CQ0, 46, 43
+{
+	Patch "sprites/8 - Chainsaw/PL8CQ0.png", 0, 0
+	offset 25, 39
+}
+Sprite PL8CD4D6, 45, 31
+{
+	Patch "sprites/8 - Chainsaw/PL8CD4D6.png", 0, 0
+	offset 23, 27
+}
+Sprite PL8CB3B7, 65, 31
+{
+	Patch "sprites/8 - Chainsaw/PL8CB3B7.png", 0, 0
+	offset 34, 27
+}
+Sprite PLA8G3G7, 44, 55
+{
+	Patch "sprites/8 - Chainsaw/PLA8G3G7.png", 0, 0
+	offset 19, 52
+}
+Sprite PL8CA1, 29, 31
+{
+	Patch "sprites/8 - Chainsaw/PL8CA1.png", 0, 0
+	offset 14, 27
+}
+Sprite PL8CE5, 25, 32
+{
+	Patch "sprites/8 - Chainsaw/PL8CE5.png", 0, 0
+	offset 11, 28
+}
+Sprite PLA8B7, 34, 54
+{
+	Patch "sprites/8 - Chainsaw/PLA8B7.png", 0, 0
+	offset 12, 52
+}
+Sprite PL8CV0, 57, 23
+{
+	Patch "sprites/8 - Chainsaw/PL8CV0.png", 0, 0
+	offset 30, 19
+}
+Sprite PL8CL0, 47, 16
+{
+	Patch "sprites/8 - Chainsaw/PL8CL0.png", 0, 0
+	offset 23, 12
+}
+Sprite PLA8B5, 37, 54
+{
+	Patch "sprites/8 - Chainsaw/PLA8B5.png", 0, 0
+	offset 18, 51
+}
+Sprite PLA8I0, 35, 43
+{
+	Patch "sprites/8 - Chainsaw/PLA8I0.png", 0, 0
+	offset 11, 39
+}
+Sprite PL8CK0, 41, 19
+{
+	Patch "sprites/8 - Chainsaw/PL8CK0.png", 0, 0
+	offset 20, 16
+}
+Sprite PLA8B6, 37, 54
+{
+	Patch "sprites/8 - Chainsaw/PLA8B6.png", 0, 0
+	offset 16, 52
+}
+Sprite PLA8J0, 36, 46
+{
+	Patch "sprites/8 - Chainsaw/PLA8J0.png", 0, 0
+	offset 12, 43
+}
+Sprite PLA8C2, 29, 55
+{
+	Patch "sprites/8 - Chainsaw/PLA8C2.png", 0, 0
+	offset 7, 51
+}
+Sprite PLA8D2, 29, 55
+{
+	Patch "sprites/8 - Chainsaw/PLA8D2.png", 0, 0
+	offset 10, 52
+}
+Sprite PLA8A1, 41, 56
+{
+	Patch "sprites/8 - Chainsaw/PLA8A1.png", 0, 0
+	offset 18, 51
+}
+Sprite PL8CB1, 29, 31
+{
+	Patch "sprites/8 - Chainsaw/PL8CB1.png", 0, 0
+	offset 14, 27
+}
+Sprite PL8CI0, 34, 31
+{
+	Patch "sprites/8 - Chainsaw/PL8CI0.png", 0, 0
+	offset 18, 27
+}
+Sprite PL8CB4B6, 45, 31
+{
+	Patch "sprites/8 - Chainsaw/PL8CB4B6.png", 0, 0
+	offset 23, 27
+}
+Sprite PL8CO0, 38, 36
+{
+	Patch "sprites/8 - Chainsaw/PL8CO0.png", 0, 0
+	offset 19, 32
+}
+Sprite PL8CD5, 25, 32
+{
+	Patch "sprites/8 - Chainsaw/PL8CD5.png", 0, 0
+	offset 11, 28
+}
+Sprite PLA8G5, 31, 54
+{
+	Patch "sprites/8 - Chainsaw/PLA8G5.png", 0, 0
+	offset 17, 50
+}
+Sprite PLA8F4F6, 38, 52
+{
+	Patch "sprites/8 - Chainsaw/PLA8F4F6.png", 0, 0
+	offset 18, 48
+}
+Sprite PL8CF5, 25, 32
+{
+	Patch "sprites/8 - Chainsaw/PL8CF5.png", 0, 0
+	offset 11, 28
+}
+Sprite PL8CU0, 57, 30
+{
+	Patch "sprites/8 - Chainsaw/PL8CU0.png", 0, 0
+	offset 30, 26
+}
+Sprite PLA8Q0, 48, 57
+{
+	Patch "sprites/8 - Chainsaw/PLA8Q0.png", 0, 0
+	offset 21, 54
+}
+Sprite PLA8L0, 51, 14
+{
+	Patch "sprites/8 - Chainsaw/PLA8L0.png", 0, 0
+	offset 27, 9
+}
+Sprite PLA8C7, 42, 53
+{
+	Patch "sprites/8 - Chainsaw/PLA8C7.png", 0, 0
+	offset 20, 50
+}
+Sprite PL8CR0, 52, 40
+{
+	Patch "sprites/8 - Chainsaw/PL8CR0.png", 0, 0
+	offset 28, 36
+}
+Sprite PLA8D5, 36, 54
+{
+	Patch "sprites/8 - Chainsaw/PLA8D5.png", 0, 0
+	offset 19, 51
+}
+Sprite PL8CF3F7, 65, 31
+{
+	Patch "sprites/8 - Chainsaw/PL8CF3F7.png", 0, 0
+	offset 35, 27
+}
+Sprite PLA8F5, 26, 51
+{
+	Patch "sprites/8 - Chainsaw/PLA8F5.png", 0, 0
+	offset 12, 46
+}
+Sprite PL8CE4E6, 40, 31
+{
+	Patch "sprites/8 - Chainsaw/PL8CE4E6.png", 0, 0
+	offset 21, 27
+}
+Sprite PLA8V0, 57, 23
+{
+	Patch "sprites/8 - Chainsaw/PLA8V0.png", 0, 0
+	offset 24, 19
+}
+Sprite PL8CM0, 47, 16
+{
+	Patch "sprites/8 - Chainsaw/PL8CM0.png", 0, 0
+	offset 23, 12
+}
+Sprite PLA8A2, 30, 54
+{
+	Patch "sprites/8 - Chainsaw/PLA8A2.png", 0, 0
+	offset 10, 50
+}
+Sprite PLA8E1, 26, 56
+{
+	Patch "sprites/8 - Chainsaw/PLA8E1.png", 0, 0
+	offset 12, 51
+}
+Sprite PL8CH0, 36, 39
+{
+	Patch "sprites/8 - Chainsaw/PL8CH0.png", 0, 0
+	offset 18, 35
+}
+Sprite PL8CC1, 29, 31
+{
+	Patch "sprites/8 - Chainsaw/PL8CC1.png", 0, 0
+	offset 14, 27
+}
+Sprite PLA9C4C6, 41, 55
+{
+	Patch "sprites/9 - Super Shotgun/PLA9C4C6.png", 0, 0
+	offset 20, 51
+}
+Sprite PL9CE5, 25, 32
+{
+	Patch "sprites/9 - Super Shotgun/PL9CE5.png", 0, 0
+	offset 11, 28
+}
+Sprite PL9CF3F7, 65, 31
+{
+	Patch "sprites/9 - Super Shotgun/PL9CF3F7.png", 0, 0
+	offset 36, 27
+}
+Sprite PL9CA3A7, 59, 31
+{
+	Patch "sprites/9 - Super Shotgun/PL9CA3A7.png", 0, 0
+	offset 28, 27
+}
+Sprite PLA9C2C8, 37, 55
+{
+	Patch "sprites/9 - Super Shotgun/PLA9C2C8.png", 0, 0
+	offset 15, 51
+}
+Sprite PL9CC1, 29, 31
+{
+	Patch "sprites/9 - Super Shotgun/PL9CC1.png", 0, 0
+	offset 14, 27
+}
+Sprite PLA9M0, 51, 14
+{
+	Patch "sprites/9 - Super Shotgun/PLA9M0.png", 0, 0
+	offset 27, 9
+}
+Sprite PL9CP0, 42, 40
+{
+	Patch "sprites/9 - Super Shotgun/PL9CP0.png", 0, 0
+	offset 22, 34
+}
+Sprite PLA9E3E7, 51, 53
+{
+	Patch "sprites/9 - Super Shotgun/PLA9E3E7.png", 0, 0
+	offset 26, 50
+}
+Sprite PL9CA4A6, 41, 31
+{
+	Patch "sprites/9 - Super Shotgun/PL9CA4A6.png", 0, 0
+	offset 20, 27
+}
+Sprite PL9CH0, 36, 39
+{
+	Patch "sprites/9 - Super Shotgun/PL9CH0.png", 0, 0
+	offset 18, 35
+}
+Sprite PLA9E1, 26, 56
+{
+	Patch "sprites/9 - Super Shotgun/PLA9E1.png", 0, 0
+	offset 12, 51
+}
+Sprite PL9CK0, 41, 19
+{
+	Patch "sprites/9 - Super Shotgun/PL9CK0.png", 0, 0
+	offset 20, 16
+}
+Sprite PL9CG2G8, 46, 32
+{
+	Patch "sprites/9 - Super Shotgun/PL9CG2G8.png", 0, 0
+	offset 23, 28
+}
+Sprite PLA9A4A6, 45, 51
+{
+	Patch "sprites/9 - Super Shotgun/PLA9A4A6.png", 0, 0
+	offset 18, 49
+}
+Sprite PLA9G3G7, 43, 55
+{
+	Patch "sprites/9 - Super Shotgun/PLA9G3G7.png", 0, 0
+	offset 18, 52
+}
+Sprite PL9CC3C7, 59, 31
+{
+	Patch "sprites/9 - Super Shotgun/PL9CC3C7.png", 0, 0
+	offset 28, 27
+}
+Sprite PLA9A5, 39, 54
+{
+	Patch "sprites/9 - Super Shotgun/PLA9A5.png", 0, 0
+	offset 20, 51
+}
+Sprite PLA9F5, 24, 51
+{
+	Patch "sprites/9 - Super Shotgun/PLA9F5.png", 0, 0
 	offset 11, 46
 }
-Sprite PLA1E5, 26, 51
+Sprite PL9CE2E8, 47, 32
 {
-	Patch "sprites/PLA1E5.png", 0, 0
-	offset 14, 46
+	Patch "sprites/9 - Super Shotgun/PL9CE2E8.png", 0, 0
+	offset 24, 28
 }
-Sprite PLA0V0, 57, 23
+Sprite PL9CI0, 34, 31
 {
-	Patch "sprites/PLA0V0.png", 0, 0
+	Patch "sprites/9 - Super Shotgun/PL9CI0.png", 0, 0
+	offset 17, 27
+}
+Sprite PLA9P0, 44, 59
+{
+	Patch "sprites/9 - Super Shotgun/PLA9P0.png", 0, 0
+	offset 18, 56
+}
+Sprite PL9CB5, 25, 32
+{
+	Patch "sprites/9 - Super Shotgun/PL9CB5.png", 0, 0
+	offset 11, 28
+}
+Sprite PLA9F1, 26, 56
+{
+	Patch "sprites/9 - Super Shotgun/PLA9F1.png", 0, 0
+	offset 12, 51
+}
+Sprite PLA9B5, 39, 54
+{
+	Patch "sprites/9 - Super Shotgun/PLA9B5.png", 0, 0
+	offset 17, 51
+}
+Sprite PL9CF4F6, 44, 31
+{
+	Patch "sprites/9 - Super Shotgun/PL9CF4F6.png", 0, 0
+	offset 25, 27
+}
+Sprite PLA9F4F6, 41, 52
+{
+	Patch "sprites/9 - Super Shotgun/PLA9F4F6.png", 0, 0
+	offset 20, 48
+}
+Sprite PL9CF5, 25, 32
+{
+	Patch "sprites/9 - Super Shotgun/PL9CF5.png", 0, 0
+	offset 11, 28
+}
+Sprite PL9CJ0, 33, 25
+{
+	Patch "sprites/9 - Super Shotgun/PL9CJ0.png", 0, 0
+	offset 16, 21
+}
+Sprite PL9CG5, 24, 31
+{
+	Patch "sprites/9 - Super Shotgun/PL9CG5.png", 0, 0
+	offset 11, 27
+}
+Sprite PL9CD2D8, 50, 32
+{
+	Patch "sprites/9 - Super Shotgun/PL9CD2D8.png", 0, 0
+	offset 26, 28
+}
+Sprite PL9CE4E6, 38, 31
+{
+	Patch "sprites/9 - Super Shotgun/PL9CE4E6.png", 0, 0
+	offset 19, 27
+}
+Sprite PLA9B3B7, 36, 55
+{
+	Patch "sprites/9 - Super Shotgun/PLA9B3B7.png", 0, 0
+	offset 18, 52
+}
+Sprite PL9CN0, 47, 16
+{
+	Patch "sprites/9 - Super Shotgun/PL9CN0.png", 0, 0
+	offset 23, 12
+}
+Sprite PL9CS0, 55, 39
+{
+	Patch "sprites/9 - Super Shotgun/PL9CS0.png", 0, 0
+	offset 29, 35
+}
+Sprite PL9CE3E7, 57, 31
+{
+	Patch "sprites/9 - Super Shotgun/PL9CE3E7.png", 0, 0
+	offset 27, 27
+}
+Sprite PLA9K0, 41, 38
+{
+	Patch "sprites/9 - Super Shotgun/PLA9K0.png", 0, 0
+	offset 17, 34
+}
+Sprite PL9CD4D6, 43, 31
+{
+	Patch "sprites/9 - Super Shotgun/PL9CD4D6.png", 0, 0
+	offset 21, 27
+}
+Sprite PL9CD5, 25, 32
+{
+	Patch "sprites/9 - Super Shotgun/PL9CD5.png", 0, 0
+	offset 11, 28
+}
+Sprite PLA9I0, 38, 43
+{
+	Patch "sprites/9 - Super Shotgun/PLA9I0.png", 0, 0
+	offset 11, 39
+}
+Sprite PL9CE1, 29, 31
+{
+	Patch "sprites/9 - Super Shotgun/PL9CE1.png", 0, 0
+	offset 14, 27
+}
+Sprite PL9CD1, 29, 31
+{
+	Patch "sprites/9 - Super Shotgun/PL9CD1.png", 0, 0
+	offset 14, 27
+}
+Sprite PL9CF2F8, 56, 32
+{
+	Patch "sprites/9 - Super Shotgun/PL9CF2F8.png", 0, 0
+	offset 32, 28
+}
+Sprite PLA9O0, 39, 56
+{
+	Patch "sprites/9 - Super Shotgun/PLA9O0.png", 0, 0
+	offset 19, 52
+}
+Sprite PLA9F2F8, 51, 55
+{
+	Patch "sprites/9 - Super Shotgun/PLA9F2F8.png", 0, 0
+	offset 30, 51
+}
+Sprite PLA9D4D6, 40, 54
+{
+	Patch "sprites/9 - Super Shotgun/PLA9D4D6.png", 0, 0
+	offset 22, 52
+}
+Sprite PL9CB1, 29, 31
+{
+	Patch "sprites/9 - Super Shotgun/PL9CB1.png", 0, 0
+	offset 14, 27
+}
+Sprite PLA9G2G8, 36, 56
+{
+	Patch "sprites/9 - Super Shotgun/PLA9G2G8.png", 0, 0
+	offset 16, 52
+}
+Sprite PLA9C1, 43, 56
+{
+	Patch "sprites/9 - Super Shotgun/PLA9C1.png", 0, 0
+	offset 22, 51
+}
+Sprite PL9CB3B7, 59, 31
+{
+	Patch "sprites/9 - Super Shotgun/PL9CB3B7.png", 0, 0
+	offset 28, 27
+}
+Sprite PLA9U0, 57, 33
+{
+	Patch "sprites/9 - Super Shotgun/PLA9U0.png", 0, 0
+	offset 24, 29
+}
+Sprite PL9CF1, 29, 31
+{
+	Patch "sprites/9 - Super Shotgun/PL9CF1.png", 0, 0
+	offset 14, 27
+}
+Sprite PLA9R0, 53, 52
+{
+	Patch "sprites/9 - Super Shotgun/PLA9R0.png", 0, 0
+	offset 24, 49
+}
+Sprite PLA9S0, 55, 47
+{
+	Patch "sprites/9 - Super Shotgun/PLA9S0.png", 0, 0
+	offset 23, 43
+}
+Sprite PL9CA5, 25, 32
+{
+	Patch "sprites/9 - Super Shotgun/PL9CA5.png", 0, 0
+	offset 11, 28
+}
+Sprite PLA9V0, 57, 23
+{
+	Patch "sprites/9 - Super Shotgun/PLA9V0.png", 0, 0
 	offset 24, 19
+}
+Sprite PLA9B1, 43, 56
+{
+	Patch "sprites/9 - Super Shotgun/PLA9B1.png", 0, 0
+	offset 24, 53
+}
+Sprite PLA9L0, 51, 14
+{
+	Patch "sprites/9 - Super Shotgun/PLA9L0.png", 0, 0
+	offset 27, 9
+}
+Sprite PL9CA1, 29, 31
+{
+	Patch "sprites/9 - Super Shotgun/PL9CA1.png", 0, 0
+	offset 14, 27
+}
+Sprite PLA9A1, 43, 56
+{
+	Patch "sprites/9 - Super Shotgun/PLA9A1.png", 0, 0
+	offset 23, 51
+}
+Sprite PLA9G5, 34, 54
+{
+	Patch "sprites/9 - Super Shotgun/PLA9G5.png", 0, 0
+	offset 17, 50
+}
+Sprite PL9CG3G7, 55, 31
+{
+	Patch "sprites/9 - Super Shotgun/PL9CG3G7.png", 0, 0
+	offset 27, 27
+}
+Sprite PLA9E5, 26, 51
+{
+	Patch "sprites/9 - Super Shotgun/PLA9E5.png", 0, 0
+	offset 12, 46
+}
+Sprite PL9CV0, 57, 23
+{
+	Patch "sprites/9 - Super Shotgun/PL9CV0.png", 0, 0
+	offset 30, 19
+}
+Sprite PLA9D1, 43, 55
+{
+	Patch "sprites/9 - Super Shotgun/PLA9D1.png", 0, 0
+	offset 23, 52
+}
+Sprite PLA9T0, 57, 40
+{
+	Patch "sprites/9 - Super Shotgun/PLA9T0.png", 0, 0
+	offset 24, 36
+}
+Sprite PL9CL0, 47, 16
+{
+	Patch "sprites/9 - Super Shotgun/PL9CL0.png", 0, 0
+	offset 23, 12
+}
+Sprite PLA9H0, 44, 50
+{
+	Patch "sprites/9 - Super Shotgun/PLA9H0.png", 0, 0
+	offset 16, 47
+}
+Sprite PL9CT0, 57, 33
+{
+	Patch "sprites/9 - Super Shotgun/PL9CT0.png", 0, 0
+	offset 30, 29
+}
+Sprite PLA9C5, 39, 54
+{
+	Patch "sprites/9 - Super Shotgun/PLA9C5.png", 0, 0
+	offset 15, 50
+}
+Sprite PL9CQ0, 46, 43
+{
+	Patch "sprites/9 - Super Shotgun/PL9CQ0.png", 0, 0
+	offset 25, 39
+}
+Sprite PLA9A2A8, 34, 54
+{
+	Patch "sprites/9 - Super Shotgun/PLA9A2A8.png", 0, 0
+	offset 14, 50
+}
+Sprite PL9CC2C8, 50, 32
+{
+	Patch "sprites/9 - Super Shotgun/PL9CC2C8.png", 0, 0
+	offset 26, 28
+}
+Sprite PL9CB4B6, 43, 31
+{
+	Patch "sprites/9 - Super Shotgun/PL9CB4B6.png", 0, 0
+	offset 21, 27
+}
+Sprite PLA9E2E8, 43, 55
+{
+	Patch "sprites/9 - Super Shotgun/PLA9E2E8.png", 0, 0
+	offset 21, 51
+}
+Sprite PLA9Q0, 48, 57
+{
+	Patch "sprites/9 - Super Shotgun/PLA9Q0.png", 0, 0
+	offset 21, 54
+}
+Sprite PLA9D3D7, 34, 54
+{
+	Patch "sprites/9 - Super Shotgun/PLA9D3D7.png", 0, 0
+	offset 21, 52
+}
+Sprite PL9CU0, 57, 30
+{
+	Patch "sprites/9 - Super Shotgun/PL9CU0.png", 0, 0
+	offset 30, 26
+}
+Sprite PLA9C3C7, 38, 54
+{
+	Patch "sprites/9 - Super Shotgun/PLA9C3C7.png", 0, 0
+	offset 18, 51
+}
+Sprite PL9CG1, 29, 31
+{
+	Patch "sprites/9 - Super Shotgun/PL9CG1.png", 0, 0
+	offset 14, 27
+}
+Sprite PLA9E4E6, 38, 52
+{
+	Patch "sprites/9 - Super Shotgun/PLA9E4E6.png", 0, 0
+	offset 18, 48
+}
+Sprite PLA9A3A7, 42, 53
+{
+	Patch "sprites/9 - Super Shotgun/PLA9A3A7.png", 0, 0
+	offset 21, 50
+}
+Sprite PL9CA2A8, 49, 32
+{
+	Patch "sprites/9 - Super Shotgun/PL9CA2A8.png", 0, 0
+	offset 25, 28
+}
+Sprite PLA9G4G6, 43, 52
+{
+	Patch "sprites/9 - Super Shotgun/PLA9G4G6.png", 0, 0
+	offset 19, 50
+}
+Sprite PL9CR0, 52, 40
+{
+	Patch "sprites/9 - Super Shotgun/PL9CR0.png", 0, 0
+	offset 28, 36
+}
+Sprite PLA9D5, 39, 54
+{
+	Patch "sprites/9 - Super Shotgun/PLA9D5.png", 0, 0
+	offset 19, 51
+}
+Sprite PL9CW0, 57, 22
+{
+	Patch "sprites/9 - Super Shotgun/PL9CW0.png", 0, 0
+	offset 30, 18
+}
+Sprite PLA9J0, 36, 46
+{
+	Patch "sprites/9 - Super Shotgun/PLA9J0.png", 0, 0
+	offset 12, 43
+}
+Sprite PLA9W0, 57, 22
+{
+	Patch "sprites/9 - Super Shotgun/PLA9W0.png", 0, 0
+	offset 24, 18
+}
+Sprite PL9CC4C6, 42, 31
+{
+	Patch "sprites/9 - Super Shotgun/PL9CC4C6.png", 0, 0
+	offset 21, 27
+}
+Sprite PL9CB2B8, 50, 32
+{
+	Patch "sprites/9 - Super Shotgun/PL9CB2B8.png", 0, 0
+	offset 26, 28
+}
+Sprite PLA9B2B8, 32, 55
+{
+	Patch "sprites/9 - Super Shotgun/PLA9B2B8.png", 0, 0
+	offset 15, 52
+}
+Sprite PLA9B4B6, 41, 54
+{
+	Patch "sprites/9 - Super Shotgun/PLA9B4B6.png", 0, 0
+	offset 18, 52
+}
+Sprite PL9CG4G6, 38, 31
+{
+	Patch "sprites/9 - Super Shotgun/PL9CG4G6.png", 0, 0
+	offset 19, 27
+}
+Sprite PL9CC5, 25, 31
+{
+	Patch "sprites/9 - Super Shotgun/PL9CC5.png", 0, 0
+	offset 11, 27
+}
+Sprite PLA9N0, 51, 14
+{
+	Patch "sprites/9 - Super Shotgun/PLA9N0.png", 0, 0
+	offset 27, 9
+}
+Sprite PL9CD3D7, 59, 31
+{
+	Patch "sprites/9 - Super Shotgun/PL9CD3D7.png", 0, 0
+	offset 28, 27
+}
+Sprite PLA9F3F7, 55, 53
+{
+	Patch "sprites/9 - Super Shotgun/PLA9F3F7.png", 0, 0
+	offset 30, 50
+}
+Sprite PLA9D2D8, 35, 55
+{
+	Patch "sprites/9 - Super Shotgun/PLA9D2D8.png", 0, 0
+	offset 15, 52
+}
+Sprite PLA9G1, 46, 55
+{
+	Patch "sprites/9 - Super Shotgun/PLA9G1.png", 0, 0
+	offset 20, 52
+}
+Sprite PL9CM0, 47, 16
+{
+	Patch "sprites/9 - Super Shotgun/PL9CM0.png", 0, 0
+	offset 23, 12
+}
+Sprite PL9CO0, 38, 36
+{
+	Patch "sprites/9 - Super Shotgun/PL9CO0.png", 0, 0
+	offset 19, 32
 }
