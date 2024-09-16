@@ -1,7 +1,7 @@
 ** DRSGME
 
 And isometric camera mode with orthographic projection for the gzdoom engine.
-Made for the fork: https://github.com/dileepvr/gzdoom_isometric/tree/isocam_merge_test_Jun24
+Made for versions 4.13 onward (or vkdoom 1.0).
 Should work with just about any iwad.
 
 Consider playing with a sprites pack with all weapons and directions rendered for the player.
@@ -35,7 +35,7 @@ faces relative to the camera.
 A lot of mods, forum posts, and wikis were consulted to prepare this. Special thanks to:
 - Rachel Alexanderson
 - Nash Muhandes
-- Ricardo Luís Vaz Silva
+- Jay Luís Vaz Silva
 - m8f (Author of [[https://github.com/mmaulwurff/target-spy][Target-Spy]])
 - Major Cooke
 - Whoever made the damage direction indicators for [[https://github.com/MajorCooke/Doom4Doom][D4D]] (probably Major Cooke again)
@@ -50,7 +50,7 @@ Fist Marine - Sprite by: Mark Quinn
 Chainsaw Marine - Sprite by: Mark Quinn and Xenaero
 Pistol Marine - Sprite by: Mark Quinn and Grimm
 Shotgun Marine - Sprite by: Mark Quinn
-Super Shotgun Marine - Sprite by: Xim, Xenaero and The Skulltag Team 
+Super Shotgun Marine - Sprite by: Xim, Xenaero and The Skulltag Team
 Chaingun Marine - Sprite by: Anthony Cole
 Rocket Marine - Sprite by: Xim
 Plasma Marine - Sprite by: CaptainToenail

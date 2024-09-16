@@ -3,6 +3,8 @@ class DoomPlayer2 : DoomPlayer
   Default
     {
       Player.DisplayName "Doomguy2";
+	  Player.ViewBob 0;
+	  Player.FlyBob 0;
       +NOSKIN
     }
 	

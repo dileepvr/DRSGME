@@ -1,4 +1,4 @@
-class CameraChangeHandler : CustomFloatCVar
+Class CameraChangeHandler : CustomFloatCVar
 {
   override double ModifyValue(Name CVarName, double val)
   {
@@ -245,7 +245,7 @@ class MKeyEvents : EventHandler
 		[key1, key2] = Bindings.GetKeysForCommand("cycle_select");
 		if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
 		{
-			viewh = players[e.Player].mo.height*0.5; // viewheight*players[e.Player].crouchfactor;
+			viewh = players[e.Player].mo.viewheight*players[e.Player].crouchfactor; // players[e.Player].mo.height*0.5;
 			if (isosel[e.Player].GetBool())
 			{
 				// Handle next selection change, if possible
@@ -626,29 +626,31 @@ class CameraSpawnHandler : EventHandler // Can't be static because camera actor 
 
   override void WorldTick()
   {
-    for (int i = 0; i < MAXPLAYERS; i++)
-    {
-		if (PlayerInGame[i] && players[i].mo)
-		{
-			if ((!players[i].camera || (players[i].camera == players[i].mo)) && players[i].mo.tracer && players[i].mo.tracer.tracer)
-			{
-				// player.camera was reset for some reason
-				// Retreive from storage
-				players[i].camera = players[i].mo.tracer.tracer;
-			}
-			if (players[i].camera)
-			{
-				if (rotatelefts[i].GetBool() || rotaterights[i].GetBool())
-				{
-					isoyaws[i].SetFloat(isoyaws[i].GetFloat() + (rotaterights[i].GetBool() ? 1 : -1) * isospeeds[i].GetFloat());
-					int camflags = VPSF_ABSOLUTEOFFSET | VPSF_ALLOWOUTOFBOUNDS | VPSF_ORTHOGRAPHIC;
-					SpectatorCamera(players[i].camera).Init(isodists[i].GetFloat(),
-															isoyaws[i].GetFloat(),
-															isopitches[i].GetFloat(), camflags);
-				}
-			}
-		}
-	}
+	  if (gamestate != GS_LEVEL) return;
+
+	  for (int i = 0; i < MAXPLAYERS; i++)
+	  {
+		  if (PlayerInGame[i] && players[i].mo)
+		  {
+			  if ((!players[i].camera || (players[i].camera == players[i].mo)) && players[i].mo.tracer && players[i].mo.tracer.tracer)
+			  {
+				  // player.camera was reset for some reason
+				  // Retreive from storage
+				  players[i].camera = players[i].mo.tracer.tracer;
+			  }
+			  if (players[i].camera)
+			  {
+				  if (rotatelefts[i].GetBool() || rotaterights[i].GetBool())
+				  {
+					  isoyaws[i].SetFloat(isoyaws[i].GetFloat() + (rotaterights[i].GetBool() ? 1 : -1) * isospeeds[i].GetFloat());
+					  int camflags = VPSF_ABSOLUTEOFFSET | VPSF_ALLOWOUTOFBOUNDS | VPSF_ORTHOGRAPHIC;
+					  SpectatorCamera(players[i].camera).Init(isodists[i].GetFloat(),
+															  isoyaws[i].GetFloat(),
+															  isopitches[i].GetFloat(), camflags);
+				  }
+			  }
+		  }
+	  }
   }
 }
 

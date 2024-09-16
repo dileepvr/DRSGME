@@ -17,5 +17,5 @@ debug:
 $(BUILDDIR):
 	mkdir $(BUILDDIR)
 
-$(ZIPTARGET) : *.* */*.png *.zc */*.zc | $(BUILDDIR)
+$(ZIPTARGET) : *.* */*.png */*.wav *.zc */*.zc | $(BUILDDIR)
 	$(ZIP) $(ZIPFLAGS) $(ZIPTARGET) * $(ZIPEXCLUDES)

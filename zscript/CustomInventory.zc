@@ -20,6 +20,7 @@ class Z_NashMove : CustomInventory
 		Inventory.MaxAmount 1;
 		+INVENTORY.UNDROPPABLE
 		+INVENTORY.UNTOSSABLE
+		+INVENTORY.UNCLEARABLE
 		+INVENTORY.AUTOACTIVATE
 	}
 
@@ -143,6 +144,7 @@ class IsometricMovement : CustomInventory
 		Inventory.MaxAmount 1;
 		+INVENTORY.UNDROPPABLE
 		+INVENTORY.UNTOSSABLE
+		+INVENTORY.UNCLEARABLE
 		+INVENTORY.AUTOACTIVATE
 	}
 
@@ -302,12 +304,12 @@ class MoveTorch : Inventory
 			light = DynamicLight(Actor.Spawn("DynamicLight"));
 			light.battenuate = true;
 			light.bnoshadowmap = true;
-			light.args[0] = 144;
-			light.args[1] = 144;
-			light.args[2] = 144;
+			light.args[0] = 132;
+			light.args[1] = 132;
+			light.args[2] = 132;
 			light.args[3] = 124;
 			light.args[4] = 124;
-		        offs = (0, 0, owner.height / 2);
+			offs = (owner.radius*Cos(owner.angle), owner.radius*Sin(owner.angle), owner.player.viewheight);
 		}
 		if (light)
 		{
