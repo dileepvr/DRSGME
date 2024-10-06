@@ -569,6 +569,8 @@ class CameraSpawnHandler : EventHandler // Can't be static because camera actor 
     players[e.PlayerNumber].mo.tracer = Actor.Spawn("ScopeCamera", players[e.PlayerNumber].mo.pos, ALLOW_REPLACE);
     players[e.PlayerNumber].mo.tracer.target = players[e.PlayerNumber].mo;
     // When the player spawns, spawn an isometric spectator camera:
+	players[e.PlayerNumber].mo.ViewBob = 0;
+	players[e.PlayerNumber].mo.FlyBob = 0;
     players[e.PlayerNumber].camera = SpectatorCamera(Actor.Spawn("SpectatorCamera", players[e.PlayerNumber].mo.pos));
     players[e.PlayerNumber].camera.tracer = players[e.PlayerNumber].mo; // This makes camera follow the player
 	players[e.PlayerNumber].camera.player = players[e.PlayerNumber]; // Necessary for pain and pickup screen flashes. Adds viewbob too.
@@ -605,6 +607,8 @@ class CameraSpawnHandler : EventHandler // Can't be static because camera actor 
 			  players[i].mo.tracer = Actor.Spawn("ScopeCamera", players[i].mo.pos, ALLOW_REPLACE);
 			  players[i].mo.tracer.target = players[i].mo;
 			  // When World loads, spawn an isometric spectator camera:
+			  players[i].mo.ViewBob = 0;
+			  players[i].mo.FlyBob = 0;
 			  players[i].camera = SpectatorCamera(Actor.Spawn("SpectatorCamera", players[i].mo.pos));
 			  players[i].camera.tracer = players[i].mo; // This makes camera follow the player
 			  players[i].camera.player = players[i]; // Necessary for pain and pickup screen flashes. Adds viewbob too.

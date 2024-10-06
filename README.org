@@ -46,15 +46,15 @@ direction indicator sprite' are licensed under CC-0 (see
 in [[https://github.com/mmaulwurff/target-spy][Target-Spy]] and are licensed under GPLv3 (see [[./GPLv3.txt]]).
 
 *** Sprites credits:
-Fist Marine - Sprite by: Mark Quinn
-Chainsaw Marine - Sprite by: Mark Quinn and Xenaero
-Pistol Marine - Sprite by: Mark Quinn and Grimm
-Shotgun Marine - Sprite by: Mark Quinn
-Super Shotgun Marine - Sprite by: Xim, Xenaero and The Skulltag Team
-Chaingun Marine - Sprite by: Anthony Cole
-Rocket Marine - Sprite by: Xim
-Plasma Marine - Sprite by: CaptainToenail
-BFG9000 Marine - Sprite by: Toke
+- Fist Marine - Sprite by: Mark Quinn
+- Chainsaw Marine - Sprite by: Mark Quinn and Xenaero
+- Pistol Marine - Sprite by: Mark Quinn and Grimm
+- Shotgun Marine - Sprite by: Mark Quinn
+- Super Shotgun Marine - Sprite by: Xim, Xenaero and The Skulltag Team
+- Chaingun Marine - Sprite by: Anthony Cole
+- Rocket Marine - Sprite by: Xim
+- Plasma Marine - Sprite by: CaptainToenail
+- BFG9000 Marine - Sprite by: Toke
 
 Sprites originally gathered in one place by Ivory Duke for WeaponMatchingPlayerSkin mod: https://forum.zdoom.org/viewtopic.php?t=67834
 
