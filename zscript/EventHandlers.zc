@@ -20,7 +20,7 @@ class MKeyEvents : EventHandler
   cvar isodists[MAXPLAYERS], isopitches[MAXPLAYERS], isoyaws[MAXPLAYERS];
   cvar isoaims[MAXPLAYERS], rotlefts[MAXPLAYERS], rotrights[MAXPLAYERS], isosel[MAXPLAYERS];
   cvar selx[MAXPLAYERS], sely[MAXPLAYERS], selz[MAXPLAYERS];
-  cvar lookingdown[MAXPLAYERS];
+  cvar lookingup[MAXPLAYERS], lookingdown[MAXPLAYERS];
   array <Actor> selectables;
   array <Line> switches;
   int selnum, selobjsize, selswsize;
@@ -50,6 +50,7 @@ class MKeyEvents : EventHandler
 		  selx[i] = CVar.GetCVar("SelXPos", players[i]);
 		  sely[i] = CVar.GetCVar("SelYPos", players[i]);
 		  selz[i] = CVar.GetCVar("SelZPos", players[i]);
+		  lookingup[i] = CVar.GetCVar("IsoLookingUp", players[i]);
 		  lookingdown[i] = CVar.GetCVar("IsoLookingDown", players[i]);
 	  }
   }
@@ -144,6 +145,12 @@ class MKeyEvents : EventHandler
 		if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
 		{
 			isosel[e.Player].SetBool(false);
+		}
+
+		[key1, key2] = Bindings.GetKeysForCommand("look_up");
+		if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
+		{
+			lookingup[e.Player].SetBool(true);
 		}
 
 		[key1, key2] = Bindings.GetKeysForCommand("look_down");
@@ -444,6 +451,12 @@ class MKeyEvents : EventHandler
 				rotrights[e.Player].SetBool(false);
 		}
 
+		[key1, key2] = Bindings.GetKeysForCommand("look_up");
+		if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
+		{
+			lookingup[e.Player].SetBool(false);
+		}
+
 		[key1, key2] = Bindings.GetKeysForCommand("look_down");
 		if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
 		{
@@ -563,6 +576,7 @@ class CameraSpawnHandler : EventHandler // Can't be static because camera actor 
 {
 	cvar isodists[MAXPLAYERS], isoyaws[MAXPLAYERS], isopitches[MAXPLAYERS];
 	cvar isospeeds[MAXPLAYERS], rotatelefts[MAXPLAYERS], rotaterights[MAXPLAYERS];
+
   override void PlayerSpawned(playerEvent e)
   {
     // Add a scope camera to each player, and store it in player.mo.tracer
@@ -588,7 +602,7 @@ class CameraSpawnHandler : EventHandler // Can't be static because camera actor 
   override void PlayerDisconnected (PlayerEvent e)
   {
     // This is needed if a player disconnects from a multiplayer session
-    if(players[e.PlayerNumber].camera) players[e.PlayerNumber].camera.destroy();
+    if(players[e.PlayerNumber].camera && players[e.PlayerNumber].camera.GetClassName() == 'SpectatorCamera') players[e.PlayerNumber].camera.Destroy();
   }
 
   override void WorldLoaded (WorldEvent e)
@@ -624,6 +638,28 @@ class CameraSpawnHandler : EventHandler // Can't be static because camera actor 
 			  // The following has to come after Init
 			  // SpectatorCamera(players[i].camera).lagdistance = 150.0; // Use for a lazy camera that only follows if you get away from center
 			  // SpectatorCamera(players[i].camera).chasemode = 2; // 0: chase until tracer centered, 1: same but only when tracer is moving, 2: stop chase if tracer within lagdistance
+		  }
+	  }
+  }
+
+  // destroy the camera when this level is unloaded
+  // in the case of hub levels, we don't want to spawn extra cameras
+  // when the player returns to this level
+  override void WorldUnloaded(WorldEvent e)
+  {
+	  for (int i = 0; i < MAXPLAYERS; i++)
+	  {
+		  if (PlayerInGame[i] && players[i].mo)
+		  {
+			  if (players[i].mo.tracer && players[i].mo.tracer.GetClassName() == 'ScopeCamera')
+			  {
+				  players[i].mo.tracer.Destroy();
+			  }
+			  if (players[i].camera && players[i].camera.GetClassName() == 'SpectatorCamera')
+			  {
+				  players[i].camera.Destroy();
+				  players[i].mo.A_SetBlend("00 00 00", 1.0, 35); // Blank screen so first-person view isn't momentarily seen
+			  }
 		  }
 	  }
   }
@@ -666,7 +702,7 @@ class RenderCursorsOverlay : EventHandler
 	cvar scopesize, scopexpos, scopeypos;
 	cvar aimbeam, scopetype, cursdist, cursoffy;
 	cvar isosel, selx, sely, selz;
-	cvar lookingdown;
+	cvar lookingup, lookingdown;
 	FLineTraceData t[MAXPLAYERS];
 	Vector3 hitloc;
 	Actor actorhit[MAXPLAYERS];
@@ -771,6 +807,7 @@ class RenderCursorsOverlay : EventHandler
 	  selx = CVar.GetCVar("SelXPos", players[consoleplayer]);
 	  sely = CVar.GetCVar("SelYPos", players[consoleplayer]);
 	  selz = CVar.GetCVar("SelZPos", players[consoleplayer]);
+	  lookingup = CVar.GetCVar("IsoLookingUp", players[consoleplayer]);
 	  lookingdown = CVar.GetCVar("IsoLookingDown", players[consoleplayer]);
 	  hitloc = (0, 0, 0);
 	  for (int i = 0; i < MAXPLAYERS; i++)
@@ -830,11 +867,14 @@ class RenderCursorsOverlay : EventHandler
 		  }
 	    }
 
+		bool lup = lookingup.GetBool();
 		bool ldown = lookingdown.GetBool();
-	    int cursordist = ldown ? players[consoleplayer].mo.viewheight*2.0 : cursdist.GetInt(); // 150;
+	    int cursordist = ldown || lup ? players[consoleplayer].mo.viewheight*2.0 : cursdist.GetInt(); // 150;
 		int cursoroffy = cursoffy.GetInt();
 	    float diffangle = pmo.deltaangle(pang, cyaw);
-	    int cosine = (int)(-0.5*cursordist*Cos(diffangle)) - cursoroffy;
+		float xscale = 0.375*( screenblocks >= 10 ? Screen.GetWidth() : 0.1*screenblocks*Screen.GetWidth() );
+		float yscale = 1.17;
+	    int cosine = (int)(-0.5*cursordist*Cos(diffangle)*yscale) - cursoroffy;
 	    int sine = (int)(cursordist*Sin(diffangle));
 		int selcos = 0;
 		int selsin = 0;
@@ -845,11 +885,14 @@ class RenderCursorsOverlay : EventHandler
 			  Vector3 playerdisp = players[consoleplayer].camera.tracer.pos - players[consoleplayer].camera.pos;
 			  diffangle = pmo.deltaangle(playerdisp.Angle(), cyaw);
 			  // Translate game/map (x, y, z) position into screen (x, y) location
-			  double xproj = 640/players[consoleplayer].camera.ViewPos.offset.length();
-			  double yproj = Sin(cpit)*xproj;
-			  double zproj = Cos(cpit)*xproj;
+			  // double xproj = 0.375*Screen.GetWidth()/players[consoleplayer].camera.ViewPos.offset.length();
+			  double xproj = 0.89*xscale/players[consoleplayer].camera.ViewPos.offset.length();
+			  double yproj = Sin(cpit)*xproj*yscale;
+			  double zproj = Cos(cpit)*xproj*yscale;
 			  cosine -= (int)(playerdisp.xy.length()*Cos(diffangle)*yproj); // + playerdisp.z*zproj); no need since Spectatorcamera tracks zpos
+			  cosine -= (screenblocks > 10 ? 0 : (int)(yscale*StatusBar.RelTop));
 			  if (!ldown) cosine -= (int)(players[consoleplayer].camera.tracer.height*0.5*zproj);
+			  if (lup) cosine -= (int)(players[consoleplayer].camera.tracer.height*0.5*zproj);
 			  sine += (int)(playerdisp.xy.length()*Sin(diffangle)*xproj);
 			  // else use libEye to locate camera.tracer's screen coordinates
 
@@ -861,7 +904,7 @@ class RenderCursorsOverlay : EventHandler
 	      }
 	    }
 
-	    if (isoaimassist.GetBool() && !ldown)
+	    if (isoaimassist.GetBool() && !(ldown || lup))
 	    {
 	      StatusBar.DrawImage("sprites/aim_hair.png", (sine/scaleFactor.x, cosine/scaleFactor.y),
 				  StatusBar.DI_SCREEN_CENTER | StatusBar.DI_ITEM_CENTER, scale: (2.4/scaleFactor.x, 2.4/scaleFactor.y));
@@ -882,21 +925,23 @@ class RenderCursorsOverlay : EventHandler
 	      int sine2 = 0;
 	      if(players[consoleplayer].camera && players[consoleplayer].camera.ViewPos && (players[consoleplayer].camera.ViewPos.Flags & VPSF_ORTHOGRAPHIC))
 	      { // If using orthographic projection
-			  Vector3 tardisp = actorhit[consoleplayer].pos + (0., 0., actorhit[consoleplayer].height/2)
-				  - players[consoleplayer].camera.pos;
+			  Vector3 tardisp = actorhit[consoleplayer].pos + (0., 0., 0.1*actorhit[consoleplayer].height)
+				  - (players[consoleplayer].camera.tracer ? players[consoleplayer].camera.tracer.pos : players[consoleplayer].mo.pos);
 			  diffangle = pmo.deltaangle(tardisp.Angle(), cyaw);
 			  // Translate game/map (x, y, z) position into screen (x, y) location
-			  double xprj = 720/players[consoleplayer].camera.ViewPos.offset.length();
-			  double yprj = Sin(cpit)*xprj;
-			  double zprj = Cos(cpit)*xprj;
+			  // double xprj = 0.375*Screen.GetWidth()/players[consoleplayer].camera.ViewPos.offset.length();
+			  double xprj = xscale/players[consoleplayer].camera.ViewPos.offset.length();
+			  double yprj = Sin(cpit)*xprj*yscale;
+			  double zprj = Cos(cpit)*xprj*yscale;
 			  cosine2 -= (int)(tardisp.xy.length()*Cos(diffangle)*yprj);
 			  cosine2 -= (int)(tardisp.z*zprj);
+			  cosine2 -= (screenblocks > 10 ? 0 : (int)(yscale*StatusBar.RelTop));
 			  sine2 += (int)(tardisp.xy.length()*Sin(diffangle)*xprj);
 	      } // else use libEye to locate camera.tracer's screen coordinates
-	      cosine -= (int)(-0.25*cursordist*Cos(diffangle));
+	      cosine -= (int)(-0.25*cursordist*Cos(diffangle)*yscale);
 	      sine -= (int)(0.5*cursordist*Sin(diffangle));	      
 	      int halfw = (int)(Screen.GetWidth()/2);
-	      int halfh = (int)(Screen.GetHeight()/2);
+	      int halfh = (int)(Screen.GetHeight()/2);// - (screenblocks > 10 ? 0 : StatusBar.RelTop);
 	      Screen.DrawLine(sine+halfw, cosine+halfh, sine2+halfw, cosine2+halfh, Color(aimbeam.GetString()));
 	      StatusBar.DrawImage("sprites/tar_hair.png", (sine2/scaleFactor.x, cosine2/scaleFactor.y),
 				  StatusBar.DI_SCREEN_CENTER | StatusBar.DI_ITEM_CENTER, scale: (1.5/scaleFactor.x, 1.5/scaleFactor.x));
@@ -918,7 +963,7 @@ class RenderCursorsOverlay : EventHandler
 		if (scopetype.GetInt() == 3) scopesprite = "sprites/scope_sight3.png";
 		StatusBar.DrawImage(scopesprite, (sxpos, sypos),
 				    StatusBar.DI_SCREEN_CENTER_BOTTOM | StatusBar.DI_ITEM_CENTER,
-				    scale: (0.8*ssize, 0.8*ssize));
+							scale: (0.8*ssize, (hud_aspectscale ? 0.8 : 0.67)*ssize));
 
 		if(showscopehealth.GetBool())
 		{
@@ -927,7 +972,7 @@ class RenderCursorsOverlay : EventHandler
 		  HUDFont monospaceSmallfont = HUDFont.Create(smallfont, smallfont.GetCharWidth("0"), true);
 		  StatusBar.DrawString(monospaceSmallfont, hpBar, (sxpos-(int)(30*ssize), sypos-(int)(40*ssize)),
 				       StatusBar.DI_SCREEN_CENTER_BOTTOM | StatusBar.DI_ITEM_CENTER,
-				       scale: (0.8*ssize, 0.8*ssize));
+				       scale: (0.8*ssize, (hud_aspectscale ? 0.8 : 0.67)*ssize));
 		}
 	      }
 	    }
@@ -942,6 +987,7 @@ class IsoAimAssistHandler : StaticEventHandler
 	FLineTraceData tarray[MAXPLAYERS];
 	cvar aimassists[MAXPLAYERS]; // They say that GetCVar() inside WorldTick() is slow?
 	cvar max_dists[MAXPLAYERS];
+	cvar lookingup[MAXPLAYERS];
 	cvar lookingdown[MAXPLAYERS];
 
 	override void WorldLoaded (WorldEvent e)
@@ -952,6 +998,7 @@ class IsoAimAssistHandler : StaticEventHandler
 			{
 				aimassists[i] = CVar.GetCVar("IsoAimAssist", players[i]);
 				max_dists[i] = CVar.GetCVar("IsoAimAssistMaxDist", players[i]);
+				lookingup[i] = CVar.GetCVar("IsoLookingUp", players[i]);
 				lookingdown[i] = CVar.GetCVar("IsoLookingDown", players[i]);
 				players[i].mo.bPickup = CVar.GetCVar("IsoAllowTouchPickup", players[i]).GetBool(); // Didn't want another staticeventhandler
 				CVar.GetCVar("IsoSelected", players[i]).SetBool(false); // Didn't want another staticeventhandler
@@ -1095,7 +1142,8 @@ class IsoAimAssistHandler : StaticEventHandler
 	  {
 	    if (PlayerInGame[i] && players[i].mo)
 	    {
-			if (lookingdown[i].GetBool()) players[i].mo.A_SetPitch(45);
+			if (lookingup[i].GetBool()) players[i].mo.A_SetPitch(-45);
+			else if (lookingdown[i].GetBool()) players[i].mo.A_SetPitch(45);
 			else if (!doAim(i)) players[i].mo.A_SetPitch(0);
 	    }
 	  }
