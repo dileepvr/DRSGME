@@ -26,6 +26,7 @@ User Float SelXPos = 0.0;
 User Float SelYPos = 0.0;
 User Float SelZPos = 0.0;
 User HandlerClass(PickupFlagHandler) Bool IsoAllowTouchPickup = true;
+User Bool IsoLookingUp = false;
 User Bool IsoLookingDown = false;
 
 user bool D4D_DamageIndicators = true;
