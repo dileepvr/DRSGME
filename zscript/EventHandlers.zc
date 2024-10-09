@@ -595,7 +595,7 @@ class CameraSpawnHandler : EventHandler // Can't be static because camera actor 
     CVar isopitch = CVar.GetCVar("IsometricPitch", players[e.PlayerNumber]);
     SpectatorCamera(players[e.PlayerNumber].camera).Init(isodist.GetFloat(), isoyaw.GetFloat(), isopitch.GetFloat(), camflags);
     // The following has to come after Init
-    // SpectatorCamera(players[e.PlayerNumber].camera).lagdistance = 150.0; // Use for a lazy camera that only follows if you get away from center
+    // SpectatorCamera(players[e.PlayerNumber].camera).lagdistance = 300.0; // Use for a lazy camera that only follows if you get away from center
     // SpectatorCamera(players[e.PlayerNumber].camera).chasemode = 2; // 0: chase until tracer centered, 1: same but only when tracer is moving, 2: stop chase if tracer within lagdistance
   }
 
@@ -636,7 +636,7 @@ class CameraSpawnHandler : EventHandler // Can't be static because camera actor 
 			  rotaterights[i] = CVar.GetCVar("RotatingRight", players[i]);
 			  SpectatorCamera(players[i].camera).Init(isodists[i].GetFloat(), isoyaws[i].GetFloat(), isopitches[i].GetFloat(), camflags);
 			  // The following has to come after Init
-			  // SpectatorCamera(players[i].camera).lagdistance = 150.0; // Use for a lazy camera that only follows if you get away from center
+			  // SpectatorCamera(players[i].camera).lagdistance = 300.0; // Use for a lazy camera that only follows if you get away from center
 			  // SpectatorCamera(players[i].camera).chasemode = 2; // 0: chase until tracer centered, 1: same but only when tracer is moving, 2: stop chase if tracer within lagdistance
 		  }
 	  }
@@ -842,6 +842,7 @@ class RenderCursorsOverlay : EventHandler
 	  if (!automapactive && (gamestate == GS_LEVEL) && (players[consoleplayer].camera.player == players[consoleplayer]))
 	  {
 	    PlayerPawn pmo = players[consoleplayer].mo;
+		PlayerInfo cplr = players[consoleplayer];
 	    float pang = pmo.angle;
 	    float cyaw = isoyaw.GetFloat();
 	    float cpit = isopitch.GetFloat();
@@ -852,12 +853,12 @@ class RenderCursorsOverlay : EventHandler
 
 	    if(showwep.GetBool())
 	    {
-		  int wsize = (int)(clamp(wepsize.GetInt(), 1, 100)*2/scaleFactor.x);
-	      int wxpos = (int)(200*clamp(wepxpos.GetFloat(), -1.0, 1.0)*scaleFactor.x);
-	      int wypos = (int)(-200*clamp(wepypos.GetFloat(), 0.0, 1.0)*scaleFactor.y);
-		  let curwep = players[consoleplayer].readyweapon;
-		  let curpsp = players[consoleplayer].FindPSprite(PSP_WEAPON);
-		  if (curwep && curpsp && players[consoleplayer].mo.health > 0) // necessary check to prevent crash
+		  int wsize = (int)(clamp(wepsize.GetInt(), 1, 100));//*2/scaleFactor.x);
+		  int wxpos = (int)(200*clamp(wepxpos.GetFloat(), -2.0, 2.0));//*scaleFactor.x);
+		  int wypos = (int)(-200*clamp(wepypos.GetFloat(), 0.0, 2.0));//*scaleFactor.y);
+		  let curwep = cplr.readyweapon;
+		  let curpsp = cplr.FindPSprite(PSP_WEAPON);
+		  if (curwep && curpsp && pmo.health > 0) // necessary check to prevent crash
 		  {
 			  StatusBar.DrawInventoryIcon(curwep, (wxpos, wypos),
 										  StatusBar.DI_SCREEN_CENTER_BOTTOM | StatusBar.DI_ITEM_CENTER,
@@ -869,37 +870,41 @@ class RenderCursorsOverlay : EventHandler
 
 		bool lup = lookingup.GetBool();
 		bool ldown = lookingdown.GetBool();
-	    int cursordist = ldown || lup ? players[consoleplayer].mo.viewheight*2.0 : cursdist.GetInt(); // 150;
+	    int cursordist = ldown || lup ? pmo.viewheight : cursdist.GetInt(); // 150;
 		int cursoroffy = cursoffy.GetInt();
 	    float diffangle = pmo.deltaangle(pang, cyaw);
 		float xscale = 0.375*( screenblocks >= 10 ? Screen.GetWidth() : 0.1*screenblocks*Screen.GetWidth() );
-		float yscale = 1.17;
+		float yscale = 1.253229 - 0.0616458*sin(cpit)*sin(cpit) - 0.191609*sin(cpit);
+		float aspratio = (1.0 * Screen.GetWidth()) / (1.0 * Screen.GetHeight());
+		if (aspratio > 1.0) xscale *= 1.777778/aspratio;
+		
 	    int cosine = (int)(-0.5*cursordist*Cos(diffangle)*yscale) - cursoroffy;
 	    int sine = (int)(cursordist*Sin(diffangle));
 		int selcos = 0;
 		int selsin = 0;
-	    if(players[consoleplayer].camera && players[consoleplayer].camera.tracer)
+	    if(cplr.camera && cplr.camera.tracer)
 	    {
-	      if(players[consoleplayer].camera.ViewPos && (players[consoleplayer].camera.ViewPos.Flags & VPSF_ORTHOGRAPHIC))
+	      if(cplr.camera.ViewPos && (cplr.camera.ViewPos.Flags & VPSF_ORTHOGRAPHIC))
 	      { // If using orthographic projection
-			  Vector3 playerdisp = players[consoleplayer].camera.tracer.pos - players[consoleplayer].camera.pos;
+			  Vector3 playerdisp = cplr.camera.tracer.pos - cplr.camera.pos;
 			  diffangle = pmo.deltaangle(playerdisp.Angle(), cyaw);
 			  // Translate game/map (x, y, z) position into screen (x, y) location
-			  // double xproj = 0.375*Screen.GetWidth()/players[consoleplayer].camera.ViewPos.offset.length();
-			  double xproj = 0.89*xscale/players[consoleplayer].camera.ViewPos.offset.length();
+			  double xproj = xscale/cplr.camera.ViewPos.offset.length();
 			  double yproj = Sin(cpit)*xproj*yscale;
 			  double zproj = Cos(cpit)*xproj*yscale;
 			  cosine -= (int)(playerdisp.xy.length()*Cos(diffangle)*yproj); // + playerdisp.z*zproj); no need since Spectatorcamera tracks zpos
-			  cosine -= (screenblocks > 10 ? 0 : (int)(yscale*StatusBar.RelTop));
-			  if (!ldown) cosine -= (int)(players[consoleplayer].camera.tracer.height*0.5*zproj);
-			  if (lup) cosine -= (int)(players[consoleplayer].camera.tracer.height*0.5*zproj);
+			  cosine -= (screenblocks <= 10 ? (int)(yscale*StatusBar.RelTop) : 0);
+			  if (ldown) cosine += (int)(cplr.camera.tracer.height*0.25*zproj);
+			  if (lup) cosine -= (int)(cplr.camera.tracer.height*0.25*zproj);
 			  sine += (int)(playerdisp.xy.length()*Sin(diffangle)*xproj);
 			  // else use libEye to locate camera.tracer's screen coordinates
 
 			  // Do the same for position of selected object or switch
-			  Vector3 seldisp = (selx.GetFloat(), sely.GetFloat(), selz.GetFloat()) - players[consoleplayer].camera.pos;
+			  Vector3 seldisp = (selx.GetFloat(), sely.GetFloat(), selz.GetFloat()) - cplr.camera.pos
+				  - (0., 0., 0.5 * pmo.height * cplr.crouchfactor);
 			  diffangle = pmo.deltaangle(seldisp.Angle(), cyaw);
 			  selcos -= (int)(seldisp.xy.length()*Cos(diffangle)*yproj + seldisp.z*zproj);
+			  selcos -= (screenblocks <= 10 ? (int)(yscale*StatusBar.RelTop) : 0);
 			  selsin += (int)(seldisp.xy.length()*Sin(diffangle)*xproj);
 	      }
 	    }
@@ -907,30 +912,32 @@ class RenderCursorsOverlay : EventHandler
 	    if (isoaimassist.GetBool() && !(ldown || lup))
 	    {
 	      StatusBar.DrawImage("sprites/aim_hair.png", (sine/scaleFactor.x, cosine/scaleFactor.y),
-				  StatusBar.DI_SCREEN_CENTER | StatusBar.DI_ITEM_CENTER, scale: (2.4/scaleFactor.x, 2.4/scaleFactor.y));
+				  StatusBar.DI_SCREEN_CENTER | StatusBar.DI_ITEM_CENTER, scale: (1.2, 1.2));
 	    } else {
 	      StatusBar.DrawImage("sprites/dir_hair.png", (sine/scaleFactor.x, cosine/scaleFactor.y),
-				  StatusBar.DI_SCREEN_CENTER | StatusBar.DI_ITEM_CENTER, scale: (1.5/scaleFactor.x, 1.5/scaleFactor.y));
+				  StatusBar.DI_SCREEN_CENTER | StatusBar.DI_ITEM_CENTER, scale: (0.75, 0.75));
 	    }
 
 		if (isosel.GetBool())
 	    {
 	      StatusBar.DrawImage("sprites/sel_hair.png", (selsin/scaleFactor.x, selcos/scaleFactor.y),
-				  StatusBar.DI_SCREEN_CENTER | StatusBar.DI_ITEM_CENTER, scale: (1.5/scaleFactor.x, 1.5/scaleFactor.y));
+				  StatusBar.DI_SCREEN_CENTER | StatusBar.DI_ITEM_CENTER, scale: (0.75, 0.75));
 	    }
 
 	    if (actorhit[consoleplayer])
 	    {
 	      int cosine2 = 0;
 	      int sine2 = 0;
-	      if(players[consoleplayer].camera && players[consoleplayer].camera.ViewPos && (players[consoleplayer].camera.ViewPos.Flags & VPSF_ORTHOGRAPHIC))
+	      if(cplr.camera && cplr.camera.ViewPos && (cplr.camera.ViewPos.Flags & VPSF_ORTHOGRAPHIC))
 	      { // If using orthographic projection
-			  Vector3 tardisp = actorhit[consoleplayer].pos + (0., 0., 0.1*actorhit[consoleplayer].height)
-				  - (players[consoleplayer].camera.tracer ? players[consoleplayer].camera.tracer.pos : players[consoleplayer].mo.pos);
+			  Vector3 tardisp = actorhit[consoleplayer].pos
+				  + (0., 0., (1.1*actorhit[consoleplayer].height - (cplr.camera.tracer ? cplr.camera.tracer.height : pmo.height)))
+				  - cplr.camera.pos
+				  + (0., 0., cplr.camera.pos.z - (cplr.camera.tracer ?
+												  cplr.camera.tracer.pos.z : pmo.pos.z));
 			  diffangle = pmo.deltaangle(tardisp.Angle(), cyaw);
 			  // Translate game/map (x, y, z) position into screen (x, y) location
-			  // double xprj = 0.375*Screen.GetWidth()/players[consoleplayer].camera.ViewPos.offset.length();
-			  double xprj = xscale/players[consoleplayer].camera.ViewPos.offset.length();
+			  double xprj = xscale/cplr.camera.ViewPos.offset.length();
 			  double yprj = Sin(cpit)*xprj*yscale;
 			  double zprj = Cos(cpit)*xprj*yscale;
 			  cosine2 -= (int)(tardisp.xy.length()*Cos(diffangle)*yprj);
@@ -938,24 +945,22 @@ class RenderCursorsOverlay : EventHandler
 			  cosine2 -= (screenblocks > 10 ? 0 : (int)(yscale*StatusBar.RelTop));
 			  sine2 += (int)(tardisp.xy.length()*Sin(diffangle)*xprj);
 	      } // else use libEye to locate camera.tracer's screen coordinates
-	      cosine -= (int)(-0.25*cursordist*Cos(diffangle)*yscale);
-	      sine -= (int)(0.5*cursordist*Sin(diffangle));	      
 	      int halfw = (int)(Screen.GetWidth()/2);
-	      int halfh = (int)(Screen.GetHeight()/2);// - (screenblocks > 10 ? 0 : StatusBar.RelTop);
+	      int halfh = (int)(Screen.GetHeight()/2);
 	      Screen.DrawLine(sine+halfw, cosine+halfh, sine2+halfw, cosine2+halfh, Color(aimbeam.GetString()));
 	      StatusBar.DrawImage("sprites/tar_hair.png", (sine2/scaleFactor.x, cosine2/scaleFactor.y),
 				  StatusBar.DI_SCREEN_CENTER | StatusBar.DI_ITEM_CENTER, scale: (1.5/scaleFactor.x, 1.5/scaleFactor.x));
 
 	      if(showscope.GetBool())
 	      {
-		double tardist = (actorhit[consoleplayer].pos - players[consoleplayer].camera.pos).length();
+		double tardist = (actorhit[consoleplayer].pos - cplr.camera.pos).length();
 		tardist -= (actorhit[consoleplayer].radius + pmo.radius);
 		double degree = 57.2957795 * actorhit[consoleplayer].height / (tardist > 0.0 ? tardist: 1.0); // in degrees
-		texman.setcameratotexture(players[consoleplayer].mo.tracer, "CAMTEX_1", degree);
+		texman.setcameratotexture(pmo.tracer, "CAMTEX_1", degree);
 
-		float ssize = 0.04*clamp(scopesize.GetInt(), 1, 100)/scaleFactor.x;
-		int sxpos = (int)(200*clamp(scopexpos.GetFloat(), -1.0, 1.0)*scaleFactor.x);
-		int sypos = (int)(-200*clamp(scopeypos.GetFloat(), 0.0, 1.0)*scaleFactor.y);
+		float ssize = 0.02*clamp(scopesize.GetInt(), 1, 100);// /scaleFactor.x;
+		int sxpos = (int)(200*clamp(scopexpos.GetFloat(), -2.0, 2.0));//*scaleFactor.x);
+		int sypos = (int)(-200*clamp(scopeypos.GetFloat(), 0.0, 2.0));//*scaleFactor.y);
 		StatusBar.DrawImage("CAMTEX_1", (sxpos, sypos),
 				    StatusBar.DI_SCREEN_CENTER_BOTTOM | StatusBar.DI_ITEM_CENTER,
 				    scale: (ssize, ssize));
