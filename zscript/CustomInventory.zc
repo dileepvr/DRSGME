@@ -13,7 +13,7 @@ class Z_NashMove : CustomInventory
 //
 //===========================================================================
 
-        int old_forwardmove, old_sidemove;
+	int old_forwardmove, old_sidemove;
 	
 	Default
 	{
@@ -31,7 +31,7 @@ class Z_NashMove : CustomInventory
 	override void PostBeginPlay()
 	{
 	        old_forwardmove = 0;
-		old_sidemove = 0;
+			old_sidemove = 0;
 	        if (Owner && Owner is "PlayerPawn") DECEL_MULT = CVar.GetCVar("DecelMult", Owner.player);
 	}
 	//===========================================================================
@@ -68,7 +68,7 @@ class Z_NashMove : CustomInventory
 
 	override void Tick(void)
 	{
-	        if (!(Owner && Owner is "PlayerPawn"))
+		if (!(Owner && Owner is "PlayerPawn"))
 		{
 		  destroy(); return;
 		}
@@ -135,12 +135,19 @@ class Z_NashMove : CustomInventory
 
 class IsometricMovement : CustomInventory
 {
-        int diffangle, face_cam_mult, oldcmdyaw, oldsidemove, oldforwardmove;
-	cvar isoyaw, aimassist;
+	int diffangle, face_cam_mult, oldcmdyaw, oldsidemove, oldforwardmove;
+	cvar isoyaw, aimassist, mousemove;
 	bool sidedownfacecam, fwddownfacecam;
+	int mousex, mousey;
+
+	property mousex : mousex;
+	property mousey : mousey;
 	
 	Default
 	{
+		IsometricMovement.mousex 0;
+		IsometricMovement.mousey 0;
+
 		Inventory.MaxAmount 1;
 		+INVENTORY.UNDROPPABLE
 		+INVENTORY.UNTOSSABLE
@@ -165,6 +172,7 @@ class IsometricMovement : CustomInventory
 		{
 		  isoyaw = CVar.GetCVar("IsometricYaw", Owner.player);
 		  aimassist = CVar.GetCVar("IsoAimAssist", Owner.player);
+		  mousemove = CVar.GetCVar("IsoMouseMove", Owner.player);
 		}
 		face_cam_mult = 1;
 		oldcmdyaw = 0;
@@ -182,23 +190,18 @@ class IsometricMovement : CustomInventory
 
 	override void Tick(void)
 	{
-	        if (!(Owner && Owner is "PlayerPawn"))
+		if (!(Owner && Owner is "PlayerPawn"))
 		{
-		  destroy(); return;
+			destroy(); return;
 		}
-	        if (!automapactive && Owner && Owner is "PlayerPawn") // Remap controls for isometric mode
+
+		if (!automapactive && Owner && Owner is "PlayerPawn") // Remap controls for isometric mode
 		{
 		  let player = Owner.player;
 		  UserCmd cmd = player.cmd;
 		  diffangle = Owner.deltaangle(Owner.angle, isoyaw.GetFloat());
 		  if (abs(diffangle) > 90) face_cam_mult = -1; // Player is facing camera
 		  else face_cam_mult = 1; // Player is facing away from camera
-
-		  // Owner.A_SetPitch(0); // No pitch in isometric mode
-		  /* if (level.IsFreelookAllowed() && cmd.pitch && (cmd.pitch != -32768)) */
-		  /* { */
-		  /*   Owner.pitch = clamp(Owner.pitch + cmd.pitch * (360.0/65536.0), player.minpitch, player.maxpitch); */
-		  /* } */
 
 		  Owner.angle -= cmd.yaw * (360./65536.); // Cancel default mouse-turn first
 		  float newyaw;
@@ -208,13 +211,8 @@ class IsometricMovement : CustomInventory
 		  if(diffangle > 45 && diffangle < 135) newyaw += 2*cmd.pitch;
 		  else if(diffangle > -135 && diffangle < -45) newyaw -= 2*cmd.pitch;
  
-		  /* if(abs(diffangle) < 80 || abs(diffangle) > 100) */
-		  /* { */
-		  /*   newyaw += face_cam_mult*cmd.yaw; */
-		  /* } */
 		  newyaw += 2*face_cam_mult*cmd.yaw;
 		  float absdiff = abs(diffangle);
-		  // if(absdiff < 45 || absdiff > 135) newyaw += 2*face_cam_mult*cmd.yaw;
 		  oldcmdyaw = cmd.yaw;
 
 		  Owner.angle += newyaw * (360./65536.);
@@ -250,12 +248,6 @@ class IsometricMovement : CustomInventory
 		      Owner.Vel.X += sm * Cos(a);
 		      Owner.Vel.Y += sm * Sin(a);
 		    }
-		    /* if (fm && fwddownfacecam) */
-		    /* { */
-		    /*   let a = Owner.angle + 180.0; */
-		    /*   Owner.Vel.X += fm * Cos(a); */
-		    /*   Owner.Vel.Y += fm * Sin(a); */
-		    /* } */
 		  }
 		  oldsidemove = cmd.sidemove;
 		  oldforwardmove = cmd.forwardmove;

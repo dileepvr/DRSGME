@@ -20,6 +20,8 @@ at the end. Over the command line, command is:
   > ./gzdoom -iwad <IWAD-FILE> -file <FULL-PATH-TO-DRSGME.pk3>
 #+end_src
 
+For best results, set fog mode to "Radial."
+
 ** Controls
 
 There are keys you can bind to rotate camera about the center, and
