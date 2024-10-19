@@ -27,12 +27,17 @@ class Z_NashMove : CustomInventory
 	// How much to reduce the slippery movement.
 	// Lower number = less slippery.
 	cvar DECEL_MULT;
+	cvar isoctrltype;
 
 	override void PostBeginPlay()
 	{
 	        old_forwardmove = 0;
 			old_sidemove = 0;
-	        if (Owner && Owner is "PlayerPawn") DECEL_MULT = CVar.GetCVar("DecelMult", Owner.player);
+	        if (Owner && Owner is "PlayerPawn")
+			{
+				DECEL_MULT = CVar.GetCVar("DecelMult", Owner.player);
+				isoctrltype = CVar.GetCVar("IsoControlType", Owner.player);
+			}
 	}
 	//===========================================================================
 	//
@@ -72,6 +77,7 @@ class Z_NashMove : CustomInventory
 		{
 		  destroy(); return;
 		}
+		int ctrltype = isoctrltype.GetInt();
 		bool stopped_or_changed_movement = !(Owner.player.cmd.forwardmove | Owner.player.cmd.sidemove);
 		stopped_or_changed_movement |= (Owner.player.cmd.forwardmove != old_forwardmove);
 		stopped_or_changed_movement |= (Owner.player.cmd.sidemove != old_sidemove);
@@ -80,8 +86,8 @@ class Z_NashMove : CustomInventory
 		if (Owner && Owner is "PlayerPawn")
 		{
 		  if (bIsOnFloor() && (DECEL_MULT.GetFloat() < 1.0))
-		    {
-		      if (stopped_or_changed_movement)
+		  {
+		    if (stopped_or_changed_movement)
 			{
 			  // Owner.A_SetSpeed((2.0 - DECEL_MULT.GetFloat()) * 2);
 			  // decelerate the player, if not in pain
@@ -91,25 +97,25 @@ class Z_NashMove : CustomInventory
 			      Owner.vel.y *= DECEL_MULT.GetFloat();
 			    }
 			}
-		      FLineTraceData tf, tb;
-		      bool bbf = Owner.LineTrace(Owner.angle, 1.5*Owner.radius, 0, TRF_NOSKY,
-						 0.5*Owner.height, 0, 0, tf);
-		      bool bbb = Owner.LineTrace(Owner.angle + 180, 1.5*Owner.radius, 0, TRF_NOSKY,
-						 0.5*Owner.height, 0, 0, tb);
-		      if ((Owner.player.cmd.sidemove == 0) && !bbf && !bbb)
+		    FLineTraceData tf, tb;
+		    bool bbf = Owner.LineTrace(Owner.angle, 1.5*Owner.radius, 0, TRF_NOSKY,
+									   0.5*Owner.height, 0, 0, tf);
+			bool bbb = Owner.LineTrace(Owner.angle + 180, 1.5*Owner.radius, 0, TRF_NOSKY,
+									   0.5*Owner.height, 0, 0, tb);
+			if ((Owner.player.cmd.sidemove == 0) && !bbf && !bbb)
 			{
-			  // decelarate perpendicular velocity if not sliding along any obstacle
-			  float unitx = Cos(Owner.angle);
-			  float unity = Sin(Owner.angle);
-			  float mycross = Owner.vel.x * unity - Owner.vel.y * unitx;
-			  float mydot = Owner.vel.x * unitx + Owner.vel.y * unity;
-			  if ((Owner.player.cmd.forwardmove != 0))
-			    {
-			      Owner.vel.x += (1.0 - DECEL_MULT.GetFloat()) * (mydot * unitx - Owner.vel.x);
-			      Owner.vel.y += (1.0 - DECEL_MULT.GetFloat()) * (mydot * unity - Owner.vel.y);
-			    }
+				// decelarate perpendicular velocity if not sliding along any obstacle
+				float unitx = Cos(Owner.angle);
+				float unity = Sin(Owner.angle);
+				float mycross = Owner.vel.x * unity - Owner.vel.y * unitx;
+				float mydot = Owner.vel.x * unitx + Owner.vel.y * unity;
+				if ((Owner.player.cmd.forwardmove != 0) && (ctrltype == 0))
+				{
+					Owner.vel.x += (1.0 - DECEL_MULT.GetFloat()) * (mydot * unitx - Owner.vel.x);
+					Owner.vel.y += (1.0 - DECEL_MULT.GetFloat()) * (mydot * unity - Owner.vel.y);
+				}
 			}
-		    }
+		  }
 		}
 		Super.Tick();
 	}
@@ -135,8 +141,8 @@ class Z_NashMove : CustomInventory
 
 class IsometricMovement : CustomInventory
 {
-	int diffangle, face_cam_mult, oldcmdyaw, oldsidemove, oldforwardmove;
-	cvar isoyaw, aimassist, mousemove;
+	int diffangle, face_cam_mult, ctrltype, oldcmdyaw, oldsidemove, oldforwardmove;
+	cvar isoyaw, aimassist, keyctrltype, mousemove;
 	bool sidedownfacecam, fwddownfacecam;
 	int mousex, mousey;
 
@@ -173,6 +179,7 @@ class IsometricMovement : CustomInventory
 		  isoyaw = CVar.GetCVar("IsometricYaw", Owner.player);
 		  aimassist = CVar.GetCVar("IsoAimAssist", Owner.player);
 		  mousemove = CVar.GetCVar("IsoMouseMove", Owner.player);
+		  keyctrltype = CVar.GetCVar("IsoControlType", Owner.player);
 		}
 		face_cam_mult = 1;
 		oldcmdyaw = 0;
@@ -188,6 +195,49 @@ class IsometricMovement : CustomInventory
 	//
 	//===========================================================================
 
+	void MoveRelativeToCamera(UserCmd cmd)
+	{
+		double fm = 0;
+		double sm = 0;
+		let player = Owner.player;
+
+		if (!bIsInPain())
+		{
+		    [fm, sm] = PlayerPawn(Owner).TweakSpeeds(cmd.forwardmove, cmd.sidemove);
+		    sm *= Owner.Speed / 256.;
+		    fm *= Owner.Speed / 256.;
+		    if (PlayerPawn(Owner).CanCrouch() && player.crouchfactor != 1)
+		    {
+		      sm *= player.crouchfactor;
+		      fm *= player.crouchfactor;
+		    }
+		    double friction, movefactor;
+		    [friction, movefactor] = PlayerPawn(Owner).GetFriction();
+		    if (!player.onground && !Owner.bNoGravity && !waterlevel) movefactor *= level.aircontrol;
+		    sm *= movefactor * (35 / TICRATE);
+		    fm *= movefactor * (35 / TICRATE);
+			// cancel old move
+			if (fm)
+			{
+				Owner.Vel.X -= fm * Cos(Owner.angle);
+				Owner.Vel.Y -= fm * Sin(Owner.angle);
+			}
+		    if (sm)
+		    {
+		      let a = Owner.angle - 90.0;
+		      Owner.Vel.X -= sm * Cos(a);
+		      Owner.Vel.Y -= sm * Sin(a);
+		    }
+			// apply new move
+			if (fm != 0 || sm != 0)
+			{
+				double camyaw = isoyaw.GetFloat();
+				Owner.Vel.X += fm * Cos(camyaw) + sm * Sin(camyaw);
+				Owner.Vel.Y += - sm * Cos(camyaw) + fm * Sin(camyaw);
+			}
+		}
+	}
+
 	override void Tick(void)
 	{
 		if (!(Owner && Owner is "PlayerPawn"))
@@ -199,12 +249,13 @@ class IsometricMovement : CustomInventory
 		{
 		  let player = Owner.player;
 		  UserCmd cmd = player.cmd;
+		  ctrltype = keyctrltype.GetInt();
 		  diffangle = Owner.deltaangle(Owner.angle, isoyaw.GetFloat());
 		  if (abs(diffangle) > 90) face_cam_mult = -1; // Player is facing camera
 		  else face_cam_mult = 1; // Player is facing away from camera
 
 		  Owner.angle -= cmd.yaw * (360./65536.); // Cancel default mouse-turn first
-		  float newyaw;
+		  float newyaw = 0;
 
  		  if(diffangle >= 0) newyaw += cmd.pitch;
 		  else if(diffangle < 0) newyaw -= cmd.pitch;
@@ -226,7 +277,12 @@ class IsometricMovement : CustomInventory
 		    if ((abs(diffangle) > 112.5) && (oldforwardmove == 0)) fwddownfacecam = true;
 		    else fwddownfacecam = false;
 		  }
-		  if ((sidedownfacecam || fwddownfacecam) && !bIsInPain())
+
+		  if (ctrltype == 1) // Keyboard control relative to camera view direction
+		  {
+			  MoveRelativeToCamera(cmd);
+		  }
+		  else if ((sidedownfacecam || fwddownfacecam) && !bIsInPain())
 		  {
 		    double fm, sm;
 		    [fm, sm] = PlayerPawn(Owner).TweakSpeeds(cmd.forwardmove, cmd.sidemove);
@@ -249,6 +305,7 @@ class IsometricMovement : CustomInventory
 		      Owner.Vel.Y += sm * Sin(a);
 		    }
 		  }
+
 		  oldsidemove = cmd.sidemove;
 		  oldforwardmove = cmd.forwardmove;
 		}

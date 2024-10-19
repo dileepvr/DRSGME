@@ -25,6 +25,7 @@ User HandlerClass(PickupFlagHandler) Bool IsoAllowTouchPickup = true;
 User Bool IsoLookingUp = false;
 User Bool IsoLookingDown = false;
 User Bool IsoMouseMove = false;
+User Int IsoControlType = 0;
 
 user bool D4D_DamageIndicators = true;
 user float D4D_DIScale = 0.5;

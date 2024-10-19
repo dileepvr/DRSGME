@@ -8,6 +8,12 @@ AddOptionMenu "OptionsMenu"
 	SubMenu "Isometric Mode Options", "IsoModOptions"
 }
 
+OptionValue "KeyboardCtrlType"
+{
+    0, "Relative to Actor"
+    1, "Relative to Camera"
+}
+
 OptionMenu "IsoModOptions"
 {
     Title "Isometric Mode Options (Hardware Renderers only)"
@@ -17,6 +23,8 @@ OptionMenu "IsoModOptions"
 	Slider "Monster's Max. Shooting Distance", IsoMonsterAimMaxDist, 100, 5000, 100
     Option "Isometric Fog of War", "r_radarclipper", "OnOff"
     Option "Visibility Through Level Geometry", "r_dithertransparency", "OnOff"
+	Option "Movement Keys", "IsoControlType", "KeyboardCtrlType"
+
     StaticText ""
     StaticText "Viewpoint Rotation Control"
     Control "Rotate Left", "rotate_cam_left"

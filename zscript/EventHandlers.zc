@@ -882,9 +882,8 @@ class RenderCursorsOverlay : EventHandler
 		int cursoroffy = cursoffy.GetInt();
 	    float diffangle = pmo.deltaangle(pang, cyaw);
 		float xscale = 0.375*( screenblocks >= 10 ? Screen.GetWidth() : 0.1*screenblocks*Screen.GetWidth() );
-		float myfov = (players[consoleplayer].camera.player ?
-					   players[consoleplayer].camera.player.FOV : players[consoleplayer].camera.CameraFOV);
-		xscale *= 1.0 / tan (clamp(myfov, 5.0, 179.0) * 0.5);
+		float myfov = (cplr.camera.player ? cplr.camera.player.FOV : cplr.camera.CameraFOV);
+		xscale *= 1.0 / tan (clamp(myfov, 5.0, 170.0) * 0.5);
 		float yscale = 1.253229 - 0.0616458*sin(cpit)*sin(cpit) - 0.191609*sin(cpit);
 		float aspratio = (1.0 * Screen.GetWidth()) / (1.0 * Screen.GetHeight());
 		if (aspratio > 1.0) xscale *= 1.777778/aspratio;
