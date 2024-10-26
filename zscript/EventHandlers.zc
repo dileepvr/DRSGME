@@ -1000,7 +1000,7 @@ class RenderCursorsOverlay : EventHandler
 
 class IsoAimAssistHandler : StaticEventHandler
 {
-	// copying RicardoLuis0's Aim Assist Mod v0.8
+	// copying Jay0's Aim Assist Mod v0.8
 	// https://forum.zdoom.org/viewtopic.php?t=62895
 	cvar aimassists[MAXPLAYERS]; // They say that GetCVar() inside WorldTick() is slow?
 	cvar max_dists[MAXPLAYERS];
