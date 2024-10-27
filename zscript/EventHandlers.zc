@@ -107,7 +107,9 @@ class MKeyEvents : EventHandler
 			  {
 				  if (key && key == e.KeyScan)
 				  {
-					  SendNetworkEvent(e.Type == InputEvent.Type_KeyDown ? "FIREDOWN" : "FIREUP");
+					  SendNetworkEvent((e.Type == InputEvent.Type_KeyDown)
+									   && !(players[consoleplayer].cmd.buttons & BT_FORWARD) // Avoid both keyboard and mouse moving forward
+									   ? "FIREDOWN" : "FIREUP");
 					  return ((e.Type == InputEvent.Type_KeyDown) || IsometricMovement(isomover).fleemode)
 						  && !IsometricMovement(isomover).hipfire;
 				  }
@@ -121,6 +123,16 @@ class MKeyEvents : EventHandler
 					  SendNetworkEvent(e.Type == InputEvent.Type_KeyDown ? "ALTFIREDOWN" : "ALTFIREUP");
 					  return ((e.Type == InputEvent.Type_KeyDown) || IsometricMovement(isomover).fleemode)
 						  && !IsometricMovement(isomover).hipfire;
+				  }
+			  }
+			  keys.Clear();
+			  Bindings.GetAllKeysForCommand(keys, "+forward");
+			  foreach (key : keys)
+			  {
+				  if (key && key == e.KeyScan) // Don't move forward if there is a chance mouse is already moving forward
+				  {
+					  return (e.Type == InputEvent.Type_KeyDown)
+						  && (IsometricMovement(isomover).firekeydown || IsometricMovement(isomover).altfirekeydown);
 				  }
 			  }
 			  keys.Clear();
