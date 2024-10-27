@@ -131,8 +131,7 @@ class MKeyEvents : EventHandler
 			  {
 				  if (key && key == e.KeyScan) // Don't move forward if there is a chance mouse is already moving forward
 				  {
-					  return (e.Type == InputEvent.Type_KeyDown)
-						  && (IsometricMovement(isomover).firekeydown || IsometricMovement(isomover).altfirekeydown);
+					  return (e.Type == InputEvent.Type_KeyDown) && (IsometricMovement(isomover).firekeydown);
 				  }
 			  }
 			  keys.Clear();
