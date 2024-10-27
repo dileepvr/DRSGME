@@ -32,6 +32,15 @@ changed in the dedicated section in the options menu. Player
 strafe-movement controls get mapped based on direction the player
 faces relative to the camera.
 
+There is an option to map WASD movement keys to directions relative to
+the camera angle instead of the player's angle.
+
+There is also an option to enable Diablo-Style mouse
+control. Right-click (alt-fire) key when hovering cursor over and
+interactable will attempt a use/pickup. There are press-and-hold
+modifier keys for "stand-still and shoot" and "hold-fire and force
+move" when in this mode.
+
 ** Credits
 
 A lot of mods, forum posts, and wikis were consulted to prepare this. Special thanks to:

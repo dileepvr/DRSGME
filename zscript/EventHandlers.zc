@@ -10,7 +10,7 @@ class PickupFlagHandler : CustomBoolCVar
 {
   override bool ModifyValue(Name CVarName, bool val)
   {
-	  players[consoleplayer].mo.bPickup = val;
+	  if (gamestate == GS_LEVEL) players[consoleplayer].mo.bPickup = val;
 	  return val;
   }
 }
@@ -43,7 +43,7 @@ class MKeyEvents : EventHandler
 {
   cvar isodists[MAXPLAYERS], isopitches[MAXPLAYERS], isoyaws[MAXPLAYERS];
   cvar isoaims[MAXPLAYERS], rotlefts[MAXPLAYERS], rotrights[MAXPLAYERS];
-  cvar lookingup[MAXPLAYERS], lookingdown[MAXPLAYERS];
+  cvar lookingup[MAXPLAYERS], lookingdown[MAXPLAYERS], mousemove[MAXPLAYERS];
   selstruct psels[MAXPLAYERS];
   Vector3 delta;
   double target_angle, target_pitch;
@@ -62,6 +62,7 @@ class MKeyEvents : EventHandler
 		  rotrights[i] = CVar.GetCVar("RotatingRight", players[i]);
 		  lookingup[i] = CVar.GetCVar("IsoLookingUp", players[i]);
 		  lookingdown[i] = CVar.GetCVar("IsoLookingDown", players[i]);
+		  mousemove[i] = CVar.GetCVar("IsoMouseMove", players[i]);
 	  }
   }
   
@@ -92,6 +93,59 @@ class MKeyEvents : EventHandler
 
   override bool InputProcess (InputEvent e)
   {
+	  if (e.Type == InputEvent.Type_KeyDown || e.Type == InputEvent.Type_KeyUp)
+	  {
+		  Inventory isomover = players[consoleplayer].mo.FindInventory("IsometricMovement");
+		  if (mousemove[consoleplayer].GetBool() && isomover
+			  && ((!IsometricMovement(isomover).pointmonster && !IsometricMovement(isomover).pointshootable)
+				  || IsometricMovement(isomover).nolos2shootable				  
+				  || IsometricMovement(isomover).pointusable || IsometricMovement(isomover).hipfire))
+		  {
+			  array<int> keys;
+			  Bindings.GetAllKeysForCommand(keys, "+attack");
+			  foreach (key : keys)
+			  {
+				  if (key && key == e.KeyScan)
+				  {
+					  SendNetworkEvent(e.Type == InputEvent.Type_KeyDown ? "FIREDOWN" : "FIREUP");
+					  return ((e.Type == InputEvent.Type_KeyDown) || IsometricMovement(isomover).fleemode)
+						  && !IsometricMovement(isomover).hipfire;
+				  }
+			  }
+			  keys.Clear();
+			  Bindings.GetAllKeysForCommand(keys, "+altattack");
+			  foreach (key : keys)
+			  {
+				  if (key && key == e.KeyScan)
+				  {
+					  SendNetworkEvent(e.Type == InputEvent.Type_KeyDown ? "ALTFIREDOWN" : "ALTFIREUP");
+					  return ((e.Type == InputEvent.Type_KeyDown) || IsometricMovement(isomover).fleemode)
+						  && !IsometricMovement(isomover).hipfire;
+				  }
+			  }
+			  keys.Clear();
+			  Bindings.GetAllKeysForCommand(keys, "hip_fire_mode");
+			  foreach (key : keys)
+			  {
+				  if (key && key == e.KeyScan)
+				  {
+					  SendNetworkEvent(e.Type == InputEvent.Type_KeyDown ? "HIPDOWN" : "HIPUP");
+					  return false;
+				  }
+			  }
+			  keys.Clear();
+			  Bindings.GetAllKeysForCommand(keys, "flee_mode");
+			  foreach (key : keys)
+			  {
+				  if (key && key == e.KeyScan)
+				  {
+					  SendNetworkEvent(e.Type == InputEvent.Type_KeyDown ? "FLEEDOWN" : "FLEEUP");
+					  return false;
+				  }
+			  }
+		  }
+	  }
+
 	  if (e.Type == InputEvent.Type_KeyDown)
 		  SendNetworkEvent("MYKEYDOWN", e.KeyScan);
 
@@ -102,36 +156,62 @@ class MKeyEvents : EventHandler
   }
 
   override void NetworkProcess(ConsoleEvent e)
-  {			
+  {
+
+	  if ((e.Name == "FIREDOWN") || (e.Name == "FIREUP") || (e.Name == "ALTFIREDOWN") || (e.Name == "ALTFIREUP")
+		  || (e.Name == "HIPDOWN") || (e.Name == "HIPUP") || (e.Name == "FLEEDOWN") || (e.Name == "FLEEUP"))
+	  {
+		  Inventory isomover = players[e.Player].mo.FindInventory("IsometricMovement");
+		  if (isomover)
+		  {
+			  if ((e.Name == "FIREDOWN") || (e.Name == "FIREUP"))
+				  IsometricMovement(isomover).firekeydown = (e.Name == "FIREDOWN");
+			  else if ((e.Name == "ALTFIREDOWN") || (e.Name == "ALTFIREUP"))
+				  IsometricMovement(isomover).altfirekeydown = (e.Name == "ALTFIREDOWN");
+			  else if ((e.Name == "HIPDOWN") || (e.Name == "HIPUP"))
+				  IsometricMovement(isomover).hipfire = (e.Name == "HIPDOWN");
+			  else if ((e.Name == "FLEEDOWN") || (e.Name == "FLEEUP"))
+				  IsometricMovement(isomover).fleemode = (e.Name == "FLEEDOWN");
+		  }
+	  }
+	  
     if (e.Name == "MYKEYDOWN")
     {
 		if (!psels[e.Player].pmo) psels[e.Player].pmo = players[e.Player].mo;
-		int key1, key2;
-		[key1, key2] = Bindings.GetKeysForCommand("rotate_cam_left");
-		if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
-			rotlefts[e.Player].SetBool(true);
-		else
+		array<int> keys;
+		Bindings.GetAllKeysForCommand(keys, "rotate_cam_left");
+		foreach (key : keys)
 		{
-			[key1, key2] = Bindings.GetKeysForCommand("rotate_cam_right");
-			if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
+			if (key && key == e.Args[0])
+				rotlefts[e.Player].SetBool(true);
+		}
+		keys.clear();
+		Bindings.GetAllKeysForCommand(keys, "rotate_cam_right");
+		foreach (key : keys)
+		{
+			if (key && key == e.Args[0])
 				rotrights[e.Player].SetBool(true);
 		}
-
-		[key1, key2] = Bindings.GetKeysForCommand("iso_zoom_in");
-		if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
+		keys.clear();
+		Bindings.GetAllKeysForCommand(keys, "iso_zoom_in");
+		foreach (key : keys)
 		{
-			if (!automapactive && (gamestate == GS_LEVEL) && players[e.Player].camera)
+			if (key && key == e.Args[0])
 			{
-				isodists[e.Player].SetFloat(clamp(isodists[e.Player].GetFloat() - 10.0, 0.0, 1000.0));
-				SpectatorCamera(players[e.Player].camera).Init(isodists[e.Player].GetFloat(),
-															   isoyaws[e.Player].GetFloat(),
-															   isopitches[e.Player].GetFloat(), -1);
+				if (!automapactive && (gamestate == GS_LEVEL) && players[e.Player].camera)
+				{
+					isodists[e.Player].SetFloat(clamp(isodists[e.Player].GetFloat() - 10.0, 0.0, 1000.0));
+					SpectatorCamera(players[e.Player].camera).Init(isodists[e.Player].GetFloat(),
+																   isoyaws[e.Player].GetFloat(),
+																   isopitches[e.Player].GetFloat(), -1);
+				}
 			}
 		}
-		else
+		keys.clear();
+		Bindings.GetAllKeysForCommand(keys, "iso_zoom_out");
+		foreach (key : keys)
 		{
-			[key1, key2] = Bindings.GetKeysForCommand("iso_zoom_out");
-			if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
+			if (key && key == e.Args[0])
 			{
 				if (!automapactive && (gamestate == GS_LEVEL) && players[e.Player].camera)
 				{
@@ -142,304 +222,332 @@ class MKeyEvents : EventHandler
 				}
 			}
 		}
-		[key1, key2] = Bindings.GetKeysForCommand("iso_aim_assist");
-		if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
+		keys.clear();
+		Bindings.GetAllKeysForCommand(keys, "iso_aim_assist");
+		foreach (key : keys)
 		{
-			isoaims[e.Player].SetBool(!isoaims[e.Player].GetBool());
-			if (e.Player == consoleplayer)
+			if (key && key == e.Args[0])
 			{
-				if (isoaims[e.Player].GetBool()) console.printf("Aim Assist Enabled");
-				else console.printf("Aim Assist Disabled");
+				isoaims[e.Player].SetBool(!isoaims[e.Player].GetBool());
+				if (e.Player == consoleplayer)
+				{
+					if (isoaims[e.Player].GetBool()) console.printf("Aim Assist Enabled");
+					else console.printf("Aim Assist Disabled");
+				}
 			}
 		}
 
-		[key1, key2] = Bindings.GetKeysForCommand("clear_select");
-		if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
+		keys.clear();
+		Bindings.GetAllKeysForCommand(keys, "clear_select");
+		foreach (key : keys)
 		{
-			psels[e.Player].isosel = false;
-		}
-
-		[key1, key2] = Bindings.GetKeysForCommand("look_up");
-		if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
-		{
-			lookingup[e.Player].SetBool(true);
-		}
-
-		[key1, key2] = Bindings.GetKeysForCommand("look_down");
-		if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
-		{
-			lookingdown[e.Player].SetBool(true);
-		}
-
-		[key1, key2] = Bindings.GetKeysForCommand("use_selected");
-		if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
-		{
-			let psel = psels[e.Player];
-			if (psel.isosel)
+			if (key && key == e.Args[0])
 			{
-				if (psel.inswarray && (psel.switches.Size() > psel.selnum) && psel.switches[psel.selnum])
+				psels[e.Player].isosel = false;
+			}
+		}
+
+		keys.clear();
+		Bindings.GetAllKeysForCommand(keys, "look_up");
+		foreach (key : keys)
+		{
+			if (key && key == e.Args[0])
+			{
+				lookingup[e.Player].SetBool(true);
+			}
+		}
+
+		keys.clear();
+		Bindings.GetAllKeysForCommand(keys, "look_down");
+		foreach (key : keys)
+		{
+			if (key && key == e.Args[0])
+			{
+				lookingdown[e.Player].SetBool(true);
+			}
+		}
+
+		keys.clear();
+		Bindings.GetAllKeysForCommand(keys, "use_selected");
+		foreach (key : keys)
+		{
+			if (key && key == e.Args[0])
+			{
+				let psel = psels[e.Player];
+				if (psel.isosel)
 				{
-					Vector3 midln = ((psel.switches[psel.selnum].v1.p.x + psel.switches[psel.selnum].v2.p.x)*0.5,
-									 (psel.switches[psel.selnum].v1.p.y + psel.switches[psel.selnum].v2.p.y)*0.5,
-									 psel.pmo.pos.Z + psel.viewh);
-					[delta, target_angle, target_pitch] = lookAt(psel.pmo.pos + (0, 0, psel.viewh), midln);
-					bool tbool = psel.pmo.LineTrace(target_angle,
-													(psel.pmo.pos.xy - midln.xy).length() + 8.0,
-													0, TRF_THRUACTORS | TRF_BLOCKUSE, psel.viewh, data:t);
-					bool swvisible = true;
-					if (!tbool || (t.hitType != TRACE_HitWall) || !t.hitLine || (t.hitLine.Index() != psel.switches[psel.selnum].Index()))
+					if (psel.inswarray && (psel.switches.Size() > psel.selnum) && psel.switches[psel.selnum])
 					{
-						// Center of wall not in line of sight of the player
-						swvisible = !tbool;
-						if (!tbool)
+						Vector3 midln = ((psel.switches[psel.selnum].v1.p.x + psel.switches[psel.selnum].v2.p.x)*0.5,
+										 (psel.switches[psel.selnum].v1.p.y + psel.switches[psel.selnum].v2.p.y)*0.5,
+										 psel.pmo.pos.Z + psel.viewh);
+						[delta, target_angle, target_pitch] = lookAt(psel.pmo.pos + (0, 0, psel.viewh), midln);
+						bool tbool = psel.pmo.LineTrace(target_angle,
+														(psel.pmo.pos.xy - midln.xy).length() + 8.0,
+														0, TRF_THRUACTORS | TRF_BLOCKUSE, psel.viewh, data:t);
+						bool swvisible = true;
+						if (!tbool || (t.hitType != TRACE_HitWall) || !t.hitLine || (t.hitLine.Index() != psel.switches[psel.selnum].Index()))
 						{
-							// Maybe the line isn't a wall! Check if it can for SPAC_UseBack condition
-							int plside = Level.ActorOnLineSide(psel.pmo, psel.switches[psel.selnum]);
-							if (plside == 1 && !(psel.switches[psel.selnum].activation & SPAC_UseBack)) { swvisible = false; }
-							if (plside == 0 && ((psel.switches[psel.selnum].activation & (SPAC_Use | SPAC_UseThrough | SPAC_UseBack)) == SPAC_UseBack))
-							{ swvisible = false; }
-						}
-					}
-					if (swvisible)
-					{
-						if (psel.switches[psel.selnum].activation & (SPAC_Use | SPAC_UseThrough | SPAC_UseBack))
-						{
-							int side = 0; // Level.ActorOnLineSide(pmo, switches[selnum]); // SPAC_UseBack gives me segfaults
-							if (!psel.switches[psel.selnum].Activate(psel.pmo, side, SPAC_Use)) // (side == 0 ? SPAC_Use : SPAC_UseBack)))
-								psel.pmo.A_StartSound("noselect", CHAN_ITEM);
-						}
-					} else {
-						psel.pmo.A_StartSound("noselect", CHAN_ITEM);
-					}
-				} else if (psel.inobjarray && (psel.selectables.Size() > psel.selnum)
-						   && psel.selectables[psel.selnum]) {
-					[delta, target_angle, target_pitch] = lookAt(psel.pmo.pos + (0, 0, psel.viewh),
-																 psel.selectables[psel.selnum].pos
-																 + (0, 0, psel.selectables[psel.selnum].height*0.5));
-					bool tbool = psel.pmo.LineTrace(target_angle, players[e.Player].mo.UseRange, target_pitch,
-															   TRF_ALLACTORS | TRF_BLOCKUSE, psel.viewh, data:t);
-					if (!tbool || (t.hitType != TRACE_HitActor) || !t.hitActor || (t.hitActor != psel.selectables[psel.selnum]))
-					{
-						psel.pmo.A_StartSound("noselect", CHAN_ITEM);
-					} else {
-						if (psel.selectables[psel.selnum].bSPECIAL)
-						{
-							psel.selectables[psel.selnum].Touch(psel.pmo);
-						} else if (psel.selectables[psel.selnum].bUSESPECIAL && psel.selectables[psel.selnum].health > 0) {
-							// This whole segment is only for old DECORATE type activate functions
-							let thing = psel.selectables[psel.selnum];
-							if (thing.activationtype & (THINGSPEC_Activate | THINGSPEC_Deactivate | THINGSPEC_Switch))
+							// Center of wall not in line of sight of the player
+							swvisible = !tbool;
+							if (!tbool)
 							{
-								if ((thing.activationtype & THINGSPEC_Switch)
-									&& !(thing.activationtype & (THINGSPEC_Activate | THINGSPEC_Deactivate)))
+								// Maybe the line isn't a wall! Check if it can for SPAC_UseBack condition
+								int plside = Level.ActorOnLineSide(psel.pmo, psel.switches[psel.selnum]);
+								if (plside == 1 && !(psel.switches[psel.selnum].activation & SPAC_UseBack)) { swvisible = false; }
+								if (plside == 0 && ((psel.switches[psel.selnum].activation & (SPAC_Use | SPAC_UseThrough | SPAC_UseBack)) == SPAC_UseBack))
 								{
-									thing.activationtype |= THINGSPEC_Activate;
-								}
-								// Can it be activated?
-								if (thing.activationtype & THINGSPEC_Activate)
-								{
-									thing.activationtype &= ~THINGSPEC_Activate; // Clear flag
-									if (thing.activationtype & THINGSPEC_Switch) // Set other flag if switching
-										thing.activationtype |= THINGSPEC_Deactivate;
-									thing.Activate(psel.pmo);
-								}
-								// If not, can it be deactivated?
-								else if (thing.activationtype & THINGSPEC_Deactivate)
-								{
-									thing.activationtype &= ~THINGSPEC_Deactivate; // Clear flag
-									if (thing.activationtype & THINGSPEC_Switch)	// Set other flag if switching
-										thing.activationtype |= THINGSPEC_Activate;
-									thing.Deactivate(psel.pmo);
+									swvisible = false;
 								}
 							}
-						} else if (!psel.selectables[psel.selnum].Used(psel.pmo)) {
+						}
+						if (swvisible)
+						{
+							if (psel.switches[psel.selnum].activation & (SPAC_Use | SPAC_UseThrough | SPAC_UseBack))
+							{
+								int side = 0; // Level.ActorOnLineSide(pmo, switches[selnum]); // SPAC_UseBack gives me segfaults
+								if (!psel.switches[psel.selnum].Activate(psel.pmo, side, SPAC_Use)) // (side == 0 ? SPAC_Use : SPAC_UseBack)))
+									psel.pmo.A_StartSound("noselect", CHAN_ITEM);
+							}
+						} else {
 							psel.pmo.A_StartSound("noselect", CHAN_ITEM);
 						}
+					} else if (psel.inobjarray && (psel.selectables.Size() > psel.selnum)
+							   && psel.selectables[psel.selnum]) {
+						[delta, target_angle, target_pitch] = lookAt(psel.pmo.pos + (0, 0, psel.viewh),
+																	 psel.selectables[psel.selnum].pos
+																	 + (0, 0, psel.selectables[psel.selnum].height*0.5));
+						bool tbool = psel.pmo.LineTrace(target_angle, players[e.Player].mo.UseRange, target_pitch,
+														TRF_ALLACTORS | TRF_BLOCKUSE, psel.viewh, data:t);
+						if (!tbool || (t.hitType != TRACE_HitActor) || !t.hitActor || (t.hitActor != psel.selectables[psel.selnum]))
+						{
+							psel.pmo.A_StartSound("noselect", CHAN_ITEM);
+						} else {
+							if (psel.selectables[psel.selnum].bSPECIAL)
+							{
+								psel.selectables[psel.selnum].Touch(psel.pmo);
+							} else if (psel.selectables[psel.selnum].bUSESPECIAL && psel.selectables[psel.selnum].health > 0) {
+								// This whole segment is only for old DECORATE type activate functions
+								let thing = psel.selectables[psel.selnum];
+								if (thing.activationtype & (THINGSPEC_Activate | THINGSPEC_Deactivate | THINGSPEC_Switch))
+								{
+									if ((thing.activationtype & THINGSPEC_Switch)
+										&& !(thing.activationtype & (THINGSPEC_Activate | THINGSPEC_Deactivate)))
+									{
+										thing.activationtype |= THINGSPEC_Activate;
+									}
+									// Can it be activated?
+									if (thing.activationtype & THINGSPEC_Activate)
+									{
+										thing.activationtype &= ~THINGSPEC_Activate; // Clear flag
+										if (thing.activationtype & THINGSPEC_Switch) // Set other flag if switching
+											thing.activationtype |= THINGSPEC_Deactivate;
+										thing.Activate(psel.pmo);
+									}
+									// If not, can it be deactivated?
+									else if (thing.activationtype & THINGSPEC_Deactivate)
+									{
+										thing.activationtype &= ~THINGSPEC_Deactivate; // Clear flag
+										if (thing.activationtype & THINGSPEC_Switch)	// Set other flag if switching
+											thing.activationtype |= THINGSPEC_Activate;
+										thing.Deactivate(psel.pmo);
+									}
+								}
+							} else if (!psel.selectables[psel.selnum].Used(psel.pmo)) {
+								psel.pmo.A_StartSound("noselect", CHAN_ITEM);
+							}
+						}
+					} else if (psel.cursec_usable && !psel.inswarray && !psel.inobjarray) {
+						if (!psel.pmo.CurSector.SecActTarget || !psel.pmo.CurSector.TriggerSectorActions(psel.pmo, SectorAction.SECSPAC_Use))
+							psel.pmo.A_StartSound("noselect", CHAN_ITEM);
 					}
-				} else if (psel.cursec_usable && !psel.inswarray && !psel.inobjarray) {
-					if (!psel.pmo.CurSector.SecActTarget || !psel.pmo.CurSector.TriggerSectorActions(psel.pmo, SectorAction.SECSPAC_Use))
-						psel.pmo.A_StartSound("noselect", CHAN_ITEM);
+					psel.isosel = false;
 				}
-				psel.isosel = false;
 			}
 		}
 
-		[key1, key2] = Bindings.GetKeysForCommand("cycle_select");
-		if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
+		keys.clear();
+		Bindings.GetAllKeysForCommand(keys, "cycle_select");
+		foreach (key : keys)
 		{
-			let psel = psels[e.Player];
-			psel.viewh = players[e.Player].mo.viewheight*players[e.Player].crouchfactor; // players[e.Player].mo.height*0.5;
-			if (psel.isosel)
+			if (key && key == e.Args[0])
 			{
-				// Handle next selection change, if possible
-				if (psel.inswarray && (psel.switches.Size() > 0))
+				let psel = psels[e.Player];
+				psel.viewh = players[e.Player].mo.viewheight*players[e.Player].crouchfactor; // players[e.Player].mo.height*0.5;
+				if (psel.isosel)
 				{
-					if (++psel.selnum >= psel.switches.Size())
+					// Handle next selection change, if possible
+					if (psel.inswarray && (psel.switches.Size() > 0))
 					{
+						if (++psel.selnum >= psel.switches.Size())
+						{
+							psel.selnum = 0;
+							if (!psel.cursec_usable && (psel.selectables.Size() > 0)) { psel.inobjarray = true; psel.inswarray = false; }
+							else if (psel.cursec_usable) { psel.inswarray = false; }
+						}
+					} else if (psel.inobjarray && (psel.selectables.Size() > 0)) {
+						if (++psel.selnum >= psel.selectables.Size())
+						{
+							psel.selnum = 0;
+							if (!psel.cursec_usable && (psel.switches.Size() > 0)) { psel.inobjarray = false; psel.inswarray = true; }
+							else if (psel.cursec_usable) { psel.inobjarray = false; }
+						}
+					} else if (psel.cursec_usable && !psel.inswarray && !psel.inobjarray) {
 						psel.selnum = 0;
-						if (!psel.cursec_usable && (psel.selectables.Size() > 0)) { psel.inobjarray = true; psel.inswarray = false; }
-						else if (psel.cursec_usable) { psel.inswarray = false; }
+						if (psel.switches.Size() > 0) psel.inswarray = true;
+						else if (psel.selectables.Size() > 0) psel.inobjarray = true;
 					}
-				} else if (psel.inobjarray && (psel.selectables.Size() > 0)) {
-					if (++psel.selnum >= psel.selectables.Size())
-					{
-						psel.selnum = 0;
-						if (!psel.cursec_usable && (psel.switches.Size() > 0)) { psel.inobjarray = false; psel.inswarray = true; }
-						else if (psel.cursec_usable) { psel.inobjarray = false; }
-					}
-				} else if (psel.cursec_usable && !psel.inswarray && !psel.inobjarray) {
-					psel.selnum = 0;
-					if (psel.switches.Size() > 0) psel.inswarray = true;
-					else if (psel.selectables.Size() > 0) psel.inobjarray = true;
-				}
 
-				// Update selected marker position
-				if (psel.cursec_usable && !psel.inswarray && !psel.inobjarray)
-				{
-					psel.selpos = (psel.pmo.pos.X, psel.pmo.pos.Y, psel.pmo.floorz);
-				} else if (psel.inswarray && (psel.switches.Size() > psel.selnum)) {
-					Vector3 midln = ((psel.switches[psel.selnum].v1.p.x + psel.switches[psel.selnum].v2.p.x)*0.5,
-									 (psel.switches[psel.selnum].v1.p.y + psel.switches[psel.selnum].v2.p.y)*0.5,
-									 psel.pmo.pos.Z + psel.viewh);
-					[delta, target_angle, target_pitch] = lookAt(psel.pmo.pos + (0, 0, psel.viewh), midln);
-					bool tbool = psel.pmo.LineTrace(target_angle,
-													(psel.pmo.pos.xy - midln.xy).length() + 8.0,
-													0, TRF_THRUACTORS | TRF_BLOCKUSE, psel.viewh, data:t);
-					if (!tbool || (t.hitType != TRACE_HitWall) || !t.hitLine || (t.hitLine.Index() != psel.switches[psel.selnum].Index()))
+					// Update selected marker position
+					if (psel.cursec_usable && !psel.inswarray && !psel.inobjarray)
 					{
-						// Center of wall not in line of sight of the player
-						bool setfalse = tbool;
-						if (!tbool)
+						psel.selpos = (psel.pmo.pos.X, psel.pmo.pos.Y, psel.pmo.floorz);
+					} else if (psel.inswarray && (psel.switches.Size() > psel.selnum)) {
+						Vector3 midln = ((psel.switches[psel.selnum].v1.p.x + psel.switches[psel.selnum].v2.p.x)*0.5,
+										 (psel.switches[psel.selnum].v1.p.y + psel.switches[psel.selnum].v2.p.y)*0.5,
+										 psel.pmo.pos.Z + psel.viewh);
+						[delta, target_angle, target_pitch] = lookAt(psel.pmo.pos + (0, 0, psel.viewh), midln);
+						bool tbool = psel.pmo.LineTrace(target_angle,
+														(psel.pmo.pos.xy - midln.xy).length() + 8.0,
+														0, TRF_THRUACTORS | TRF_BLOCKUSE, psel.viewh, data:t);
+						if (!tbool || (t.hitType != TRACE_HitWall) || !t.hitLine || (t.hitLine.Index() != psel.switches[psel.selnum].Index()))
 						{
-							// Maybe the line isn't a wall! Check if it can for SPAC_UseBack condition
-							int plside = Level.ActorOnLineSide(psel.pmo, psel.switches[psel.selnum]);
-							if (plside == 1 && !(psel.switches[psel.selnum].activation & SPAC_UseBack)) { setfalse = true; }
-							if (plside == 0 && ((psel.switches[psel.selnum].activation & (SPAC_Use | SPAC_UseThrough | SPAC_UseBack)) == SPAC_UseBack))
-							{ setfalse = true; }
+							// Center of wall not in line of sight of the player
+							bool setfalse = tbool;
+							if (!tbool)
+							{
+								// Maybe the line isn't a wall! Check if it can for SPAC_UseBack condition
+								int plside = Level.ActorOnLineSide(psel.pmo, psel.switches[psel.selnum]);
+								if (plside == 1 && !(psel.switches[psel.selnum].activation & SPAC_UseBack)) { setfalse = true; }
+								if (plside == 0 && ((psel.switches[psel.selnum].activation & (SPAC_Use | SPAC_UseThrough | SPAC_UseBack)) == SPAC_UseBack))
+								{
+									setfalse = true;
+								}
+							}
+							if (setfalse)
+							{
+								// Something is obstucting it from the player
+								psel.pmo.A_StartSound("noselect", CHAN_ITEM);
+								psel.isosel = false;;
+							}
 						}
-						if (setfalse)
+						if (psel.isosel) {
+							psel.selpos = ((psel.switches[psel.selnum].v1.p.x + psel.switches[psel.selnum].v2.p.x)*0.5,
+										   (psel.switches[psel.selnum].v1.p.y + psel.switches[psel.selnum].v2.p.y)*0.5,
+										   psel.pmo.pos.Z + psel.viewh);
+						}
+					} else if (psel.inobjarray && (psel.selectables.Size() > psel.selnum)) {
+						[delta, target_angle, target_pitch] = lookAt(psel.pmo.pos + (0, 0, psel.viewh),
+																	 psel.selectables[psel.selnum].pos
+																	 + (0, 0, psel.selectables[psel.selnum].height*0.5));
+						bool tbool = psel.pmo.LineTrace(target_angle, players[e.Player].mo.UseRange, target_pitch,
+														TRF_ALLACTORS | TRF_BLOCKUSE, psel.viewh, data:t);
+						if (!tbool || (t.hitType != TRACE_HitActor) || !t.hitActor || (t.hitActor != psel.selectables[psel.selnum]))
 						{
-							// Something is obstucting it from the player
 							psel.pmo.A_StartSound("noselect", CHAN_ITEM);
-							psel.isosel = false;;
+							psel.isosel = false;
+						} else {
+							psel.selpos = psel.selectables[psel.selnum].Pos + (0., 0., psel.selectables[psel.selnum].height*0.5);
+							console.printf("%s selected\n", psel.selectables[psel.selnum].GetClassName());
 						}
 					}
-					if (psel.isosel) {
-						psel.selpos = ((psel.switches[psel.selnum].v1.p.x + psel.switches[psel.selnum].v2.p.x)*0.5,
-									   (psel.switches[psel.selnum].v1.p.y + psel.switches[psel.selnum].v2.p.y)*0.5,
-									   psel.pmo.pos.Z + psel.viewh);
-					}
-				} else if (psel.inobjarray && (psel.selectables.Size() > psel.selnum)) {
-					[delta, target_angle, target_pitch] = lookAt(psel.pmo.pos + (0, 0, psel.viewh),
-																 psel.selectables[psel.selnum].pos
-																 + (0, 0, psel.selectables[psel.selnum].height*0.5));
-					bool tbool = psel.pmo.LineTrace(target_angle, players[e.Player].mo.UseRange, target_pitch,
-													TRF_ALLACTORS | TRF_BLOCKUSE, psel.viewh, data:t);
-					if (!tbool || (t.hitType != TRACE_HitActor) || !t.hitActor || (t.hitActor != psel.selectables[psel.selnum]))
+
+					if (!(psel.inobjarray || psel.inswarray || psel.cursec_usable))//(selectables.Size() == 0) && (switches.Size() == 0))
 					{
 						psel.pmo.A_StartSound("noselect", CHAN_ITEM);
 						psel.isosel = false;
-					} else {
-						psel.selpos = psel.selectables[psel.selnum].Pos + (0., 0., psel.selectables[psel.selnum].height*0.5);
-						console.printf("%s selected\n", psel.selectables[psel.selnum].GetClassName());
 					}
-				}
-
-				if (!(psel.inobjarray || psel.inswarray || psel.cursec_usable))//(selectables.Size() == 0) && (switches.Size() == 0))
-				{				
-					psel.pmo.A_StartSound("noselect", CHAN_ITEM);
-					psel.isosel = false;
-				}
-			} else {
-				psel.Init();
-				psel.cursec_usable = (psel.pmo.CurSector.SecActTarget != null);
-				BlockThingsIterator it = BlockThingsIterator.Create(psel.pmo, players[e.Player].mo.UseRange);
-				Actor obj;
-				while (it.Next())
-				{
-					obj = it.Thing;
-					if (!obj || obj.player || obj.bISMONSTER || obj.bCORPSE || obj.bMASTERNOSEE || obj.bONLYVISIBLEINMIRRORS || obj.bDORMANT || obj.bINVISIBLE || obj.bMISSILE || obj.bNOINTERACTION || obj.bICECORPSE || obj.bCRASHED || obj.bINCONVERSATION || psel.pmo.Distance3D(obj) > players[e.Player].mo.UseRange)
-						continue;
-					[delta, target_angle, target_pitch] = lookAt(psel.pmo.pos + (0, 0, psel.viewh),
-																 obj.pos + (0, 0, obj.height*0.5));
-					bool tbool = psel.pmo.LineTrace(target_angle, players[e.Player].mo.UseRange, target_pitch,
-													TRF_ALLACTORS | TRF_BLOCKUSE, psel.viewh, data:t);
-					if (!tbool || (t.hitType != TRACE_HitActor) || !t.HitActor || (t.HitActor != obj))
-						continue;
-					psel.selectables.Push(obj);
-					psel.selobjsize++;
-					// console.printf("Added %s\n", obj.GetClassName());
-				}
-				BlockLinesIterator it2 = BlockLinesIterator.Create(psel.pmo, players[e.Player].mo.UseRange);
-				Line ln;
-				while (it2.Next())
-				{
-					ln = it2.CurLine;
-					
-					if (shortest_dxy(psel.pmo, ln) > players[e.Player].mo.UseRange)
-						continue;
-
-					if (((psel.pmo.pos.xy - ln.v1.p) dot (ln.v2.p - ln.v1.p) < 0)
-						|| ((psel.pmo.pos.xy - ln.v2.p) dot (ln.v1.p - ln.v2.p) < 0))
+				} else {
+					psel.Init();
+					psel.cursec_usable = (psel.pmo.CurSector.SecActTarget != null);
+					BlockThingsIterator it = BlockThingsIterator.Create(psel.pmo, players[e.Player].mo.UseRange);
+					Actor obj;
+					while (it.Next())
 					{
-						if ((psel.pmo.pos.xy - ln.v1.p).length() > players[e.Player].mo.UseRange
-							&& (psel.pmo.pos.xy - ln.v2.p).length() > players[e.Player].mo.UseRange) continue;
-					}
-
-					if (!(ln.activation & (SPAC_Use | SPAC_UseThrough | SPAC_UseBack)) || (ln.special == 0))
-					{
-						int pside = Level.ActorOnLineSide(psel.pmo, ln);
-						Sector sec = pside == 0 ? ln.frontsector : ln.backsector;
-						if (((sec != null) && (sec.SecActTarget == null)))
+						obj = it.Thing;
+						if (!obj || obj.player || obj.bISMONSTER || obj.bCORPSE || obj.bMASTERNOSEE || obj.bONLYVISIBLEINMIRRORS || obj.bDORMANT || obj.bINVISIBLE || obj.bMISSILE || obj.bNOINTERACTION || obj.bICECORPSE || obj.bCRASHED || obj.bINCONVERSATION || psel.pmo.Distance3D(obj) > players[e.Player].mo.UseRange)
 							continue;
+						[delta, target_angle, target_pitch] = lookAt(psel.pmo.pos + (0, 0, psel.viewh),
+																	 obj.pos + (0, 0, obj.height*0.5));
+						bool tbool = psel.pmo.LineTrace(target_angle, players[e.Player].mo.UseRange, target_pitch,
+														TRF_ALLACTORS | TRF_BLOCKUSE, psel.viewh, data:t);
+						if (!tbool || (t.hitType != TRACE_HitActor) || !t.HitActor || (t.HitActor != obj))
+							continue;
+						psel.selectables.Push(obj);
+						psel.selobjsize++;
+						// console.printf("Added %s\n", obj.GetClassName());
 					}
-					if (ln.special == 0) continue;
-					psel.switches.Push(ln);
-					psel.selswsize++;
-				}
-				for (int iter = 0; iter < psel.switches.Size(); iter++)
-				{
-					// Something in LineTrace() prevents this from being called inside the BlockLinesIterator while loop
-					ln = psel.switches[iter];
-					Vector3 midln = ((ln.v1.p.x + ln.v2.p.x)*0.5,
-									 (ln.v1.p.y + ln.v2.p.y)*0.5,
-									 psel.pmo.pos.Z + psel.viewh);
-					[delta, target_angle, target_pitch] = lookAt(psel.pmo.pos + (0, 0, psel.viewh), midln);
-					bool tempbool = psel.pmo.LineTrace(target_angle,
-													   (psel.pmo.pos.xy - midln.xy).length() + 8.0,
-													   0, TRF_THRUACTORS | TRF_BLOCKUSE, psel.viewh, data:t);
-					if (!tempbool || (t.HitType != TRACE_HitWall) || !t.HitLine || (t.HitLine.Index() != ln.Index()))
+					BlockLinesIterator it2 = BlockLinesIterator.Create(psel.pmo, players[e.Player].mo.UseRange);
+					Line ln;
+					while (it2.Next())
 					{
-						// Center of wall not in line of sight of the player
-						if (!tempbool)
+						ln = it2.CurLine;
+
+						if (shortest_dxy(psel.pmo, ln) > players[e.Player].mo.UseRange)
+							continue;
+
+						if (((psel.pmo.pos.xy - ln.v1.p) dot (ln.v2.p - ln.v1.p) < 0)
+							|| ((psel.pmo.pos.xy - ln.v2.p) dot (ln.v1.p - ln.v2.p) < 0))
 						{
-							// Maybe the line isn't a wall! Check if it can for SPAC_UseBack condition
-							int plside = Level.ActorOnLineSide(psel.pmo, ln);
-							if (plside == 1 && !(ln.activation & SPAC_UseBack)) { psel.switches.Delete(iter--); }
-							if (plside == 0 && ((ln.activation & (SPAC_Use | SPAC_UseThrough | SPAC_UseBack)) == SPAC_UseBack))
-							{ psel.switches.Delete(iter--); }
-						} else {
-							// Something is obstucting it from the player
-							psel.switches.Delete(iter--);
+							if ((psel.pmo.pos.xy - ln.v1.p).length() > players[e.Player].mo.UseRange
+								&& (psel.pmo.pos.xy - ln.v2.p).length() > players[e.Player].mo.UseRange) continue;
+						}
+
+						if (!(ln.activation & (SPAC_Use | SPAC_UseThrough | SPAC_UseBack)) || (ln.special == 0))
+						{
+							int pside = Level.ActorOnLineSide(psel.pmo, ln);
+							Sector sec = pside == 0 ? ln.frontsector : ln.backsector;
+							if (((sec != null) && (sec.SecActTarget == null)))
+								continue;
+						}
+						if (ln.special == 0) continue;
+						psel.switches.Push(ln);
+						psel.selswsize++;
+					}
+					for (int iter = 0; iter < psel.switches.Size(); iter++)
+					{
+						// Something in LineTrace() prevents this from being called inside the BlockLinesIterator while loop
+						ln = psel.switches[iter];
+						Vector3 midln = ((ln.v1.p.x + ln.v2.p.x)*0.5,
+										 (ln.v1.p.y + ln.v2.p.y)*0.5,
+										 psel.pmo.pos.Z + psel.viewh);
+						[delta, target_angle, target_pitch] = lookAt(psel.pmo.pos + (0, 0, psel.viewh), midln);
+						bool tempbool = psel.pmo.LineTrace(target_angle,
+														   (psel.pmo.pos.xy - midln.xy).length() + 8.0,
+														   0, TRF_THRUACTORS | TRF_BLOCKUSE, psel.viewh, data:t);
+						if (!tempbool || (t.HitType != TRACE_HitWall) || !t.HitLine || (t.HitLine.Index() != ln.Index()))
+						{
+							// Center of wall not in line of sight of the player
+							if (!tempbool)
+							{
+								// Maybe the line isn't a wall! Check if it can for SPAC_UseBack condition
+								int plside = Level.ActorOnLineSide(psel.pmo, ln);
+								if (plside == 1 && !(ln.activation & SPAC_UseBack)) { psel.switches.Delete(iter--); }
+								if (plside == 0 && ((ln.activation & (SPAC_Use | SPAC_UseThrough | SPAC_UseBack)) == SPAC_UseBack))
+									{ psel.switches.Delete(iter--); }
+							} else {
+								// Something is obstucting it from the player
+								psel.switches.Delete(iter--);
+							}
 						}
 					}
-				}
-				psel.selswsize = psel.switches.Size();
-				psel.isosel = (psel.cursec_usable || (psel.selswsize > 0) || (psel.selobjsize > 0));
-				if (psel.cursec_usable) {
-					psel.selpos = (psel.pmo.pos.X, psel.pmo.pos.Y, psel.pmo.floorz);
-				} else if (psel.selswsize > 0) {
-					psel.inswarray = true;
-					psel.selpos = ((psel.switches[0].v1.p.x + psel.switches[0].v2.p.x)*0.5,
-								   (psel.switches[0].v1.p.y + psel.switches[0].v2.p.y)*0.5,
-								   psel.pmo.pos.Z + psel.viewh);
-					// console.printf("%d Lines selected\n", psel.selswsize);
-				} else if (psel.selobjsize > 0) {
-					psel.inobjarray = true;
-					psel.selpos = psel.selectables[0].pos + (0., 0., psel.selectables[0].height*0.5);
-					console.printf("%s selected\n", psel.selectables[0].GetClassName());
-				} else {
-					psel.pmo.A_StartSound("noselect", CHAN_ITEM);
+					psel.selswsize = psel.switches.Size();
+					psel.isosel = (psel.cursec_usable || (psel.selswsize > 0) || (psel.selobjsize > 0));
+					if (psel.cursec_usable) {
+						psel.selpos = (psel.pmo.pos.X, psel.pmo.pos.Y, psel.pmo.floorz);
+					} else if (psel.selswsize > 0) {
+						psel.inswarray = true;
+						psel.selpos = ((psel.switches[0].v1.p.x + psel.switches[0].v2.p.x)*0.5,
+									   (psel.switches[0].v1.p.y + psel.switches[0].v2.p.y)*0.5,
+									   psel.pmo.pos.Z + psel.viewh);
+						// console.printf("%d Lines selected\n", psel.selswsize);
+					} else if (psel.selobjsize > 0) {
+						psel.inobjarray = true;
+						psel.selpos = psel.selectables[0].pos + (0., 0., psel.selectables[0].height*0.5);
+						console.printf("%s selected\n", psel.selectables[0].GetClassName());
+					} else {
+						psel.pmo.A_StartSound("noselect", CHAN_ITEM);
+					}
 				}
 			}
 		}
@@ -448,25 +556,33 @@ class MKeyEvents : EventHandler
     {
 		int key1, key2;
 		[key1, key2] = Bindings.GetKeysForCommand("rotate_cam_left");
-		if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
-			rotlefts[e.Player].SetBool(false);
-		else
+		array<int> keys;
+		Bindings.GetAllKeysForCommand(keys, "rotate_cam_left");
+		foreach (key : keys)
 		{
-			[key1, key2] = Bindings.GetKeysForCommand("rotate_cam_right");
-			if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
+			if (key && key == e.Args[0])
+				rotlefts[e.Player].SetBool(false);
+		}
+		keys.clear();
+		Bindings.GetAllKeysForCommand(keys, "rotate_cam_right");
+		foreach (key : keys)
+		{
+			if (key && key == e.Args[0])
 				rotrights[e.Player].SetBool(false);
 		}
-
-		[key1, key2] = Bindings.GetKeysForCommand("look_up");
-		if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
+		keys.clear();
+		Bindings.GetAllKeysForCommand(keys, "look_up");
+		foreach (key : keys)
 		{
-			lookingup[e.Player].SetBool(false);
+			if (key && key == e.Args[0])
+				lookingup[e.Player].SetBool(false);
 		}
-
-		[key1, key2] = Bindings.GetKeysForCommand("look_down");
-		if ((key1 && key1 == e.Args[0]) || (key2 && key2 == e.Args[0]))
+		keys.clear();
+		Bindings.GetAllKeysForCommand(keys, "look_down");
+		foreach (key : keys)
 		{
-			lookingdown[e.Player].SetBool(false);
+			if (key && key == e.Args[0])
+				lookingdown[e.Player].SetBool(false);
 		}
 	}
   }
@@ -714,9 +830,11 @@ class RenderCursorsOverlay : EventHandler
 	cvar scopesize, scopexpos, scopeypos;
 	cvar aimbeam, scopetype, cursdist, cursoffy;
 	cvar lookingup, lookingdown;
+	cvar mousemove;
 	FLineTraceData t[MAXPLAYERS];
 	Vector3 hitloc;
 	Actor actorhit[MAXPLAYERS];
+	ui int oldmx, oldmy;
 
 	// getActorMaxHealth(), makeHpBar(), and makeRepeating() functions
 	// are derived from similar functions defined in the Target-Spy mod
@@ -801,6 +919,7 @@ class RenderCursorsOverlay : EventHandler
 	  isopitch = CVar.GetCVar("IsometricPitch", players[consoleplayer]);
 	  isoaimdist = CVar.GetCVar("IsoAimAssistMaxDist", players[consoleplayer]);
 	  isoaimassist = CVar.GetCVar("IsoAimAssist", players[consoleplayer]);
+	  mousemove = CVar.GetCVar("IsoMouseMove", players[consoleplayer]);
 	  showwep = CVar.GetCVar("IsoHUDShowWeapon", players[consoleplayer]);
 	  showscope = CVar.GetCVar("IsoHUDShowTarget", players[consoleplayer]);
 	  showscopehealth = CVar.GetCVar("IsoHUDShowTargetHealth", players[consoleplayer]);
@@ -916,11 +1035,30 @@ class RenderCursorsOverlay : EventHandler
 			  selcos -= (int)(seldisp.xy.length()*Cos(diffangle)*yproj + seldisp.z*zproj);
 			  selcos -= (screenblocks <= 10 ? (int)(yscale*StatusBar.RelTop) : 0);
 			  selsin += (int)(seldisp.xy.length()*Sin(diffangle)*xproj);
+
+			  if (mousemove.GetBool())
+			  {
+				  Inventory isomover = pmo.FindInventory("IsometricMovement");
+				  /* if (isomover) console.printf("%d, %d\n", IsometricMovement(isomover).mousex, */
+				  /* 							 IsometricMovement(isomover).mousey); */
+				  oldmx += (int)(e.fracTic*(IsometricMovement(isomover).mousex - oldmx));
+				  oldmy += (int)(e.fracTic*(IsometricMovement(isomover).mousey
+											- (screenblocks <= 10 ? (int)(1.2*yscale*StatusBar.RelTop) : 0) - oldmy));
+				  int cursortype = 0; // 0: aim_hair, 1: dir_hair, 2: sel_hair, 3: tar_hair
+				  string cursorimg[4] = {"sprites/aim_hair.png", "sprites/dir_hair.png", "sprites/sel_hair.png", "sprites/tar_hair.png"};
+				  if (IsometricMovement(isomover).pointusable && !IsometricMovement(isomover).pointshootable
+					  && !IsometricMovement(isomover).fleemode && !IsometricMovement(isomover).hipfire)
+					  cursortype = 2;
+				  else if (IsometricMovement(isomover).fleemode) cursortype = 1;
+				  else if (IsometricMovement(isomover).hipfire || IsometricMovement(isomover).pointshootable) cursortype = 3;
+				  else cursortype = 0;
+				  double cursorscale = (cursortype < 2 ? 1.2 : 0.75);
+				  StatusBar.DrawImage(cursorimg[cursortype], (oldmx/scaleFactor.x, oldmy/scaleFactor.y),
+									  StatusBar.DI_SCREEN_CENTER | StatusBar.DI_ITEM_CENTER,
+									  scale: (cursorscale, cursorscale));
+			  }
 	      }
 	    }
-		/* float cfact = 0.5; */
-		/* StatusBar.DrawImage("sprites/aim_hair.png", (Screen.GetWidth()*cfact/scaleFactor.x, Screen.GetHeight()*cfact/scaleFactor.y), */
-		/* 					StatusBar.DI_SCREEN_CENTER | StatusBar.DI_ITEM_CENTER, scale: (1.2, 1.2)); */
 
 	    if (isoaimassist.GetBool() && !(ldown || lup))
 	    {
@@ -1006,6 +1144,8 @@ class IsoAimAssistHandler : StaticEventHandler
 	cvar max_dists[MAXPLAYERS];
 	cvar lookingup[MAXPLAYERS];
 	cvar lookingdown[MAXPLAYERS];
+	cvar mousemove[MAXPLAYERS];
+	Inventory isomover[MAXPLAYERS];
 
 	override void WorldLoaded (WorldEvent e)
 	{
@@ -1017,6 +1157,8 @@ class IsoAimAssistHandler : StaticEventHandler
 				max_dists[i] = CVar.GetCVar("IsoAimAssistMaxDist", players[i]);
 				lookingup[i] = CVar.GetCVar("IsoLookingUp", players[i]);
 				lookingdown[i] = CVar.GetCVar("IsoLookingDown", players[i]);
+				mousemove[i] = CVar.GetCVar("IsoMouseMove", players[i]);
+				isomover[i] = players[i].mo.FindInventory("IsometricMovement");
 				players[i].mo.bPickup = CVar.GetCVar("IsoAllowTouchPickup", players[i]).GetBool(); // Didn't want another staticeventhandler
 				MKeyEvents(EventHandler.Find("MKeyEvents")).psels[i].isosel = false; // Didn't want another staticeventhandler
 			}
@@ -1127,7 +1269,7 @@ class IsoAimAssistHandler : StaticEventHandler
 		  double angle_diff = pawn.DeltaAngle(pawn.angle, target_angle);
 		  double pitch_diff = pawn.DeltaAngle(pawn.pitch, target_pitch);
 
-		  double rot_speed = 1;
+		  double rot_speed = (mousemove[pnum].GetBool() ? 10.0 : 1.0);
 		  if (aimassist.GetBool())
 		  {
 		    //check rotation speed
@@ -1161,7 +1303,18 @@ class IsoAimAssistHandler : StaticEventHandler
 	    {
 			if (lookingup[i].GetBool()) players[i].mo.A_SetPitch(-45);
 			else if (lookingdown[i].GetBool()) players[i].mo.A_SetPitch(45);
-			else if (!doAim(i)) players[i].mo.A_SetPitch(0);
+			else
+			{
+				if (mousemove[i].GetBool() && isomover[i])
+				{
+					if (!doAim(i))
+					{
+						players[i].mo.A_SetPitch((IsometricMovement(isomover[i]).plrpitch > 5 ? // Avoid hipfire to ground
+												  0 : IsometricMovement(isomover[i]).plrpitch));
+					}
+				}
+				else if (!doAim(i)) players[i].mo.A_SetPitch(0);
+			}
 	    }
 	  }
 	}

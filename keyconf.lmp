@@ -30,3 +30,10 @@ addmenukey "Look Down" "look_down"
 alias "look_down" ""
 defaultbind Z "look_down"
 
+addkeysection "Mouse Movement Modifiers" MouseMovementControlSection
+addmenukey "Stand Still and Fire" "hip_fire_mode"
+alias "hip_fire_mode" ""
+defaultbind shift "hip_fire_mode"
+addmenukey "Hold Fire and Move" "flee_mode"
+alias "flee_mode" ""
+defaultbind ctrl "flee_mode"

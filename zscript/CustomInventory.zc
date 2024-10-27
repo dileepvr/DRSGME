@@ -142,17 +142,42 @@ class Z_NashMove : CustomInventory
 class IsometricMovement : CustomInventory
 {
 	int diffangle, face_cam_mult, ctrltype, oldcmdyaw, oldsidemove, oldforwardmove;
-	cvar isoyaw, aimassist, keyctrltype, mousemove;
+	cvar isoyaw, aimassist, keyctrltype, mousemove, lookingup, lookingdown;
 	bool sidedownfacecam, fwddownfacecam;
-	int mousex, mousey;
-
+	int debounce_timer, debounce_ticks;
+	int mousex, mousey, mx, my, mxmax, mymax;
+	float msense;
+	double plrpitch;
+	bool hipfire, fleemode, pointmonster, pointshootable, pointusable, nolos2shootable, firekeydown, altfirekeydown;
+	double xproj, yproj, zproj;
+	int seestatecounter;
+ 
 	property mousex : mousex;
 	property mousey : mousey;
+	property hipfire : hipfire;
+	property fleemode : fleemode;
+	property pointmonster : pointmonster;
+	property pointshootable : pointshootable;
+	property pointusable : pointusable;
+	property nolos2shootable : nolos2shootable;
+	property firekeydown : firekeydown;
+	property altfirekeydown : altfirekeydown;
+	property plrpitch : plrpitch; // Pitch to adopt when aim-assist in hipfire mode returns negative
 	
 	Default
 	{
 		IsometricMovement.mousex 0;
 		IsometricMovement.mousey 0;
+
+		IsometricMovement.pointmonster false;
+		IsometricMovement.pointshootable false;
+		IsometricMovement.pointusable false;
+		IsometricMovement.nolos2shootable false;
+		IsometricMovement.firekeydown false;
+		IsometricMovement.altfirekeydown false;
+		IsometricMovement.hipfire false;
+		IsometricMovement.fleemode false;
+		IsometricMovement.plrpitch 0;
 
 		Inventory.MaxAmount 1;
 		+INVENTORY.UNDROPPABLE
@@ -161,6 +186,12 @@ class IsometricMovement : CustomInventory
 		+INVENTORY.AUTOACTIVATE
 	}
 
+	override void BeginPlay()
+	{
+		Super.BeginPlay();
+		// ChangeStatNum(Thinker.STAT_PLAYER - 1); // For performance (dangerous code)
+	}
+  
 	bool bIsInPain(void)
 	{
 		State PainState = Owner.FindState('Pain');
@@ -173,12 +204,14 @@ class IsometricMovement : CustomInventory
 
 	override void PostBeginPlay()
 	{
-	        Super.PostBeginPlay();
-	        if (Owner && Owner is "PlayerPawn")
+		Super.PostBeginPlay();
+		if (Owner && Owner is "PlayerPawn" && Owner.player)
 		{
 		  isoyaw = CVar.GetCVar("IsometricYaw", Owner.player);
 		  aimassist = CVar.GetCVar("IsoAimAssist", Owner.player);
 		  mousemove = CVar.GetCVar("IsoMouseMove", Owner.player);
+		  lookingup = CVar.GetCVar("IsoLookingUp", Owner.player);
+		  lookingdown = CVar.GetCVar("IsoLookingDown", Owner.player);
 		  keyctrltype = CVar.GetCVar("IsoControlType", Owner.player);
 		}
 		face_cam_mult = 1;
@@ -187,6 +220,15 @@ class IsometricMovement : CustomInventory
 		oldforwardmove = 0;
 		sidedownfacecam = false;
 		fwddownfacecam = false;
+
+		mx = 0; my = 0;
+		msense = 20.0; // Bigger means slower
+		mxmax = (int)(msense*0.5*Screen.GetWidth());
+		mymax = (int)(msense*0.5*Screen.GetHeight());
+
+		debounce_timer = 0;
+		debounce_ticks = 10; // Things cannot be repeatedly switched/used faster than this by clicking
+		seestatecounter = 0;
 	}
 
 	//===========================================================================
@@ -194,6 +236,192 @@ class IsometricMovement : CustomInventory
 	//
 	//
 	//===========================================================================
+
+	void UpdateScreenProjVars()
+	{
+		let player = Owner.player;
+		if (player.camera && player.camera.ViewPos && player.camera.player && player.camera.player == player)
+		{
+			double xscale = 0.375*( screenblocks >= 10 ? Screen.GetWidth() : 0.1*screenblocks*Screen.GetWidth() );
+			double myfov = (player.camera.player ? player.camera.player.FOV : player.camera.CameraFOV);
+			xscale *= 1.0/tan(clamp(myfov, 5.0, 170.0) * 0.5);
+			double aspratio = (1.0 * Screen.GetWidth()) / (1.0 * Screen.GetHeight());
+			if (aspratio > 1.0) xscale *= 1.777778/aspratio;
+			double yscale = 1.253229 - 0.0616458*sin(player.camera.pitch)*sin(player.camera.pitch) - 0.191609*sin(player.camera.pitch);
+			xproj = xscale/player.camera.ViewPos.offset.length();
+			yproj = Sin(player.camera.pitch)*xproj*yscale;
+			zproj = Cos(player.camera.pitch)*xproj*yscale;
+		}
+	}
+	
+	int, Vector3, actor, Line ScanTrace(int sx, int sy)
+	{
+		int validloc = TRACE_HitNone;
+		actor pointedmo = NULL;
+		Line pointedln = NULL;
+		let player = Owner.player;
+		pointmonster = false; pointshootable = false; pointusable = false; nolos2shootable = false;
+		Vector3 hitloc = (player.camera ? player.camera.pos : Owner.pos);
+		int firsttraceflags = TRF_THRUACTORS | TRF_THRUBLOCK | TRF_THRUHITSCAN;
+		double offsetz = 0.5 * ( player.camera && player.camera.tracer ? player.camera.tracer.height : Owner.height );
+		Vector2 sxy = (sx/xproj, -sy/yproj); // sy is positive for bottom half of screen
+		double relposdist = sxy.length();
+		double screenang = sxy.Angle();
+		double worldang = deltaangle(-player.camera.angle, -90+screenang);
+		double isodist = (player.camera.ViewPos ? player.camera.ViewPos.offset.length() : 100.0);
+		double azimax = atan2(isodist, relposdist);
+		hitloc = Owner.pos + (relposdist*Cos(worldang), relposdist*Sin(worldang), offsetz);
+
+		FLineTraceData t, t2;
+		int trf_flags = TRF_ABSPOSITION | TRF_THRUACTORS | TRF_THRUBLOCK | TRF_THRUHITSCAN;
+		int trf_flags2 = TRF_ABSPOSITION | TRF_ALLACTORS | TRF_THRUBLOCK | TRF_THRUHITSCAN;
+		Vector3 dir = (Cos(deltaangle(180, player.camera.angle))*Cos(player.camera.pitch),
+					   Sin(deltaangle(180, player.camera.angle))*Cos(player.camera.pitch),
+					   Sin(player.camera.pitch));
+		for (double mylen = 3.0*tan(azimax)*relposdist; mylen > -tan(azimax)*relposdist; mylen -= offsetz)
+		{
+			Vector3 inhitloc = hitloc + mylen*dir;
+			if (level.IsPointInLevel(inhitloc))
+			{
+				// Shoot trace towards (anti-parallel to) camera
+				if (player.mo.LineTrace(deltaangle(180, player.camera.angle), isodist*3, -player.camera.pitch, trf_flags,
+										inhitloc.z, inhitloc.x, inhitloc.y, data:t))
+				{
+					inhitloc = t.HitLocation - 0.1 * dir;
+					// Shoot trace away from (parallel to) camera
+					if(player.mo.LineTrace(player.camera.angle, isodist*3, player.camera.pitch, trf_flags2,
+										   inhitloc.z, inhitloc.x, inhitloc.y, data:t2))
+					{						
+						inhitloc = t2.HitLocation;
+						Vector3 dummy = level.vec3diff(Owner.pos, inhitloc);
+						plrpitch = atan2(Owner.pos.z + player.ViewHeight*player.crouchfactor - inhitloc.z, dummy.xy.length());
+						if (t2.HitType == TRACE_HitActor && t2.HitActor)
+						{
+							pointmonster = t2.HitActor.bISMONSTER && !t2.HitActor.bCORPSE;
+							pointshootable = t2.HitActor.bSHOOTABLE;
+							pointusable = !(t2.HitActor.player || t2.HitActor.bISMONSTER || t2.HitActor.bCORPSE
+											|| t2.HitActor.bMASTERNOSEE || t2.HitActor.bONLYVISIBLEINMIRRORS
+											|| t2.HitActor.bDORMANT || t2.HitActor.bINVISIBLE || t2.HitActor.bMISSILE
+											|| t2.HitActor.bNOINTERACTION || t2.HitActor.bICECORPSE
+											|| t2.HitActor.bCRASHED || t2.HitActor.bINCONVERSATION);
+							validloc = TRACE_HitActor;
+							pointedmo = t2.HitActor;
+						}
+						else if (t2.HitType == TRACE_HitWall && t2.HitLine && t2.HitTexture && t2.HitTexture.IsValid())
+						{
+							pointusable = (t2.HitLine.activation & (SPAC_Use | SPAC_UseThrough | SPAC_UseBack));
+							pointusable &= (t2.HitLine.special != 0);
+							validloc = TRACE_HitWall;
+							pointedln = t2.HitLine;
+						}
+						else if (t2.HitType == TRACE_HitFloor)
+						{
+							validloc = TRACE_HitFloor;
+							inhitloc.z += offsetz;
+						}
+					}
+				}
+				hitloc = inhitloc;
+				break;
+			}
+		}
+		return validloc, hitloc, pointedmo, pointedln;
+	}
+
+	//get shorted xy-distance between actor and line
+	static double shortest_dxy(Actor mo, Line ln)
+	{
+		double lnlength = (ln.v1.p - ln.v2.p).length();
+		if (lnlength == 0.0) return (mo.pos.xy - ln.v1.p).length();
+		else
+		{
+			return abs((ln.v2.p.y - ln.v1.p.y)* mo.pos.x - (ln.v2.p.x - ln.v1.p.x)* mo.pos.y
+					   + ln.v2.p.x * ln.v1.p.y - ln.v2.p.y * ln.v1.p.x) / lnlength;
+		}
+	}
+
+	bool TryInteract(int tracehittype, Actor mo, Line ln)
+	{
+		bool withinuserange = false;
+		let player = Owner.player;
+		if (tracehittype == TRACE_HitActor && mo)
+		{
+			if ((Owner.Distance3D(mo) < 64 + mo.Radius) && Owner.CheckSight(mo))
+			{
+				withinuserange = true;
+				if (debounce_timer == 0)
+				{
+					debounce_timer = debounce_ticks;
+					if (mo.bSPECIAL) mo.Touch(Owner);
+					else if (mo.bUSESPECIAL && mo.health > 0)
+					{
+						// This whole segment is only for old DECORATE type activate functions
+						if (mo.activationtype & (THINGSPEC_Activate | THINGSPEC_Deactivate | THINGSPEC_Switch))
+						{
+							if ((mo.activationtype & THINGSPEC_Switch)
+								&& !(mo.activationtype & (THINGSPEC_Activate | THINGSPEC_Deactivate)))
+							{
+								mo.activationtype |= THINGSPEC_Activate;
+							}
+							// Can it be activated?
+							if (mo.activationtype & THINGSPEC_Activate)
+							{
+								mo.activationtype &= ~THINGSPEC_Activate; // Clear flag
+								if (mo.activationtype & THINGSPEC_Switch) // Set other flag if switching
+									mo.activationtype |= THINGSPEC_Deactivate;
+								mo.Activate(Owner);
+							}
+							// If not, can it be deactivated?
+							else if (mo.activationtype & THINGSPEC_Deactivate)
+							{
+								mo.activationtype &= ~THINGSPEC_Deactivate; // Clear flag
+								if (mo.activationtype & THINGSPEC_Switch)	// Set other flag if switching
+									mo.activationtype |= THINGSPEC_Activate;
+								mo.Deactivate(Owner);
+							}
+						}
+					}
+					else if (!mo.Used(Owner)) A_StartSound("noselect", CHAN_ITEM);
+				} // debounce_timer
+			} // Distance3D
+		}
+		else if (tracehittype == TRACE_HitWall && ln)
+		{
+			if (shortest_dxy(Owner, ln) < 64)
+			{
+				bool swvisible = true;
+				int plside = Level.ActorOnLineSide(Owner, ln);
+				if (plside == 1 && !(ln.activation & SPAC_UseBack)) { swvisible = false; }
+				if (plside == 0 && ((ln.activation & (SPAC_Use | SPAC_UseThrough | SPAC_UseBack)) == SPAC_UseBack))
+			    { swvisible = false; }
+
+				if (swvisible)
+				{
+					if (ln.activation & (SPAC_Use | SPAC_UseThrough | SPAC_UseBack))
+					{
+						int side = 0; // Level.ActorOnLineSide(Owner, ln); // SPAC_UseBack gives me segfaults
+						if (!ln.Activate(Owner, side, SPAC_Use)) // (side == 0 ? SPAC_Use : SPAC_UseBack)))
+							Owner.A_StartSound("noselect", CHAN_ITEM);
+						else
+							withinuserange = true;
+					}
+				} else {
+					Owner.A_StartSound("noselect", CHAN_ITEM);
+				}
+			}
+		}
+		return withinuserange;
+	}
+
+	int, int GetScreenXY(Vector3 relpos)
+	{
+		let player = Owner.player;
+		int sx, sy;
+		double  diffang = deltaangle(relpos.Angle(), player.camera.angle);
+		sx = (int)( relpos.xy.length() * Sin(diffang) * xproj );
+		sy = (int)( -relpos.xy.length() * Cos(diffang) * yproj - relpos.z * zproj );
+		return sx, sy;
+	}
 
 	void MoveRelativeToCamera(UserCmd cmd)
 	{
@@ -245,7 +473,12 @@ class IsometricMovement : CustomInventory
 			destroy(); return;
 		}
 
-		if (!automapactive && Owner && Owner is "PlayerPawn") // Remap controls for isometric mode
+		mxmax = (int)(msense*0.5*Screen.GetWidth());
+		mymax = (int)(msense*0.5*Screen.GetHeight());
+
+		if (debounce_timer > 0) debounce_timer--;
+
+		if (!automapactive && Owner && Owner is "PlayerPawn" && Owner.player) // Remap controls for isometric mode
 		{
 		  let player = Owner.player;
 		  UserCmd cmd = player.cmd;
@@ -254,7 +487,7 @@ class IsometricMovement : CustomInventory
 		  if (abs(diffangle) > 90) face_cam_mult = -1; // Player is facing camera
 		  else face_cam_mult = 1; // Player is facing away from camera
 
-		  Owner.angle -= cmd.yaw * (360./65536.); // Cancel default mouse-turn first
+		  Owner.angle -= cmd.yaw * (360/65536.f); // Cancel default mouse-turn first
 		  float newyaw = 0;
 
  		  if(diffangle >= 0) newyaw += cmd.pitch;
@@ -266,7 +499,7 @@ class IsometricMovement : CustomInventory
 		  float absdiff = abs(diffangle);
 		  oldcmdyaw = cmd.yaw;
 
-		  Owner.angle += newyaw * (360./65536.);
+		  if (!mousemove.GetBool()) Owner.angle += newyaw * (360./65536.);
 
 		  // Reverse side-movement (strafing) control mapping
 		  bool keychange = (oldsidemove != cmd.sidemove) || (oldforwardmove != cmd.forwardmove);
@@ -308,6 +541,118 @@ class IsometricMovement : CustomInventory
 
 		  oldsidemove = cmd.sidemove;
 		  oldforwardmove = cmd.forwardmove;
+
+		  if (mousemove.GetBool()) // Diablo-Style
+		  {
+			  // Handle mouse movement on screenspace
+			  int inyaw = cmd.yaw; // GetPlayerInput(INPUT_YAW);
+			  int inpitch = cmd.pitch; // GetPlayerInput(INPUT_PITCH);
+			  mx = clamp(mx - inyaw, -mxmax, mxmax);
+			  my = clamp(my - inpitch, -mymax, mymax);
+			  mousex = (int)(mx/msense);
+			  mousey = (int)(my/msense);
+
+			  UpdateScreenProjVars();
+			  int validloc = TRACE_HitNone;
+			  Vector3 hitloc;
+			  actor pointedmo = NULL;
+			  Line pointedln = NULL;
+			  [validloc, hitloc, pointedmo, pointedln] = ScanTrace(mousex, mousey); // What is the mouse pointing at?
+
+			  if (pointshootable)
+			  {
+				  FLineTraceData tt;
+				  bool tbool = player.mo.LineTrace(Owner.AngleTo(pointedmo), Owner.Distance3D(pointedmo),
+												   plrpitch, 0, player.ViewHeight*player.crouchfactor,
+												   0, 0, data:tt);
+				  nolos2shootable = !tbool || !(tt.HitType == TRACE_HitActor && tt.HitActor == pointedmo);
+			  }
+
+			  int plrx = 0;
+			  int plry = 0;
+			  if (player.camera) [plrx, plry] = GetScreenXY(level.vec3diff(player.camera.pos, Owner.pos));
+			  diffangle = deltaangle(Owner.angle, player.camera.angle);
+			  double diffangle2 = deltaangle(-90, atan2((mousey-plry)/yproj, (mousex-plrx)/xproj));
+			  if (fleemode && validloc != TRACE_HitNone)
+				  diffangle2 = deltaangle(diffangle2, player.camera.angle);
+			  
+			  if (validloc != TRACE_HitNone && !fleemode) diffangle2 = level.vec3diff(Owner.pos, hitloc).Angle();
+			  int buttons = cmd.buttons;
+			  if ((buttons & (BT_ATTACK | BT_ALTATTACK)) || firekeydown || altfirekeydown
+				  || hipfire || fleemode || lookingup.GetBool() || lookingdown.GetBool())
+			  {
+				  if (validloc != TRACE_HitNone) Owner.A_SetAngle(diffangle2, SPF_INTERPOLATE); // Turn to face the mouse cursor
+				  else Owner.A_SetAngle(Owner.angle + deltaangle(diffangle2, diffangle), SPF_INTERPOLATE);
+
+				  bool movefwd = false; // Move towards mouse cursor
+				  bool interact = false; // Interact with object/line the cursor is pointing at
+				  if (fleemode && firekeydown)
+				  {
+					  movefwd = true;
+				  }
+				  else if (!fleemode && !hipfire)
+				  {
+					  if ((firekeydown || altfirekeydown) && pointshootable)
+					  {
+						  if (player.readyweapon && player.readyweapon.bMELEEWEAPON && pointedmo
+								  && (Owner.Distance3D(pointedmo) > Owner.MeleeRange + Owner.MELEEDELTA + pointedmo.Radius))
+						  {
+							  movefwd = true;
+						  }
+						  else if (nolos2shootable)
+						  {
+							  movefwd = false;
+							  Owner.A_StartSound("noselect", CHAN_WEAPON);
+						  }
+						  else
+						  {
+							  Owner.A_SetPitch(plrpitch); // Fire away
+						  }
+					  }
+					  else if (altfirekeydown && pointusable)
+					  {
+						  interact = TryInteract(validloc, pointedmo, pointedln);
+						  movefwd = !interact;
+					  }
+					  else if (firekeydown)
+					  {
+						  movefwd = true;
+					  }
+				  }
+
+				  if (movefwd)
+				  {
+					  double fm, sm;
+					  [fm, sm] = PlayerPawn(Owner).TweakSpeeds((buttons & BT_RUN ? 12800 : 6400), 0);
+					  // sm *= Owner.Speed / 256.;
+					  fm *= Owner.Speed / 256.;
+					  if (PlayerPawn(Owner).CanCrouch() && player.crouchfactor != 1)
+					  {
+						  // sm *= player.crouchfactor;
+						  fm *= player.crouchfactor;
+					  }
+					  double friction, movefactor;
+					  [friction, movefactor] = PlayerPawn(Owner).GetFriction();
+					  if (!player.onground && !Owner.bNoGravity && !waterlevel) movefactor *= level.aircontrol;
+					  // sm *= movefactor * (35 / TICRATE);
+					  fm *= movefactor * (35 / TICRATE);
+					  if ((waterlevel || Owner.bNoGravity) && Owner.Pitch != 0 && !player.GetClassicFlight())
+					  {
+						  double zpush = fm * sin(Owner.Pitch);
+						  if (waterlevel && waterlevel < 2 && zpush < 0) zpush = 0;
+						  Owner.Vel.Z -= zpush;
+						  fm *= cos(Pitch);
+					  }
+					  Owner.Thrust(5.0*fm, Owner.angle);
+					  Owner.SetState(Owner.SeeState + seestatecounter++);
+					  if (!Owner.InStateSequence(Owner.CurState, Owner.SeeState))
+					  {
+						  Owner.SetState(Owner.SeeState);
+						  seestatecounter = 0;
+					  }
+				  }
+			  }
+		  }
 		}
 
 		Super.Tick();
