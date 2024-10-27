@@ -1307,7 +1307,7 @@ class IsoAimAssistHandler : StaticEventHandler
 			{
 				if (mousemove[i].GetBool() && isomover[i])
 				{
-					if (!doAim(i))
+					if (!IsometricMovement(isomover[i]).fleemode && !doAim(i))
 					{
 						players[i].mo.A_SetPitch((IsometricMovement(isomover[i]).plrpitch > 5 ? // Avoid hipfire to ground
 												  0 : IsometricMovement(isomover[i]).plrpitch));
