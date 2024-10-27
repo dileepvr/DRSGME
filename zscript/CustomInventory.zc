@@ -599,10 +599,11 @@ class IsometricMovement : CustomInventory
 						  {
 							  movefwd = true;
 						  }
-						  else if (nolos2shootable)
+						  else if (nolos2shootable && debounce_timer == 0)
 						  {
 							  movefwd = false;
 							  Owner.A_StartSound("noselect", CHAN_WEAPON);
+							  debounce_timer = debounce_ticks;
 						  }
 						  else
 						  {
