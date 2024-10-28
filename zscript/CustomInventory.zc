@@ -565,7 +565,7 @@ class IsometricMovement : CustomInventory
 				  bool tbool = player.mo.LineTrace(Owner.AngleTo(pointedmo), Owner.Distance3D(pointedmo),
 												   plrpitch, 0, player.ViewHeight*player.crouchfactor,
 												   0, 0, data:tt);
-				  nolos2shootable = !tbool || !(tt.HitType == TRACE_HitActor && tt.HitActor == pointedmo);
+				  nolos2shootable = !tbool || !(tt.HitType == TRACE_HitActor && tt.HitActor && tt.HitActor.bSHOOTABLE);
 			  }
 
 			  int plrx = 0;
