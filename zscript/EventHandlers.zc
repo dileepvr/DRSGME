@@ -209,7 +209,7 @@ class MKeyEvents : EventHandler
 		{
 			if (key && key == e.Args[0])
 			{
-				if (!automapactive && (gamestate == GS_LEVEL) && players[e.Player].camera)
+				if (!automapactive && (gamestate == GS_LEVEL) && players[e.Player].camera && players[e.Player].camera.GetClassName() == 'SpectatorCamera')
 				{
 					isodists[e.Player].SetFloat(clamp(isodists[e.Player].GetFloat() - 10.0, 0.0, 1000.0));
 					SpectatorCamera(players[e.Player].camera).Init(isodists[e.Player].GetFloat(),
@@ -224,7 +224,7 @@ class MKeyEvents : EventHandler
 		{
 			if (key && key == e.Args[0])
 			{
-				if (!automapactive && (gamestate == GS_LEVEL) && players[e.Player].camera)
+				if (!automapactive && (gamestate == GS_LEVEL) && players[e.Player].camera && players[e.Player].camera.GetClassName() == 'SpectatorCamera')
 				{
 					isodists[e.Player].SetFloat(clamp(isodists[e.Player].GetFloat() + 10.0, 0.0, 1000.0));
 					SpectatorCamera(players[e.Player].camera).Init(isodists[e.Player].GetFloat(),
@@ -700,7 +700,7 @@ class LoadGameCameraHandler : StaticEventHandler
 					CVar isodist = CVar.GetCVar("IsometricDist", players[i]);
 					CVar isoyaw = CVar.GetCVar("IsometricYaw", players[i]);
 					CVar isopitch = CVar.GetCVar("IsometricPitch", players[i]);
-					if (players[i].mo.tracer && players[i].mo.tracer.tracer)
+					if (players[i].mo.tracer && players[i].mo.tracer.tracer && players[i].mo.tracer.tracer.GetClassName() == 'SpectatorCamera')
 					{
 						players[i].camera = players[i].mo.tracer.tracer;
 						SpectatorCamera(players[i].camera).Init(isodist.GetFloat(), isoyaw.GetFloat(), isopitch.GetFloat(), camflags);
@@ -823,9 +823,12 @@ class CameraSpawnHandler : EventHandler // Can't be static because camera actor 
 				  {
 					  isoyaws[i].SetFloat(isoyaws[i].GetFloat() + (rotaterights[i].GetBool() ? 1 : -1) * isospeeds[i].GetFloat());
 					  int camflags = VPSF_ABSOLUTEOFFSET | VPSF_ALLOWOUTOFBOUNDS | VPSF_ORTHOGRAPHIC;
-					  SpectatorCamera(players[i].camera).Init(isodists[i].GetFloat(),
-															  isoyaws[i].GetFloat(),
-															  isopitches[i].GetFloat(), camflags);
+					  if (players[i].camera.GetClassName() == 'SpectatorCamera')
+					  {
+						  SpectatorCamera(players[i].camera).Init(isodists[i].GetFloat(),
+																  isoyaws[i].GetFloat(),
+																  isopitches[i].GetFloat(), camflags);
+					  }
 				  }
 			  }
 		  }
