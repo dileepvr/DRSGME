@@ -19,7 +19,20 @@ class DoomPlayer2 : DoomPlayer
 		Int slotid, indx, Number;
 		Bool found;
 		[found, slotid, indx] = Player.Weapons.LocateWeapon(Weap.GetClass());
-		if (found) Number = slotid + 7 * indx; // This should probably be unrolled into switch cases
+		if (found)
+		{
+			Number = slotid;
+			switch(slotid)
+			{
+			case 1: // For chainsaw
+			case 3: // For SSG (will be set to 10)
+				if (indx < 2) { Number += 7 * indx; }
+				else { Number = 11; } // Unknown weapon
+				break;
+			default:
+				break;
+			}
+		}
 		else Number = 11;
 		if (Number == 10) Number = 9; // Super Shotgun
 		if(Number < 10) // Feel free to add more sprites for more weapons and increase this

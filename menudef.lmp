@@ -54,9 +54,10 @@ OptionMenu "IsoModOptions"
     Slider "Weapon Icon X Position", IsoHUDWeaponXPos, -2, 2, 0.1, 1, "IsoHUDShowWeapon"
     Slider "Weapon Icon Y Position", IsoHUDWeaponYPos, 0, 2, 0.1, 1, "IsoHUDShowWeapon"
     Option "Show Scope Target", "IsoHUDShowTarget", "OnOff"
-    Option "Show Scope Target Health", "IsoHUDShowTargetHealth", "OnOff", "IsoHUDShowTarget"
+	Option "Scope First Person (Affects Fog of War)", "IsoHUDScopeFirstPerson", "OnOff", "IsoHUDShowTarget"
+    Option "Show Scope Target Health", "IsoHUDShowTargetHealth", "OnOff"
 	Slider "Scope Type", "IsoHUDScopeType", 1, 3, 1, 0, "IsoHUDShowTarget"
     Slider "Scope Size", IsoHUDTargetSize, 25, 100, 1, 0, "IsoHUDShowTarget"
-    Slider "Scope X Position", IsoHUDTargetXPos, -2, 2, 0.1, 1, "IsoHUDShowTarget"
-    Slider "Scope Y Position", IsoHUDTargetYPos, 0, 2, 0.1, 1, "IsoHUDShowTarget"
+    Slider "Scope X Position", IsoHUDTargetXPos, -2, 2, 0.1, 1
+    Slider "Scope Y Position", IsoHUDTargetYPos, 0, 2, 0.1, 1
 }

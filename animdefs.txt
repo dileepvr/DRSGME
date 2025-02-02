@@ -1,1 +1,1 @@
-cameratexture CAMTEX_1 50 50
+cameratexture CAMTEX_1 100 100 fit 50 50

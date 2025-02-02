@@ -19,6 +19,7 @@ User Float IsoHUDTargetXPos = 0.15;
 User Float IsoHUDTargetYPos = 0.15;
 User Color IsoAimBeam = "ff 00 ff";
 User Int IsoHUDScopeType = 1;
+User Bool IsoHUDScopeFirstPerson = false;
 User Int IsoCursorDist = 150;
 User Int IsoCursorOffsetY = 0;
 User HandlerClass(PickupFlagHandler) Bool IsoAllowTouchPickup = true;
