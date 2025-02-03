@@ -653,6 +653,7 @@ class ScopeCamera : SpectatorCamera
 	  super.postbeginplay();
 	  ppawn=playerpawn(target);
 	  if(ppawn) FirstPerson = Cvar.GetCvar("IsoHUDScopeFirstPerson", ppawn.player);
+	  // Level.ReplaceTextures("F_SKY1", "SKY1", 0); // In case vkdoom is running with levelmesh
 	}
 
 	override void tick()
@@ -1166,7 +1167,7 @@ class RenderCursorsOverlay : EventHandler
 			  StatusBar.DrawString(monospaceSmallfont, hpBar, (sxpos-(int)(30*ssize), sypos-(int)(40*ssize)),
 								   StatusBar.DI_SCREEN_CENTER_BOTTOM | StatusBar.DI_ITEM_CENTER,
 								   scale: (0.8*ssize, (hud_aspectscale ? 0.8 : 0.67)*ssize));
-			  StatusBar.DrawString(monospaceSmallfont, String.Format("%s", actorhit[consoleplayer].GetClassName()),
+			  StatusBar.DrawString(monospaceSmallfont, String.Format("%s", actorhit[consoleplayer].GetTag()),
 								   (sxpos-(int)(30*ssize), sypos-(int)(40*ssize) + smallfont.GetCharWidth("0")),
 								   StatusBar.DI_SCREEN_CENTER_BOTTOM | StatusBar.DI_ITEM_CENTER,
 								   scale: (0.8*ssize, (hud_aspectscale ? 0.8 : 0.67)*ssize));
