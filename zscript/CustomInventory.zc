@@ -142,20 +142,24 @@ class Z_NashMove : CustomInventory
 class IsometricMovement : CustomInventory
 {
 	int diffangle, face_cam_mult, ctrltype, oldcmdyaw, oldsidemove, oldforwardmove;
-	cvar isoyaw, aimassist, keyctrltype, mousemove, lookingup, lookingdown;
+	cvar isoyaw, aimassist, keyctrltype, mousemove, lookingup, lookingdown, rotateleft, rotateright, isospeed;
 	bool sidedownfacecam, fwddownfacecam;
 	int debounce_timer, debounce_ticks;
 	int mousex, mousey, mx, my, mxmax, mymax;
 	float msense;
 	double plrpitch;
-	bool hipfire, fleemode, pointmonster, pointshootable, pointusable, nolos2shootable, firekeydown, altfirekeydown;
+	bool hipfire, fleemode, pointmonster, pointshootable, pointusable, nolos2shootable, firekeydown, altfirekeydown, mrotate;
 	double xproj, yproj, zproj;
 	int seestatecounter;
+	int footstepCounter;
+	double footstepLength;
+	bool footstepFoot;
  
 	property mousex : mousex;
 	property mousey : mousey;
 	property hipfire : hipfire;
 	property fleemode : fleemode;
+	property mrotate : mrotate;
 	property pointmonster : pointmonster;
 	property pointshootable : pointshootable;
 	property pointusable : pointusable;
@@ -177,6 +181,7 @@ class IsometricMovement : CustomInventory
 		IsometricMovement.altfirekeydown false;
 		IsometricMovement.hipfire false;
 		IsometricMovement.fleemode false;
+		IsometricMovement.mrotate false;
 		IsometricMovement.plrpitch 0;
 
 		Inventory.MaxAmount 1;
@@ -213,6 +218,10 @@ class IsometricMovement : CustomInventory
 		  lookingup = CVar.GetCVar("IsoLookingUp", Owner.player);
 		  lookingdown = CVar.GetCVar("IsoLookingDown", Owner.player);
 		  keyctrltype = CVar.GetCVar("IsoControlType", Owner.player);
+		  rotateleft = CVar.GetCVar("RotatingLeft", Owner.player);
+		  rotateright = CVar.GetCVar("RotatingRight", Owner.player);
+		  isospeed = CVar.GetCVar("IsometricSpeed", Owner.player);
+		  PlayerPawn(Owner.player.mo).bMakeFootsteps = True;
 		}
 		face_cam_mult = 1;
 		oldcmdyaw = 0;
@@ -237,10 +246,86 @@ class IsometricMovement : CustomInventory
 	//
 	//===========================================================================
 
-	void UpdateScreenProjVars()
+	void DoFootstep(TerrainDef Ground) // For diablo-style mouse movement, can't use owner's MakeFootSteps so replicate in inventory item
+	{
+		Sound Step = Ground.StepSound;
+
+		//Generic foot-agnostic sound takes precedence.
+		if(!Step)
+		{
+			//Apparently most people walk with their right foot first, so assume that here.
+			if (!footstepFoot)
+			{
+				Step = Ground.LeftStepSound;
+			}
+			else
+			{
+				Step = Ground.RightStepSound;
+			}
+
+			footstepFoot = !footstepFoot;
+		}
+
+		if(Step)
+		{
+			Owner.A_StartSound(Step, flags: CHANF_OVERLAP, volume: Ground.StepVolume * snd_footstepvolume);
+		}
+
+		//Steps make splashes regardless.
+		bool Heavy = (Owner.Mass >= 200) ? 0 : THW_SMALL; //Big player makes big splash.
+		Owner.HitWater(Owner.CurSector, (Owner.Pos.XY, Owner.CurSector.FloorPlane.ZatPoint(Owner.Pos.XY)), true, false, flags: Heavy | THW_NOVEL);
+	}
+
+	void InvMakeFootsteps() // For diablo-style mouse movement, can't use owner's MakeFootSteps so replicate in inventory item
+	{
+		if(Owner.pos.z > Owner.floorz) return;
+
+		let Ground = Owner.GetFloorTerrain();
+
+		if(Ground)
+		{
+			int Delay = (Owner.player.cmd.buttons & BT_RUN) ? Ground.RunStepTics : Ground.WalkStepTics;
+
+			if(Ground.StepDistance > 0)
+			{ // distance-based terrain
+				footstepCounter = 0;
+				double moveVel = Owner.vel.xy.length();
+				if(moveVel > Ground.StepDistanceMinVel)
+				{
+					footstepLength += moveVel;
+					while(footstepLength > Ground.StepDistance)
+					{
+						footstepLength -= Ground.StepDistance;
+						DoFootstep(Ground);
+					}
+				}
+				else
+				{
+					footstepLength = Ground.StepDistance;
+				}
+			}
+			else if(Delay > 0)
+			{ // delay-based terrain
+				footstepLength = 0;
+				if(footstepCounter % Delay == 0)
+				{
+					DoFootstep(Ground);
+				}
+				footstepCounter = (footstepCounter + 1) % Delay;
+			}
+			else
+			{
+				footstepCounter = 0;
+				footstepLength = Ground.StepDistance;
+				footstepFoot = false;
+			}
+		}
+	}
+
+    void UpdateScreenProjVars()
 	{
 		let player = Owner.player;
-		if (player.camera && player.camera.ViewPos && player.camera.player && player.camera.player == player)
+		if (player.camera && player.camera.ViewPos && player.camera.player && player.camera.GetClassName() == 'SpectatorCamera')
 		{
 			double xscale = 0.375*( screenblocks >= 10 ? Screen.GetWidth() : 0.1*screenblocks*Screen.GetWidth() );
 			double myfov = (player.camera.player ? player.camera.player.FOV : player.camera.CameraFOV);
@@ -278,7 +363,7 @@ class IsometricMovement : CustomInventory
 		Vector3 dir = (Cos(deltaangle(180, player.camera.angle))*Cos(player.camera.pitch),
 					   Sin(deltaangle(180, player.camera.angle))*Cos(player.camera.pitch),
 					   Sin(player.camera.pitch));
-		for (double mylen = 3.0*tan(azimax)*relposdist; mylen > -tan(azimax)*relposdist; mylen -= offsetz)
+		for (double mylen = -0*tan(azimax)*relposdist; mylen < 3.0*tan(azimax)*relposdist; mylen += offsetz)
 		{
 			Vector3 inhitloc = hitloc + mylen*dir;
 			if (level.IsPointInLevel(inhitloc))
@@ -291,7 +376,7 @@ class IsometricMovement : CustomInventory
 					// Shoot trace away from (parallel to) camera
 					if(player.mo.LineTrace(player.camera.angle, isodist*3, player.camera.pitch, trf_flags2,
 										   inhitloc.z, inhitloc.x, inhitloc.y, data:t2))
-					{						
+					{
 						inhitloc = t2.HitLocation;
 						Vector3 dummy = level.vec3diff(Owner.pos, inhitloc);
 						plrpitch = atan2(Owner.pos.z + player.ViewHeight*player.crouchfactor - inhitloc.z, dummy.xy.length());
@@ -542,13 +627,41 @@ class IsometricMovement : CustomInventory
 		  oldsidemove = cmd.sidemove;
 		  oldforwardmove = cmd.forwardmove;
 
-		  if (mousemove.GetBool()) // Diablo-Style
+		  if (mousemove.GetBool() && PlayerPawn(Owner).player.camera.GetClassName() == 'SpectatorCamera') // Diablo-Style
 		  {
 			  // Handle mouse movement on screenspace
 			  int inyaw = cmd.yaw; // GetPlayerInput(INPUT_YAW);
 			  int inpitch = cmd.pitch; // GetPlayerInput(INPUT_PITCH);
-			  mx = clamp(mx - inyaw, -mxmax, mxmax);
-			  my = clamp(my - inpitch, -mymax, mymax);
+			  if (mrotate)
+			  {
+				  if (inyaw == 0 && inpitch == 0)
+				  {
+					  rotateleft.SetBool(false); rotateright.SetBool(false);
+				  } else {
+					  float mouseangle = atan2(my, mx);
+					  float anglechange = Owner.deltaangle(atan2(my - inpitch, mx - inyaw), mouseangle);
+					  Vector2 mvec = (mx, my);
+					  float mrad = mvec.Length();
+					  float rotspeed = isospeed.GetFloat();
+					  if(anglechange > 0)
+					  {
+						  rotateleft.SetBool(true);
+						  rotateright.SetBool(false);
+						  mx = (int)(mrad * Cos (mouseangle - rotspeed));
+						  my = (int)(mrad * Sin (mouseangle - rotspeed));
+					  } else {
+						  rotateleft.SetBool(false);
+						  rotateright.SetBool(true);
+						  mx = (int)(mrad * Cos (mouseangle + rotspeed));
+						  my = (int)(mrad * Sin (mouseangle + rotspeed));
+					  }
+					  mx = clamp(mx, -mxmax, mxmax);
+					  my = clamp(my, -mymax, mymax);
+				  }
+			  } else {
+				  mx = clamp(mx - inyaw, -mxmax, mxmax);
+				  my = clamp(my - inpitch, -mymax, mymax);
+			  }
 			  mousex = (int)(mx/msense);
 			  mousey = (int)(my/msense);
 
@@ -644,13 +757,21 @@ class IsometricMovement : CustomInventory
 						  Owner.Vel.Z -= zpush;
 						  fm *= cos(Pitch);
 					  }
-					  Owner.Thrust(5.0*fm, Owner.angle);
-					  Owner.SetState(Owner.SeeState + seestatecounter++);
+					  Owner.Thrust(7.0*fm, Owner.angle);
+					  InvMakeFootsteps();
+					  if (seestatecounter++ > 2*Owner.CurState.Tics)
+					  {
+						  Owner.SetState(Owner.CurState.NextState);
+						  seestatecounter = 0;
+					  }
 					  if (!Owner.InStateSequence(Owner.CurState, Owner.SeeState))
 					  {
 						  Owner.SetState(Owner.SeeState);
-						  seestatecounter = 0;
 					  }
+				  }
+				  else if (!(buttons & (BT_ATTACK | BT_ALTATTACK)))
+				  {
+					  Owner.SetState(Owner.SpawnState);
 				  }
 			  }
 		  }

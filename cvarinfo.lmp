@@ -20,6 +20,7 @@ User Float IsoHUDTargetYPos = 0.15;
 User Color IsoAimBeam = "ff 00 ff";
 User Int IsoHUDScopeType = 1;
 User Bool IsoHUDScopeFirstPerson = false;
+User Bool IsoHUDShowTargetName = true;
 User Int IsoCursorDist = 150;
 User Int IsoCursorOffsetY = 0;
 User HandlerClass(PickupFlagHandler) Bool IsoAllowTouchPickup = true;
@@ -28,6 +29,5 @@ User Bool IsoLookingDown = false;
 User Bool IsoMouseMove = false;
 User Int IsoControlType = 0;
 
-user bool D4D_DamageIndicators = true;
-user float D4D_DIScale = 0.5;
-user float D4D_DIAlpha = 1.0;
+user float D4D2_DIScale = 0.5;
+user float D4D2_DIAlpha = 1.0;

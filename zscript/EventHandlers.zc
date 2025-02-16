@@ -154,6 +154,16 @@ class MKeyEvents : EventHandler
 					  return false;
 				  }
 			  }
+			  keys.Clear();
+			  Bindings.GetAllKeysForCommand(keys, "mouse_rotate");
+			  foreach (key : keys)
+			  {
+				  if (key && key == e.KeyScan)
+				  {
+					  SendNetworkEvent(e.Type == InputEvent.Type_KeyDown ? "MROTDOWN" : "MROTUP");
+					  return false;
+				  }
+			  }
 		  }
 	  }
 
@@ -170,7 +180,8 @@ class MKeyEvents : EventHandler
   {
 
 	  if ((e.Name == "FIREDOWN") || (e.Name == "FIREUP") || (e.Name == "ALTFIREDOWN") || (e.Name == "ALTFIREUP")
-		  || (e.Name == "HIPDOWN") || (e.Name == "HIPUP") || (e.Name == "FLEEDOWN") || (e.Name == "FLEEUP"))
+		  || (e.Name == "HIPDOWN") || (e.Name == "HIPUP") || (e.Name == "FLEEDOWN") || (e.Name == "FLEEUP")
+		  || (e.Name == "MROTDOWN") || (e.Name == "MROTUP"))
 	  {
 		  Inventory isomover = players[e.Player].mo.FindInventory("IsometricMovement");
 		  if (isomover)
@@ -183,6 +194,15 @@ class MKeyEvents : EventHandler
 				  IsometricMovement(isomover).hipfire = (e.Name == "HIPDOWN");
 			  else if ((e.Name == "FLEEDOWN") || (e.Name == "FLEEUP"))
 				  IsometricMovement(isomover).fleemode = (e.Name == "FLEEDOWN");
+			  else if ((e.Name == "MROTDOWN") || (e.Name == "MROTUP"))
+			  {
+				  IsometricMovement(isomover).mrotate = (e.Name == "MROTDOWN");
+				  if (e.Name == "MROTUP")
+				  {
+					  rotlefts[e.Player].SetBool(false);
+					  rotrights[e.Player].SetBool(false);
+				  }
+			  }
 		  }
 	  }
 	  
@@ -653,7 +673,6 @@ class ScopeCamera : SpectatorCamera
 	  super.postbeginplay();
 	  ppawn=playerpawn(target);
 	  if(ppawn) FirstPerson = Cvar.GetCvar("IsoHUDScopeFirstPerson", ppawn.player);
-	  // Level.ReplaceTextures("F_SKY1", "SKY1", 0); // In case vkdoom is running with levelmesh
 	}
 
 	override void tick()
@@ -717,78 +736,85 @@ class CameraSpawnHandler : EventHandler // Can't be static because camera actor 
 	cvar isospeeds[MAXPLAYERS], rotatelefts[MAXPLAYERS], rotaterights[MAXPLAYERS];
 	Actor isocam[MAXPLAYERS], scopecam[MAXPLAYERS];
 
-  override void PlayerSpawned(playerEvent e)
-  {
-    // Add a scope camera to each player, and store it in scopecam
-	if (scopecam[e.PlayerNumber] == NULL)
-		scopecam[e.PlayerNumber] = Actor.Spawn("ScopeCamera", players[e.PlayerNumber].mo.pos, ALLOW_REPLACE);
-	scopecam[e.PlayerNumber].target = players[e.PlayerNumber].mo;
-    // When the player spawns, spawn an isometric spectator camera:
-	players[e.PlayerNumber].mo.ViewBob = 0;
-	players[e.PlayerNumber].mo.FlyBob = 0;
-	if (isocam[e.PlayerNumber] == NULL)
-		isocam[e.PlayerNumber] = SpectatorCamera(Actor.Spawn("SpectatorCamera", players[e.PlayerNumber].mo.pos));
-    players[e.PlayerNumber].camera = isocam[e.PlayerNumber];
-    players[e.PlayerNumber].camera.tracer = players[e.PlayerNumber].mo; // This makes camera follow the player
-	players[e.PlayerNumber].camera.player = players[e.PlayerNumber]; // Necessary for pain and pickup screen flashes. Adds viewbob too.
-    int camflags = VPSF_ABSOLUTEOFFSET | VPSF_ALLOWOUTOFBOUNDS | VPSF_ORTHOGRAPHIC;
-    CVar isodist = CVar.GetCVar("IsometricDist", players[e.PlayerNumber]);
-    CVar isoyaw = CVar.GetCVar("IsometricYaw", players[e.PlayerNumber]);
-    CVar isopitch = CVar.GetCVar("IsometricPitch", players[e.PlayerNumber]);
-    SpectatorCamera(players[e.PlayerNumber].camera).Init(isodist.GetFloat(), isoyaw.GetFloat(), isopitch.GetFloat(), camflags);
-	if (!Cvar.GetCvar("IsoHUDScopeFirstPerson", players[e.PlayerNumber]).GetBool())
-		SpectatorCamera(scopecam[e.PlayerNumber]).Init(isodist.GetFloat(), isoyaw.GetFloat(), isopitch.GetFloat(), camflags);
-    // The following has to come after Init
-    // SpectatorCamera(players[e.PlayerNumber].camera).lagdistance = 300.0; // Use for a lazy camera that only follows if you get away from center
-    // SpectatorCamera(players[e.PlayerNumber].camera).chasemode = 2; // 0: chase until tracer centered, 1: same but only when tracer is moving, 2: stop chase if tracer within lagdistance
-  }
+	override void PlayerSpawned(playerEvent e)
+	{
+		if (gamestate != GS_TITLELEVEL)
+		{
+			// Add a scope camera to each player, and store it in scopecam
+			if (scopecam[e.PlayerNumber] == NULL)
+				scopecam[e.PlayerNumber] = Actor.Spawn("ScopeCamera", players[e.PlayerNumber].mo.pos, ALLOW_REPLACE);
+			scopecam[e.PlayerNumber].target = players[e.PlayerNumber].mo;
+			// When the player spawns, spawn an isometric spectator camera:
+			players[e.PlayerNumber].mo.ViewBob = 0;
+			players[e.PlayerNumber].mo.FlyBob = 0;
+			if (isocam[e.PlayerNumber] == NULL)
+				isocam[e.PlayerNumber] = SpectatorCamera(Actor.Spawn("SpectatorCamera", players[e.PlayerNumber].mo.pos));
+			players[e.PlayerNumber].camera = isocam[e.PlayerNumber];
+			players[e.PlayerNumber].camera.tracer = players[e.PlayerNumber].mo; // This makes camera follow the player
+			players[e.PlayerNumber].camera.player = players[e.PlayerNumber]; // Necessary for pain and pickup screen flashes. Adds viewbob too.
+			int camflags = VPSF_ABSOLUTEOFFSET | VPSF_ALLOWOUTOFBOUNDS | VPSF_ORTHOGRAPHIC;
+			CVar isodist = CVar.GetCVar("IsometricDist", players[e.PlayerNumber]);
+			CVar isoyaw = CVar.GetCVar("IsometricYaw", players[e.PlayerNumber]);
+			CVar isopitch = CVar.GetCVar("IsometricPitch", players[e.PlayerNumber]);
+			SpectatorCamera(players[e.PlayerNumber].camera).Init(isodist.GetFloat(), isoyaw.GetFloat(), isopitch.GetFloat(), camflags);
+			if (!Cvar.GetCvar("IsoHUDScopeFirstPerson", players[e.PlayerNumber]).GetBool())
+				SpectatorCamera(scopecam[e.PlayerNumber]).Init(isodist.GetFloat(), isoyaw.GetFloat(), isopitch.GetFloat(), camflags);
+			// The following has to come after Init
+			// SpectatorCamera(players[e.PlayerNumber].camera).lagdistance = 300.0; // Use for a lazy camera that only follows if you get away from center
+			// SpectatorCamera(players[e.PlayerNumber].camera).chasemode = 2; // 0: chase until tracer centered, 1: same but only when tracer is moving, 2: stop chase if tracer within lagdistance
+		}
+	}
 
-  override void PlayerDisconnected (PlayerEvent e)
-  {
-    // This is needed if a player disconnects from a multiplayer session
-	if(isocam[e.PlayerNumber]) isocam[e.PlayerNumber].Destroy();
-  }
+	override void PlayerDisconnected (PlayerEvent e)
+	{
+		// This is needed if a player disconnects from a multiplayer session
+		if(isocam[e.PlayerNumber]) isocam[e.PlayerNumber].Destroy();
+	}
 
-  override void WorldLoaded (WorldEvent e)
-  {
-	  ThinkerIterator MonsterFinder = ThinkerIterator.Create("Actor");
-	  Actor mo;
-	  while ((mo = Actor(MonsterFinder.Next())))
-	  {
-		  if (mo.bIsMonster && mo.MaxTargetRange > IsoMonsterAimMaxDist) mo.MaxTargetRange = IsoMonsterAimMaxDist;
-	  }
-	  for (int i = 0; i < MAXPLAYERS; i++)
-	  {
-		  if (PlayerInGame[i] && players[i].mo)
-		  {
-			  // Add a scope camera to each player, and store it in scopecam
-			  if (scopecam[i] == NULL)
-				  scopecam[i] = Actor.Spawn("ScopeCamera", players[i].mo.pos, ALLOW_REPLACE);
-			  scopecam[i].target = players[i].mo;
-			  // When World loads, spawn an isometric spectator camera:
-			  players[i].mo.ViewBob = 0;
-			  players[i].mo.FlyBob = 0;
-			  if (isocam[i] == NULL)
-				  isocam[i] = SpectatorCamera(Actor.Spawn("SpectatorCamera", players[i].mo.pos));
-			  players[i].camera = isocam[i];
-			  players[i].camera.tracer = players[i].mo; // This makes camera follow the player
-			  players[i].camera.player = players[i]; // Necessary for pain and pickup screen flashes. Adds viewbob too.
-			  int camflags = VPSF_ABSOLUTEOFFSET | VPSF_ALLOWOUTOFBOUNDS | VPSF_ORTHOGRAPHIC;
-			  isodists[i] = CVar.GetCVar("IsometricDist", players[i]);
-			  isoyaws[i] = CVar.GetCVar("IsometricYaw", players[i]);
-			  isopitches[i] = CVar.GetCVar("IsometricPitch", players[i]);
-			  isospeeds[i] = CVar.GetCVar("IsometricSpeed", players[i]);
-			  rotatelefts[i] = CVar.GetCVar("RotatingLeft", players[i]);
-			  rotaterights[i] = CVar.GetCVar("RotatingRight", players[i]);
-			  SpectatorCamera(players[i].camera).Init(isodists[i].GetFloat(), isoyaws[i].GetFloat(), isopitches[i].GetFloat(), camflags);
-			  if (!Cvar.GetCvar("IsoHUDScopeFirstPerson", players[i]).GetBool())
-				  SpectatorCamera(scopecam[i]).Init(isodists[i].GetFloat(), isoyaws[i].GetFloat(), isopitches[i].GetFloat(), camflags);
-			  // The following has to come after Init
-			  // SpectatorCamera(players[i].camera).lagdistance = 300.0; // Use for a lazy camera that only follows if you get away from center
-			  // SpectatorCamera(players[i].camera).chasemode = 2; // 0: chase until tracer centered, 1: same but only when tracer is moving, 2: stop chase if tracer within lagdistance
-		  }
-	  }
-  }
+	override void WorldLoaded (WorldEvent e)
+	{
+		if (gamestate != GS_TITLELEVEL)
+		{
+			Level.ReplaceTextures("F_SKY1", "SKY1", TexMan.NOT_FLOOR); // Don't render sky from ceiling
+			ThinkerIterator MonsterFinder = ThinkerIterator.Create("Actor");
+			Actor mo;
+			while ((mo = Actor(MonsterFinder.Next())))
+			{
+				if (mo.bIsMonster && mo.MaxTargetRange > IsoMonsterAimMaxDist) mo.MaxTargetRange = IsoMonsterAimMaxDist;
+			}
+			for (int i = 0; i < MAXPLAYERS; i++)
+			{
+				if (PlayerInGame[i] && players[i].mo)
+				{
+					// Add a scope camera to each player, and store it in scopecam
+					if (scopecam[i] == NULL)
+						scopecam[i] = Actor.Spawn("ScopeCamera", players[i].mo.pos, ALLOW_REPLACE);
+					scopecam[i].target = players[i].mo;
+					// When World loads, spawn an isometric spectator camera:
+					players[i].mo.ViewBob = 0;
+					players[i].mo.FlyBob = 0;
+					if (isocam[i] == NULL)
+						isocam[i] = SpectatorCamera(Actor.Spawn("SpectatorCamera", players[i].mo.pos));
+					players[i].camera = isocam[i];
+					players[i].camera.tracer = players[i].mo; // This makes camera follow the player
+					players[i].camera.player = players[i]; // Necessary for pain and pickup screen flashes. Adds viewbob too.
+					int camflags = VPSF_ABSOLUTEOFFSET | VPSF_ALLOWOUTOFBOUNDS | VPSF_ORTHOGRAPHIC;
+					isodists[i] = CVar.GetCVar("IsometricDist", players[i]);
+					isoyaws[i] = CVar.GetCVar("IsometricYaw", players[i]);
+					isopitches[i] = CVar.GetCVar("IsometricPitch", players[i]);
+					isospeeds[i] = CVar.GetCVar("IsometricSpeed", players[i]);
+					rotatelefts[i] = CVar.GetCVar("RotatingLeft", players[i]);
+					rotaterights[i] = CVar.GetCVar("RotatingRight", players[i]);
+					SpectatorCamera(players[i].camera).Init(isodists[i].GetFloat(), isoyaws[i].GetFloat(), isopitches[i].GetFloat(), camflags);
+					if (!Cvar.GetCvar("IsoHUDScopeFirstPerson", players[i]).GetBool())
+						SpectatorCamera(scopecam[i]).Init(isodists[i].GetFloat(), isoyaws[i].GetFloat(), isopitches[i].GetFloat(), camflags);
+					// The following has to come after Init
+					// SpectatorCamera(players[i].camera).lagdistance = 300.0; // Use for a lazy camera that only follows if you get away from center
+					// SpectatorCamera(players[i].camera).chasemode = 2; // 0: chase until tracer centered, 1: same but only when tracer is moving, 2: stop chase if tracer within lagdistance
+				}
+			}
+		}
+	}
 
   // destroy the camera when this level is unloaded
   // in the case of hub levels, we don't want to spawn extra cameras
@@ -859,7 +885,7 @@ class RenderCursorsOverlay : EventHandler
 	cvar scopesize, scopexpos, scopeypos;
 	cvar aimbeam, scopetype, cursdist, cursoffy;
 	cvar lookingup, lookingdown;
-	cvar mousemove, firstpersonscope;
+	cvar mousemove, firstpersonscope, scopetargetname;
 	FLineTraceData t[MAXPLAYERS];
 	Vector3 hitloc;
 	Actor actorhit[MAXPLAYERS];
@@ -965,6 +991,7 @@ class RenderCursorsOverlay : EventHandler
 	  lookingup = CVar.GetCVar("IsoLookingUp", players[consoleplayer]);
 	  lookingdown = CVar.GetCVar("IsoLookingDown", players[consoleplayer]);
 	  firstpersonscope = CVar.GetCVar("IsoHUDScopeFirstPerson", players[consoleplayer]);
+	  scopetargetname = CVar.GetCVar("IsoHUDShowTargetName", players[consoleplayer]);
 	  hitloc = (0, 0, 0);
 	  for (int i = 0; i < MAXPLAYERS; i++)
 	  {
@@ -993,9 +1020,9 @@ class RenderCursorsOverlay : EventHandler
 	  }
 	}
 	
-	override void RenderOverlay(RenderEvent e)
+	override void RenderUnderlay(RenderEvent e)
 	{
-	  if (!automapactive && (gamestate == GS_LEVEL) && (players[consoleplayer].camera.player == players[consoleplayer]))
+		if (!automapactive && (gamestate == GS_LEVEL) && players[consoleplayer].camera.GetClassName() == 'SpectatorCamera' && players[consoleplayer].mo.health > 0)
 	  {
 	    PlayerPawn pmo = players[consoleplayer].mo;
 		PlayerInfo cplr = players[consoleplayer];
@@ -1090,11 +1117,11 @@ class RenderCursorsOverlay : EventHandler
 	      }
 	    }
 
-	    if (isoaimassist.GetBool() && !(ldown || lup))
+	    if (!mousemove.GetBool() && isoaimassist.GetBool() && !(ldown || lup))
 	    {
 	      StatusBar.DrawImage("sprites/aim_hair.png", (sine/scaleFactor.x, cosine/scaleFactor.y),
 				  StatusBar.DI_SCREEN_CENTER | StatusBar.DI_ITEM_CENTER, scale: (1.2, 1.2));
-	    } else {
+	    } else if (!mousemove.GetBool()) {
 	      StatusBar.DrawImage("sprites/dir_hair.png", (sine/scaleFactor.x, cosine/scaleFactor.y),
 				  StatusBar.DI_SCREEN_CENTER | StatusBar.DI_ITEM_CENTER, scale: (0.75, 0.75));
 	    }
@@ -1159,7 +1186,7 @@ class RenderCursorsOverlay : EventHandler
 								  scale: (0.8*ssize, (hud_aspectscale ? 0.8 : 0.67)*ssize));
 	      }
 
-		  if(showscopehealth.GetBool())
+		  if (showscopehealth.GetBool())
 		  {
 			  string hpBar = makeHpBar(actorhit[consoleplayer].health,
 									   getActorMaxHealth(actorhit[consoleplayer]));
@@ -1167,10 +1194,13 @@ class RenderCursorsOverlay : EventHandler
 			  StatusBar.DrawString(monospaceSmallfont, hpBar, (sxpos-(int)(30*ssize), sypos-(int)(40*ssize)),
 								   StatusBar.DI_SCREEN_CENTER_BOTTOM | StatusBar.DI_ITEM_CENTER,
 								   scale: (0.8*ssize, (hud_aspectscale ? 0.8 : 0.67)*ssize));
-			  StatusBar.DrawString(monospaceSmallfont, String.Format("%s", actorhit[consoleplayer].GetTag()),
-								   (sxpos-(int)(30*ssize), sypos-(int)(40*ssize) + smallfont.GetCharWidth("0")),
-								   StatusBar.DI_SCREEN_CENTER_BOTTOM | StatusBar.DI_ITEM_CENTER,
-								   scale: (0.8*ssize, (hud_aspectscale ? 0.8 : 0.67)*ssize));
+			  if (scopetargetname.GetBool())
+			  {
+				  StatusBar.DrawString(monospaceSmallfont, String.Format("%s", actorhit[consoleplayer].GetTag()),
+									   (sxpos-(int)(30*ssize), sypos-(int)(40*ssize) + smallfont.GetCharWidth("0")),
+									   StatusBar.DI_SCREEN_CENTER_BOTTOM | StatusBar.DI_ITEM_CENTER,
+									   scale: (0.8*ssize, (hud_aspectscale ? 0.8 : 0.67)*ssize));
+			  }
 		  }
 	    }
 	  }
@@ -1382,7 +1412,7 @@ class IsoAimAssistHandler : StaticEventHandler
 // I can't track down who to credit here.
 // Is it MajorCooke?
 // Slightly modified to take camera angle into account.
-Class D4DHandler : EventHandler
+Class D4DHandler2 : EventHandler
 {
 	override void OnRegister()
 	{
@@ -1392,7 +1422,7 @@ Class D4DHandler : EventHandler
 	
 	override void WorldLoaded(WorldEvent e)
 	{
-		ArrowManager = D4VisualDamageManager.Create();
+		ArrowManager = D4VisualDamageManager2.Create();
 	}
 	
 	override void RenderOverlay(RenderEvent e)
@@ -1424,7 +1454,7 @@ Class D4DHandler : EventHandler
 	
 	
 	
-	private D4VisualDamageManager ArrowManager;
+	private D4VisualDamageManager2 ArrowManager;
 	private ui void RenderDamageIndicators(RenderEvent e)
 	{
 		if (ArrowManager)
@@ -1456,15 +1486,15 @@ Class D4DHandler : EventHandler
 // Damage Indicators
 //==============================================================================
 
-Class D4VisualDamageManager play
+Class D4VisualDamageManager2 play
 {
-	private Array<D4DamageIndicator> Arrows;
+	private Array<D4DamageIndicator2> Arrows;
 	private int Timer;
 	const ClearTimer = 5 * 5;
 	
-	static D4VisualDamageManager Create()
+	static D4VisualDamageManager2 Create()
 	{
-		let vdm = new('D4VisualDamageManager');
+		let vdm = new('D4VisualDamageManager2');
 		vdm.Init();
 		return vdm;
 	}
@@ -1489,7 +1519,7 @@ Class D4VisualDamageManager play
 			}
 		}
 		
-		let arrow = new('D4DamageIndicator');
+		let arrow = new('D4DamageIndicator2');
 		arrow.src = src;
 		arrow.inf = inf;
 		if (src)	arrow.srcpos = src.pos;
@@ -1500,7 +1530,7 @@ Class D4VisualDamageManager play
 		}
 		if (inf)	arrow.infpos = inf.pos;
 		arrow.plr = plr;
-		arrow.tex = TexMan.CheckForTexture(D4DamageIndicator.texname,TexMan.Type_Any);
+		arrow.tex = TexMan.CheckForTexture(D4DamageIndicator2.texname,TexMan.Type_Any);
 		arrow.ResetTimer();
 		arrow.Init();
 		Arrows.Push(arrow);
@@ -1522,7 +1552,7 @@ Class D4VisualDamageManager play
 		if (++Timer >= ClearTimer)
 		{
 			Timer = 0;
-			Array<D4DamageIndicator> temp; temp.Clear();
+			Array<D4DamageIndicator2> temp; temp.Clear();
 			
 			for (int i = 0; i < size; i++)
 				if (Arrows[i])	temp.Push(Arrows[i]);
@@ -1537,8 +1567,8 @@ Class D4VisualDamageManager play
 			return;
 		
 		PlayerInfo plr = players[consoleplayer];
-		let CDIAlpha = Cvar.GetCvar('D4D_DIAlpha', plr);
-		let CDIScale = Cvar.GetCvar('D4D_DIScale', plr);
+		let CDIAlpha = Cvar.GetCvar('D4D2_DIAlpha', plr);
+		let CDIScale = Cvar.GetCvar('D4D2_DIScale', plr);
 		double Alpha = 1.0, Scale = 0.5;
 		
 		if (CDIAlpha)	Alpha = CDIAlpha.GetFloat();
@@ -1547,14 +1577,14 @@ Class D4VisualDamageManager play
 		int size = Arrows.Size();
 		for (int i = 0; i < size; i++)
 		{
-			let arrow = D4DamageIndicator(Arrows[i]);
+			let arrow = D4DamageIndicator2(Arrows[i]);
 			if (arrow && arrow.pinfo == plr)
 				Arrows[i].Render(e, Alpha, Scale);
 		}
 	}
 }
 
-Class D4DamageIndicator play
+Class D4DamageIndicator2 play
 {
 	const texname = "sprites/DmgDir2.png";
 	Actor inf, src, plr;
