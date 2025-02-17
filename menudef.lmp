@@ -23,6 +23,7 @@ OptionMenu "IsoModOptions"
 	Slider "Monster's Max. Shooting Distance", IsoMonsterAimMaxDist, 100, 5000, 100
     Option "Isometric Fog of War", "r_radarclipper", "OnOff"
     Option "Visibility Through Level Geometry", "r_dithertransparency", "OnOff"
+    Option "Disable Ceiling Skies", "IsoDisableCeilingSky", "OnOff"
 	Option "Movement Keys", "IsoControlType", "KeyboardCtrlType"
 
     StaticText ""

@@ -15,6 +15,21 @@ class PickupFlagHandler : CustomBoolCVar
   }
 }
 
+class SkyToggleHandler : CustomBoolCVar
+{
+  override bool ModifyValue(Name CVarName, bool val)
+  {
+	  if (gamestate == GS_LEVEL)
+	  {
+		  if (val)
+			  Level.ReplaceTextures("F_SKY1", "SKY1", TexMan.NOT_FLOOR); // Don't render sky from ceiling
+		  else
+			  Level.ReplaceTextures("SKY1", "F_SKY1", TexMan.NOT_FLOOR);
+	  }
+	  return val;
+  }
+}
+
 class selstruct
 {
 	array<Actor> selectables;
@@ -773,9 +788,10 @@ class CameraSpawnHandler : EventHandler // Can't be static because camera actor 
 
 	override void WorldLoaded (WorldEvent e)
 	{
+		if (CVar.FindCVar("IsoDisableCeilingSky").GetBool())
+			Level.ReplaceTextures("F_SKY1", "SKY1", TexMan.NOT_FLOOR); // Don't render sky from ceiling
 		if (gamestate != GS_TITLELEVEL)
 		{
-			Level.ReplaceTextures("F_SKY1", "SKY1", TexMan.NOT_FLOOR); // Don't render sky from ceiling
 			ThinkerIterator MonsterFinder = ThinkerIterator.Create("Actor");
 			Actor mo;
 			while ((mo = Actor(MonsterFinder.Next())))

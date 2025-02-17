@@ -29,5 +29,7 @@ User Bool IsoLookingDown = false;
 User Bool IsoMouseMove = false;
 User Int IsoControlType = 0;
 
+NoSave HandlerClass(SkyToggleHandler) Bool IsoDisableCeilingSky = true;
+
 user float D4D2_DIScale = 0.5;
 user float D4D2_DIAlpha = 1.0;
