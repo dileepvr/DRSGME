@@ -19,12 +19,12 @@ class SkyToggleHandler : CustomBoolCVar
 {
   override bool ModifyValue(Name CVarName, bool val)
   {
-	  if (gamestate == GS_LEVEL)
+	  if (gamestate == GS_LEVEL && !multiplayer)
 	  {
 		  if (val)
-			  Level.ReplaceTextures("F_SKY1", "SKY1", TexMan.NOT_FLOOR); // Don't render sky from ceiling
+			  Level.ReplaceTextures(Texman.GetName(skyflatnum), "SKY1", TexMan.NOT_FLOOR); // Don't render sky from ceiling
 		  else
-			  Level.ReplaceTextures("SKY1", "F_SKY1", TexMan.NOT_FLOOR);
+			  Level.ReplaceTextures("SKY1", Texman.GetName(skyflatnum), TexMan.NOT_FLOOR);
 	  }
 	  return val;
   }
@@ -788,8 +788,8 @@ class CameraSpawnHandler : EventHandler // Can't be static because camera actor 
 
 	override void WorldLoaded (WorldEvent e)
 	{
-		if (CVar.FindCVar("IsoDisableCeilingSky").GetBool())
-			Level.ReplaceTextures("F_SKY1", "SKY1", TexMan.NOT_FLOOR); // Don't render sky from ceiling
+		if (CVar.FindCVar("IsoDisableCeilingSky").GetBool() && !multiplayer)
+			Level.ReplaceTextures(Texman.GetName(skyflatnum), "SKY1", TexMan.NOT_FLOOR); // Don't render sky from ceiling
 		if (gamestate != GS_TITLELEVEL)
 		{
 			ThinkerIterator MonsterFinder = ThinkerIterator.Create("Actor");
@@ -896,7 +896,7 @@ class CameraSpawnHandler : EventHandler // Can't be static because camera actor 
 class RenderCursorsOverlay : EventHandler
 {
 	cvar isoyaw, isopitch, isoaimdist, isoaimassist;
-	cvar showwep, showscope, showscopehealth;
+	cvar showwep, showwepname, showscope, showscopehealth;
 	cvar wepsize, wepxpos, wepypos;
 	cvar scopesize, scopexpos, scopeypos;
 	cvar aimbeam, scopetype, cursdist, cursoffy;
@@ -992,6 +992,7 @@ class RenderCursorsOverlay : EventHandler
 	  isoaimassist = CVar.GetCVar("IsoAimAssist", players[consoleplayer]);
 	  mousemove = CVar.GetCVar("IsoMouseMove", players[consoleplayer]);
 	  showwep = CVar.GetCVar("IsoHUDShowWeapon", players[consoleplayer]);
+	  showwepname = CVar.GetCVar("IsoHUDShowWeaponName", players[consoleplayer]);
 	  showscope = CVar.GetCVar("IsoHUDShowTarget", players[consoleplayer]);
 	  showscopehealth = CVar.GetCVar("IsoHUDShowTargetHealth", players[consoleplayer]);
 	  wepsize = CVar.GetCVar("IsoHUDWeaponSize", players[consoleplayer]);
@@ -1065,6 +1066,14 @@ class RenderCursorsOverlay : EventHandler
 										  (curpsp.CurState == curwep.FindState("Fire") ) ||
 										  curpsp.CurState.InStateSequence(curwep.FindState("Ready")) ? 1.0 : 0.7, // alpha
 										  (2*wsize, wsize), (0.03*wsize, 0.03*wsize)); // boxsize, scale
+			  if (showwepname.GetBool())
+			  {
+				  HUDFont monospaceSmallfont2 = HUDFont.Create(smallfont, smallfont.GetCharWidth("0"), true);
+				  StatusBar.DrawString(monospaceSmallfont2, String.Format("%s", curwep.GetTag()),
+									   (wxpos-(int)(0.8*wsize), wypos-(int)(0.8*wsize) + smallfont.GetCharWidth("0")),
+									   StatusBar.DI_SCREEN_CENTER_BOTTOM | StatusBar.DI_ITEM_CENTER,
+									   scale: (0.02*wsize, (hud_aspectscale ? 0.016 : 0.0134)*wsize));
+			  }
 		  }
 	    }
 

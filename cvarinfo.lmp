@@ -14,6 +14,7 @@ User Bool IsoHUDShowTargetHealth = true;
 User Int IsoHUDWeaponSize = 50;
 User Float IsoHUDWeaponXPos = -0.15;
 User Float IsoHUDWeaponYPos = -0.15;
+User Bool IsoHUDShowWeaponName = true;
 User Int IsoHUDTargetSize = 50;
 User Float IsoHUDTargetXPos = 0.15;
 User Float IsoHUDTargetYPos = 0.15;

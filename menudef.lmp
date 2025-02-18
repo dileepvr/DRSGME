@@ -23,7 +23,7 @@ OptionMenu "IsoModOptions"
 	Slider "Monster's Max. Shooting Distance", IsoMonsterAimMaxDist, 100, 5000, 100
     Option "Isometric Fog of War", "r_radarclipper", "OnOff"
     Option "Visibility Through Level Geometry", "r_dithertransparency", "OnOff"
-    Option "Disable Ceiling Skies", "IsoDisableCeilingSky", "OnOff"
+    Option "Disable Ceiling Skies (in singleplayer)", "IsoDisableCeilingSky", "OnOff"
 	Option "Movement Keys", "IsoControlType", "KeyboardCtrlType"
 
     StaticText ""
@@ -52,6 +52,7 @@ OptionMenu "IsoModOptions"
 	Slider "Direction Cursor Vertical Offset", IsoCursorOffsetY, -100, 100, 10, 0
 	ColorPicker "Aim Beam Color", "IsoAimBeam"
 	Option "Show Weapon Icon", "IsoHUDShowWeapon", "OnOff"
+	Option "Show Weapon Name", "IsoHUDShowWeaponName", "OnOff"
     Slider "Weapon Icon Size", IsoHUDWeaponSize, 25, 100, 1, 0, "IsoHUDShowWeapon"
     Slider "Weapon Icon X Position", IsoHUDWeaponXPos, -2, 2, 0.1, 1, "IsoHUDShowWeapon"
     Slider "Weapon Icon Y Position", IsoHUDWeaponYPos, 0, 2, 0.1, 1, "IsoHUDShowWeapon"
