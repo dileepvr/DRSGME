@@ -715,6 +715,12 @@ class ScopeCamera : SpectatorCamera
 
 class LoadGameCameraHandler : StaticEventHandler
 {
+	int camflags;
+	override void OnRegister()
+	{
+		camflags = VPSF_ABSOLUTEOFFSET | VPSF_ORTHOGRAPHIC | VPSF_ALLOWOUTOFBOUNDS;
+	}
+
 	override void WorldLoaded (WorldEvent e) 
 	{
 		if(e.IsSaveGame)
@@ -723,7 +729,6 @@ class LoadGameCameraHandler : StaticEventHandler
 			{
 				if (PlayerInGame[i] && players[i].mo)
 				{
-					int camflags = VPSF_ABSOLUTEOFFSET | VPSF_ALLOWOUTOFBOUNDS | VPSF_ORTHOGRAPHIC;
 					CVar isodist = CVar.GetCVar("IsometricDist", players[i]);
 					CVar isoyaw = CVar.GetCVar("IsometricYaw", players[i]);
 					CVar isopitch = CVar.GetCVar("IsometricPitch", players[i]);
@@ -750,6 +755,12 @@ class CameraSpawnHandler : EventHandler // Can't be static because camera actor 
 	cvar isodists[MAXPLAYERS], isoyaws[MAXPLAYERS], isopitches[MAXPLAYERS];
 	cvar isospeeds[MAXPLAYERS], rotatelefts[MAXPLAYERS], rotaterights[MAXPLAYERS];
 	Actor isocam[MAXPLAYERS], scopecam[MAXPLAYERS];
+	int replaceceilingskytimer;
+
+	override void OnRegister()
+	{
+		replaceceilingskytimer = 0;
+	}
 
 	override void PlayerSpawned(playerEvent e)
 	{
@@ -767,7 +778,7 @@ class CameraSpawnHandler : EventHandler // Can't be static because camera actor 
 			players[e.PlayerNumber].camera = isocam[e.PlayerNumber];
 			players[e.PlayerNumber].camera.tracer = players[e.PlayerNumber].mo; // This makes camera follow the player
 			players[e.PlayerNumber].camera.player = players[e.PlayerNumber]; // Necessary for pain and pickup screen flashes. Adds viewbob too.
-			int camflags = VPSF_ABSOLUTEOFFSET | VPSF_ALLOWOUTOFBOUNDS | VPSF_ORTHOGRAPHIC;
+			int camflags = LoadGameCameraHandler(StaticEventHandler.Find("LoadGameCameraHandler")).camflags;
 			CVar isodist = CVar.GetCVar("IsometricDist", players[e.PlayerNumber]);
 			CVar isoyaw = CVar.GetCVar("IsometricYaw", players[e.PlayerNumber]);
 			CVar isopitch = CVar.GetCVar("IsometricPitch", players[e.PlayerNumber]);
@@ -788,8 +799,8 @@ class CameraSpawnHandler : EventHandler // Can't be static because camera actor 
 
 	override void WorldLoaded (WorldEvent e)
 	{
-		if (CVar.FindCVar("IsoDisableCeilingSky").GetBool() && !multiplayer)
-			Level.ReplaceTextures(Texman.GetName(skyflatnum), "SKY1", TexMan.NOT_FLOOR); // Don't render sky from ceiling
+		if (CVar.FindCVar("IsoDisableCeilingSky").GetBool() || multiplayer)
+			replaceceilingskytimer = 1;
 		if (gamestate != GS_TITLELEVEL)
 		{
 			ThinkerIterator MonsterFinder = ThinkerIterator.Create("Actor");
@@ -814,7 +825,7 @@ class CameraSpawnHandler : EventHandler // Can't be static because camera actor 
 					players[i].camera = isocam[i];
 					players[i].camera.tracer = players[i].mo; // This makes camera follow the player
 					players[i].camera.player = players[i]; // Necessary for pain and pickup screen flashes. Adds viewbob too.
-					int camflags = VPSF_ABSOLUTEOFFSET | VPSF_ALLOWOUTOFBOUNDS | VPSF_ORTHOGRAPHIC;
+					int camflags = LoadGameCameraHandler(StaticEventHandler.Find("LoadGameCameraHandler")).camflags;
 					isodists[i] = CVar.GetCVar("IsometricDist", players[i]);
 					isoyaws[i] = CVar.GetCVar("IsometricYaw", players[i]);
 					isopitches[i] = CVar.GetCVar("IsometricPitch", players[i]);
@@ -858,6 +869,16 @@ class CameraSpawnHandler : EventHandler // Can't be static because camera actor 
   {
 	  if (gamestate != GS_LEVEL) return;
 
+	  if (replaceceilingskytimer > 0)
+	  {
+		  replaceceilingskytimer++;
+		  if (replaceceilingskytimer > TICRATE) // Some maps seem to need this delay
+		  {
+			  Level.ReplaceTextures(Texman.GetName(skyflatnum), "SKY1", TexMan.NOT_FLOOR); // Don't render sky from ceiling
+			  replaceceilingskytimer = 0;
+		  }
+	  }
+
 	  for (int i = 0; i < MAXPLAYERS; i++)
 	  {
 		  if (PlayerInGame[i] && players[i].mo)
@@ -873,7 +894,7 @@ class CameraSpawnHandler : EventHandler // Can't be static because camera actor 
 				  if (rotatelefts[i].GetBool() || rotaterights[i].GetBool())
 				  {
 					  isoyaws[i].SetFloat(isoyaws[i].GetFloat() + (rotaterights[i].GetBool() ? 1 : -1) * isospeeds[i].GetFloat());
-					  int camflags = VPSF_ABSOLUTEOFFSET | VPSF_ALLOWOUTOFBOUNDS | VPSF_ORTHOGRAPHIC;
+					  int camflags = LoadGameCameraHandler(StaticEventHandler.Find("LoadGameCameraHandler")).camflags;
 					  if (players[i].camera.GetClassName() == 'SpectatorCamera')
 					  {
 						  SpectatorCamera(players[i].camera).Init(isodists[i].GetFloat(),

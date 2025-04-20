@@ -21,7 +21,7 @@ OptionMenu "IsoModOptions"
     Slider "Deceleration Multiplier", DecelMult, 0.1, 1.0, 0.1
     Slider "Aim Assist Max. Distance", IsoAimAssistMaxDist, 100, 5000, 100
 	Slider "Monster's Max. Shooting Distance", IsoMonsterAimMaxDist, 100, 5000, 100
-    Option "Isometric Fog of War", "r_radarclipper", "OnOff"
+    Option "Isometric Fog of War (Requires level load)", "r_radarclipper", "OnOff"
     Option "Visibility Through Level Geometry", "r_dithertransparency", "OnOff"
     Option "Disable Ceiling Skies (in singleplayer)", "IsoDisableCeilingSky", "OnOff"
 	Option "Movement Keys", "IsoControlType", "KeyboardCtrlType"
