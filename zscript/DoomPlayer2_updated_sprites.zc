@@ -25,6 +25,8 @@ class DoomPlayer2 : DoomPlayer
 			switch(slotid)
 			{
 			case 1: // For chainsaw
+				if (indx > 0) { Number += 7; } // Show chainsaw sprite for all melee other than fists
+				break;
 			case 3: // For SSG (will be set to 10)
 				if (indx < 2) { Number += 7 * indx; }
 				else { Number = 11; } // Unknown weapon

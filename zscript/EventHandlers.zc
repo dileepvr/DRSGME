@@ -788,6 +788,14 @@ class CameraSpawnHandler : EventHandler // Can't be static because camera actor 
 			// The following has to come after Init
 			// SpectatorCamera(players[e.PlayerNumber].camera).lagdistance = 300.0; // Use for a lazy camera that only follows if you get away from center
 			// SpectatorCamera(players[e.PlayerNumber].camera).chasemode = 2; // 0: chase until tracer centered, 1: same but only when tracer is moving, 2: stop chase if tracer within lagdistance
+			if (CVar.FindCVar("IsoShowOpeningMsg").GetBool())
+			{
+				CVar.FindCVar("IsoShowOpeningMsg").SetBool(false);
+				if (players[e.PlayerNumber].camera)
+				{
+					players[e.PlayerNumber].camera.A_Print("Don't forget to bind keys to\nROTATE and ZOOM the CAMERA.\n\nToggle 'visibility through level geometry'\nin the options menu.", 10, "BIGUPPER");
+				}
+			}
 		}
 	}
 
