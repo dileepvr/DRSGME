@@ -20,7 +20,8 @@ at the end. Over the command line, command is:
   > ./gzdoom -iwad <IWAD-FILE> -file <FULL-PATH-TO-DRSGME.pk3>
 #+end_src
 
-For best results, set fog mode to "Radial."
+For best visibility, set 'Sector light mode' to "Classic (Faster)" in
+"Display Options -> Hardware Renderer".
 
 ** Controls
 
@@ -70,4 +71,3 @@ in [[https://github.com/mmaulwurff/target-spy][Target-Spy]] and are licensed und
 Sprites originally gathered in one place by Ivory Duke for WeaponMatchingPlayerSkin mod: https://forum.zdoom.org/viewtopic.php?t=67834
 
 Remember: Book. Not Plan.
- 

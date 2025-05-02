@@ -793,7 +793,7 @@ class CameraSpawnHandler : EventHandler // Can't be static because camera actor 
 				CVar.FindCVar("IsoShowOpeningMsg").SetBool(false);
 				if (players[e.PlayerNumber].camera)
 				{
-					players[e.PlayerNumber].camera.A_Print("Don't forget to bind keys to\nROTATE and ZOOM the CAMERA.\n\nToggle 'visibility through level geometry'\nin the options menu.", 10, "BIGUPPER");
+					players[e.PlayerNumber].camera.A_PrintBold("Don't forget to bind keys to\nROTATE and ZOOM the CAMERA.\n\nToggle 'visibility through level geometry'\nin the options menu.\n\n\n\nSet 'Sector Light Mode' to 'Classic (Faster)' in \n'Display Options' -> 'Hardware renderer'.", 20, "BIGUPPER");
 				}
 			}
 		}
