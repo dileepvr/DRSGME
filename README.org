@@ -21,7 +21,8 @@ at the end. Over the command line, command is:
 #+end_src
 
 For best visibility, set 'Sector light mode' to "Classic (Faster)" in
-"Display Options -> Hardware Renderer".
+"Display Options -> Hardware Renderer". If you want to use other 'Sector
+light mode' settings, set 'Fog mode' to "Radial".
 
 ** Controls
 
