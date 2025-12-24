@@ -1,3 +1,8 @@
+AddListMenu "MainMenu" after "OptionsMenu"
+{
+	TextItem "Isometric Options", "i", "IsoModOptions"
+}
+
 AddOptionMenu "OptionsMenuSimple"
 {
 	SubMenu "Isometric Mode Options", "IsoModOptions"
@@ -17,6 +22,8 @@ OptionValue "KeyboardCtrlType"
 OptionMenu "IsoModOptions"
 {
     Title "Isometric Mode Options (Hardware Renderers only)"
+	Option "$GLPREFMNU_FOGMODE",				gl_fogmode,						"FogMode"
+	Option "$GLPREFMNU_SECLIGHTMODE",			gl_lightmode,					"LightingModes"
     Slider "Isometric Camera Pitch", IsometricPitch, 1, 89, 1
     Slider "Deceleration Multiplier", DecelMult, 0.1, 1.0, 0.1
     Slider "Aim Assist Max. Distance", IsoAimAssistMaxDist, 100, 5000, 100
@@ -32,7 +39,8 @@ OptionMenu "IsoModOptions"
     Control "Rotate Right", "rotate_cam_right"
     Control "Zoom in", "iso_zoom_in"
     Control "Zoom out", "iso_zoom_out"
-    Slider "Rotation Speed", IsometricSpeed, 1, 10, 1
+    Option "Rotate camera in 90 Degree increments", "Iso90DegreeTurns", "OnOff"
+    Slider "Rotation Speed", IsometricSpeed, 1, 10, 1, 0, "Iso90DegreeTurns", 1
     StaticText ""
     StaticText "Gameplay Aids"
 	Option "Diablo-style Mouse Control", "IsoMouseMove", "OnOff"
@@ -41,6 +49,7 @@ OptionMenu "IsoModOptions"
 	Control "Mouse Rotate Camera", "mouse_rotate"
     Control "Toggle Aim Assist", "iso_aim_assist"
 	Option "Allow Object Pickup by Touch", "IsoAllowTouchPickup", "OnOff"
+	Option "Attach light to player", "IsoMoveTorch", "OnOff"
 	Control "Cycle Select Switches/Objects", "cycle_select"
 	Control "Use Selected Switches/Objects", "use_selected"
 	Control "Clear Selection", "clear_select"

@@ -437,8 +437,7 @@ class IsometricMovement : CustomInventory
 				if (debounce_timer == 0)
 				{
 					debounce_timer = debounce_ticks;
-					if (mo.bSPECIAL) mo.Touch(Owner);
-					else if (mo.bUSESPECIAL && mo.health > 0)
+					if (mo.bUSESPECIAL && mo.health > 0)
 					{
 						// This whole segment is only for old DECORATE type activate functions
 						if (mo.activationtype & (THINGSPEC_Activate | THINGSPEC_Deactivate | THINGSPEC_Switch))
@@ -466,7 +465,19 @@ class IsometricMovement : CustomInventory
 							}
 						}
 					}
-					else if (!mo.Used(Owner)) A_StartSound("noselect", CHAN_ITEM);
+					else 
+					{
+						double reqPitch = Owner.PitchTo(mo, player.ViewHeight*player.crouchfactor, mo.height/2);
+						Owner.A_SetPitch(reqPitch);
+						double oldplrpitch = plrpitch;
+						plrpitch = reqPitch;						
+						if (!mo.Used(Owner))
+						{
+							plrpitch = oldplrpitch;
+							if (mo.bSPECIAL || mo.bBUMPSPECIAL) mo.Touch(Owner);
+							else A_StartSound("noselect", CHAN_ITEM);
+						}
+					}
 				} // debounce_timer
 			} // Distance3D
 		}
@@ -801,8 +812,8 @@ class IsometricMovement : CustomInventory
 
 class MoveTorch : Inventory
 {
-        // MoveTorch given to me by Madame Rachelle
-        DynamicLight light;
+	// MoveTorch given to me by Madame Rachelle
+	DynamicLight light;
 	vector3 offs;
 	
 	default

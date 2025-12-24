@@ -669,11 +669,34 @@ class MKeyEvents : EventHandler
 
 class StartingInventoryHandler : EventHandler
 {
+	cvar isomovetorches[MAXPLAYERS];
+	bool movetorchbools[MAXPLAYERS];
+
 	override void PlayerEntered(PlayerEvent e)
 	{
 		players[e.PlayerNumber].mo.A_GiveInventory("Z_NashMove", 1);
-		players[e.PlayerNumber].mo.A_GiveInventory("MoveTorch", 1);
+		if (movetorchbools[e.PlayerNumber]) players[e.PlayerNumber].mo.A_GiveInventory("MoveTorch", 1);
 		players[e.PlayerNumber].mo.A_GiveInventory("IsometricMovement", 1);
+		isomovetorches[e.PlayerNumber] = CVar.GetCVar("IsoMoveTorch", players[e.PlayerNumber]);
+	}
+
+	override void WorldTick()
+	{
+		if (gamestate != GS_LEVEL) return;
+
+		for (int i = 0; i < MAXPLAYERS; i++)
+		{
+			if (PlayerInGame[i] && players[i].mo)
+			{
+				if (!movetorchbools[i] == isomovetorches[i].GetBool())
+				{
+					movetorchbools[i] = !movetorchbools[i];
+					if (movetorchbools[i]) players[i].mo.A_GiveInventory("MoveTorch", 1);
+					else players[i].mo.A_TakeInventory("MoveTorch", 0);
+				}
+				
+			}
+		}
 	}
 }
 
@@ -753,13 +776,17 @@ class LoadGameCameraHandler : StaticEventHandler
 class CameraSpawnHandler : EventHandler // Can't be static because camera actor gets spawned
 {
 	cvar isodists[MAXPLAYERS], isoyaws[MAXPLAYERS], isopitches[MAXPLAYERS];
-	cvar isospeeds[MAXPLAYERS], rotatelefts[MAXPLAYERS], rotaterights[MAXPLAYERS];
+	cvar isospeeds[MAXPLAYERS], rotatelefts[MAXPLAYERS], rotaterights[MAXPLAYERS], turn90degs[MAXPLAYERS];
 	Actor isocam[MAXPLAYERS], scopecam[MAXPLAYERS];
-	int replaceceilingskytimer;
+	int replaceceilingskytimer, isoviewpoint;
+	static const double camyaw[] = {225, 315, 45, 135}; // degrees
+	bool isocam_changing;
 
 	override void OnRegister()
 	{
 		replaceceilingskytimer = 0;
+		isoviewpoint = 1;
+		isocam_changing = false;
 	}
 
 	override void PlayerSpawned(playerEvent e)
@@ -840,6 +867,7 @@ class CameraSpawnHandler : EventHandler // Can't be static because camera actor 
 					isospeeds[i] = CVar.GetCVar("IsometricSpeed", players[i]);
 					rotatelefts[i] = CVar.GetCVar("RotatingLeft", players[i]);
 					rotaterights[i] = CVar.GetCVar("RotatingRight", players[i]);
+					turn90degs[i] = CVar.GetCVar("Iso90DegreeTurns", players[i]);
 					SpectatorCamera(players[i].camera).Init(isodists[i].GetFloat(), isoyaws[i].GetFloat(), isopitches[i].GetFloat(), camflags);
 					if (!Cvar.GetCvar("IsoHUDScopeFirstPerson", players[i]).GetBool())
 						SpectatorCamera(scopecam[i]).Init(isodists[i].GetFloat(), isoyaws[i].GetFloat(), isopitches[i].GetFloat(), camflags);
@@ -899,20 +927,48 @@ class CameraSpawnHandler : EventHandler // Can't be static because camera actor 
 			  }
 			  if (players[i].camera)
 			  {
+				  if (isocam_changing)
+				  {
+					  float angdiff = 0.125 * (camyaw[isoviewpoint] - isoyaws[i].GetFloat());
+					  if (abs(angdiff) > 5.25) {
+						  if (angdiff > 22.5) angdiff -= 45.0;
+						  else if (angdiff < -22.5) angdiff += 45.0;
+						  if(abs(angdiff) > 5.25)
+							  isoyaws[i].SetFloat(isoyaws[i].GetFloat() + angdiff);
+						  else { isoyaws[i].SetFloat(camyaw[isoviewpoint]); isocam_changing = false; }
+					  } else { isoyaws[i].SetFloat(camyaw[isoviewpoint]); isocam_changing = false; }
+
+					  SpectatorCamera(players[i].camera).Init(isodists[i].GetFloat(),
+															  isoyaws[i].GetFloat(),
+															  isopitches[i].GetFloat(), -1);
+				  }
 				  if (rotatelefts[i].GetBool() || rotaterights[i].GetBool())
 				  {
-					  isoyaws[i].SetFloat(isoyaws[i].GetFloat() + (rotaterights[i].GetBool() ? 1 : -1) * isospeeds[i].GetFloat());
-					  int camflags = LoadGameCameraHandler(StaticEventHandler.Find("LoadGameCameraHandler")).camflags;
-					  if (players[i].camera.GetClassName() == 'SpectatorCamera')
+					  if (turn90degs[i].GetBool())
 					  {
-						  SpectatorCamera(players[i].camera).Init(isodists[i].GetFloat(),
-																  isoyaws[i].GetFloat(),
-																  isopitches[i].GetFloat(), camflags);
-						  if (!Cvar.GetCvar("IsoHUDScopeFirstPerson", players[i]).GetBool())
+						  if (!isocam_changing)
 						  {
-							  SpectatorCamera(scopecam[i]).Init(isodists[i].GetFloat(),
-																isoyaws[i].GetFloat(),
-																isopitches[i].GetFloat(), camflags);
+							  isocam_changing = true;
+							  isoviewpoint += (rotaterights[i].GetBool() ? 1 : -1);
+							  if (isoviewpoint < 0) isoviewpoint = 3;
+							  else if (isoviewpoint > 3) isoviewpoint = 0;
+						  }
+					  }
+					  else
+					  {
+						  isoyaws[i].SetFloat(isoyaws[i].GetFloat() + (rotaterights[i].GetBool() ? 1 : -1) * isospeeds[i].GetFloat());
+						  int camflags = LoadGameCameraHandler(StaticEventHandler.Find("LoadGameCameraHandler")).camflags;
+						  if (players[i].camera.GetClassName() == 'SpectatorCamera')
+						  {
+							  SpectatorCamera(players[i].camera).Init(isodists[i].GetFloat(),
+																	  isoyaws[i].GetFloat(),
+																	  isopitches[i].GetFloat(), camflags);
+							  if (!Cvar.GetCvar("IsoHUDScopeFirstPerson", players[i]).GetBool())
+							  {
+								  SpectatorCamera(scopecam[i]).Init(isodists[i].GetFloat(),
+																	isoyaws[i].GetFloat(),
+																	isopitches[i].GetFloat(), camflags);
+							  }
 						  }
 					  }
 				  }
@@ -1450,7 +1506,8 @@ class IsoAimAssistHandler : StaticEventHandler
 				{
 					if (!IsometricMovement(isomover[i]).fleemode && !doAim(i))
 					{
-						players[i].mo.A_SetPitch((IsometricMovement(isomover[i]).plrpitch > 5 ? // Avoid hipfire to ground
+						players[i].mo.A_SetPitch(((IsometricMovement(isomover[i]).plrpitch > 5) 
+						&& !IsometricMovement(isomover[i]).pointusable ? // Avoid hipfire to ground
 												  0 : IsometricMovement(isomover[i]).plrpitch));
 					}
 				}

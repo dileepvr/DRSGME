@@ -20,9 +20,7 @@ at the end. Over the command line, command is:
   > ./gzdoom -iwad <IWAD-FILE> -file <FULL-PATH-TO-DRSGME.pk3>
 #+end_src
 
-For best visibility, set 'Sector light mode' to "Classic (Faster)" in
-"Display Options -> Hardware Renderer". If you want to use other 'Sector
-light mode' settings, set 'Fog mode' to "Radial".
+For best results, set fog mode to "Radial."
 
 ** Controls
 
@@ -46,9 +44,9 @@ move" when in this mode.
 ** Credits
 
 A lot of mods, forum posts, and wikis were consulted to prepare this. Special thanks to:
-- Rachel Alexanderson
+- Rachael Alexanderson
 - Nash Muhandes
-- Jay Luís Vaz Silva
+- Jay (Author of [[https://github.com/RicardoLuis0/AimAssist][AimAssist]])
 - m8f (Author of [[https://github.com/mmaulwurff/target-spy][Target-Spy]])
 - Major Cooke
 - Whoever made the damage direction indicators for [[https://github.com/MajorCooke/Doom4Doom][D4D]] (probably Major Cooke again)
@@ -56,7 +54,8 @@ A lot of mods, forum posts, and wikis were consulted to prepare this. Special th
 All code and assets except the the character sprites and the 'damage
 direction indicator sprite' are licensed under CC-0 (see
 [[./LICENSE.txt]]). A few =zscript= functions are derived from m8f's work
-in [[https://github.com/mmaulwurff/target-spy][Target-Spy]] and are licensed under GPLv3 (see [[./GPLv3.txt]]).
+in [[https://github.com/mmaulwurff/target-spy][Target-Spy]] and Jay's work in [[https://github.com/RicardoLuis0/AimAssist][AimAssist]], and are licensed under
+GPLv3 (see [[./GPLv3.txt]]).
 
 *** Sprites credits:
 - Fist Marine - Sprite by: Mark Quinn
@@ -72,3 +71,4 @@ in [[https://github.com/mmaulwurff/target-spy][Target-Spy]] and are licensed und
 Sprites originally gathered in one place by Ivory Duke for WeaponMatchingPlayerSkin mod: https://forum.zdoom.org/viewtopic.php?t=67834
 
 Remember: Book. Not Plan.
+ 

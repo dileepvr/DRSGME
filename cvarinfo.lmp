@@ -29,6 +29,8 @@ User Bool IsoLookingUp = false;
 User Bool IsoLookingDown = false;
 User Bool IsoMouseMove = false;
 User Int IsoControlType = 0;
+User Bool Iso90DegreeTurns = true;
+User Bool IsoMoveTorch = true;
 
 NoSave HandlerClass(SkyToggleHandler) Bool IsoDisableCeilingSky = true;
 NoSave Bool IsoShowOpeningMsg = true;
